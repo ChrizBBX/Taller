@@ -66,6 +66,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[tllr].[tbEmpleados]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[tllr].[tbMarcas]",
          "ObjectType": 0
       },
@@ -98,7 +102,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "DESKTOP-IU26N4Q\\SQLEXPRESSLOCAL.Taller",
+   "UiHint": "VJ7400.Proyecto-Taller",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

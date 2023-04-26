@@ -26,6 +26,8 @@ namespace Taller.Entities.Entities
 
         public virtual tbClientes clie { get; set; }
         public virtual tbSucursales sucu { get; set; }
+        public virtual tbUsuarios vent_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios vent_UserModificacionNavigation { get; set; }
         public virtual ICollection<tbDetallesventas> tbDetallesventas { get; set; }
     }
 }

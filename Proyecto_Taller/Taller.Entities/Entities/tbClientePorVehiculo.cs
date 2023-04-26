@@ -18,6 +18,8 @@ namespace Taller.Entities.Entities
         public DateTime? clvh_FechaModificacion { get; set; }
 
         public virtual tbClientes clie { get; set; }
+        public virtual tbUsuarios clvh_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios clvh_UserModificacionNavigation { get; set; }
         public virtual tbVehiculos vehi { get; set; }
     }
 }

@@ -11,11 +11,9 @@ namespace Taller.Entities.Entities
         public tbVehiculos()
         {
             tbClientePorVehiculo = new HashSet<tbClientePorVehiculo>();
-            tbClientes = new HashSet<tbClientes>();
         }
 
         public int vehi_ID { get; set; }
-        public int clie_Id { get; set; }
         public int mode_ID { get; set; }
         public string vehi_Matricula { get; set; }
         public string vehi_anio { get; set; }
@@ -25,11 +23,9 @@ namespace Taller.Entities.Entities
         public int? vehi_UserModificacion { get; set; }
         public bool? vehi_Estado { get; set; }
 
-        public virtual tbClientes clie { get; set; }
         public virtual tbModelos mode { get; set; }
         public virtual tbUsuarios vehi_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios vehi_UserModificacionNavigation { get; set; }
         public virtual ICollection<tbClientePorVehiculo> tbClientePorVehiculo { get; set; }
-        public virtual ICollection<tbClientes> tbClientes { get; set; }
     }
 }

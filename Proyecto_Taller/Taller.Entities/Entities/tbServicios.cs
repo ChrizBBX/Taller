@@ -21,6 +21,8 @@ namespace Taller.Entities.Entities
         public int? serv_UserModificacion { get; set; }
         public bool? serv_Estado { get; set; }
 
+        public virtual tbUsuarios serv_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios serv_UserModificacionNavigation { get; set; }
         public virtual ICollection<tbDetallesventas> tbDetallesventas { get; set; }
     }
 }

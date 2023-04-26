@@ -8,6 +8,11 @@ namespace Taller.Entities.Entities
 {
     public partial class tbEstadosCiviles
     {
+        public tbEstadosCiviles()
+        {
+            tbEmpleados = new HashSet<tbEmpleados>();
+        }
+
         public int estacivi_ID { get; set; }
         public string estacivi_Nombre { get; set; }
         public int estacivi_UserCreacion { get; set; }
@@ -18,5 +23,6 @@ namespace Taller.Entities.Entities
 
         public virtual tbUsuarios estacivi_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios estacivi_UserModificacionNavigation { get; set; }
+        public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
     }
 }

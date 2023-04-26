@@ -20,6 +20,8 @@ namespace Taller.Entities.Entities
         public int? deve_UserModificacion { get; set; }
         public DateTime? deve_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios deve_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios deve_UserModificacionNavigation { get; set; }
         public virtual tbRepuestos resp { get; set; }
         public virtual tbServicios serv { get; set; }
         public virtual tbVentas vent { get; set; }

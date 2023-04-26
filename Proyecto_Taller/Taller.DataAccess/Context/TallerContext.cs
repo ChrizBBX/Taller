@@ -25,6 +25,7 @@ namespace Taller.DataAccess.Context
         public virtual DbSet<tbDepartamentos> tbDepartamentos { get; set; }
         public virtual DbSet<tbDetallesCompras> tbDetallesCompras { get; set; }
         public virtual DbSet<tbDetallesventas> tbDetallesventas { get; set; }
+        public virtual DbSet<tbEmpleados> tbEmpleados { get; set; }
         public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
         public virtual DbSet<tbMarcas> tbMarcas { get; set; }
         public virtual DbSet<tbMetodosPago> tbMetodosPago { get; set; }
@@ -43,7 +44,7 @@ namespace Taller.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<tbClientePorVehiculo>(entity =>
             {
@@ -65,6 +66,17 @@ namespace Taller.DataAccess.Context
                     .HasForeignKey(d => d.clie_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_clvh_ID_tllr_tbClientePorVehiculo_clie_ID_tbClientes");
+
+                entity.HasOne(d => d.clvh_UserCreacionNavigation)
+                    .WithMany(p => p.tbClientePorVehiculoclvh_UserCreacionNavigation)
+                    .HasForeignKey(d => d.clvh_UserCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_acce_tbClientePorVehiculo_clvh_UserCreacion");
+
+                entity.HasOne(d => d.clvh_UserModificacionNavigation)
+                    .WithMany(p => p.tbClientePorVehiculoclvh_UserModificacionNavigation)
+                    .HasForeignKey(d => d.clvh_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbClientePorVehiculo_clvh_UserModificacion");
 
                 entity.HasOne(d => d.vehi)
                     .WithMany(p => p.tbClientePorVehiculo)
@@ -129,12 +141,6 @@ namespace Taller.DataAccess.Context
                     .WithMany(p => p.tbClientes)
                     .HasForeignKey(d => d.muni_ID)
                     .HasConstraintName("FK_tllr_gral_tbClientes_muni_ID");
-
-                entity.HasOne(d => d.vehi)
-                    .WithMany(p => p.tbClientes)
-                    .HasForeignKey(d => d.vehi_ID)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tllr_tbClientes_vehi_ID");
             });
 
             modelBuilder.Entity<tbCompras>(entity =>
@@ -157,6 +163,17 @@ namespace Taller.DataAccess.Context
                 entity.Property(e => e.comp_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.comp_MontoFinal).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.comp_UserCreacionNavigation)
+                    .WithMany(p => p.tbComprascomp_UserCreacionNavigation)
+                    .HasForeignKey(d => d.comp_UserCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_acce_tbCompras_comp_UserCreacion");
+
+                entity.HasOne(d => d.comp_UserModificacionNavigation)
+                    .WithMany(p => p.tbComprascomp_UserModificacionNavigation)
+                    .HasForeignKey(d => d.comp_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbCompras_comp_UserModificacion");
 
                 entity.HasOne(d => d.prov)
                     .WithMany(p => p.tbCompras)
@@ -228,6 +245,17 @@ namespace Taller.DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbDetallesCompras_comp_ID_tllr_tbCompras_comp_ID");
 
+                entity.HasOne(d => d.deco_UserCreacionNavigation)
+                    .WithMany(p => p.tbDetallesComprasdeco_UserCreacionNavigation)
+                    .HasForeignKey(d => d.deco_UserCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_acce_tbDetallesCompras_deco_UserCreacion");
+
+                entity.HasOne(d => d.deco_UserModificacionNavigation)
+                    .WithMany(p => p.tbDetallesComprasdeco_UserModificacionNavigation)
+                    .HasForeignKey(d => d.deco_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbDetallesCompras_deco_UserModificacion");
+
                 entity.HasOne(d => d.resp)
                     .WithMany(p => p.tbDetallesCompras)
                     .HasForeignKey(d => d.resp_ID)
@@ -252,6 +280,17 @@ namespace Taller.DataAccess.Context
 
                 entity.Property(e => e.deve_Precioventa).HasColumnType("decimal(18, 2)");
 
+                entity.HasOne(d => d.deve_UserCreacionNavigation)
+                    .WithMany(p => p.tbDetallesventasdeve_UserCreacionNavigation)
+                    .HasForeignKey(d => d.deve_UserCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_tbDetallesventas_vehi_UserCreacion");
+
+                entity.HasOne(d => d.deve_UserModificacionNavigation)
+                    .WithMany(p => p.tbDetallesventasdeve_UserModificacionNavigation)
+                    .HasForeignKey(d => d.deve_UserModificacion)
+                    .HasConstraintName("FK_tllr_tbDetallesventas_vehi_UserModificacion");
+
                 entity.HasOne(d => d.resp)
                     .WithMany(p => p.tbDetallesventas)
                     .HasForeignKey(d => d.resp_ID)
@@ -269,6 +308,92 @@ namespace Taller.DataAccess.Context
                     .HasForeignKey(d => d.vent_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbDetallesventas_vent_ID_tllr_tbVentas_vent_ID");
+            });
+
+            modelBuilder.Entity<tbEmpleados>(entity =>
+            {
+                entity.HasKey(e => e.empe_Id)
+                    .HasName("PK_maqu_tbEmpleados_empe_Id");
+
+                entity.ToTable("tbEmpleados", "tllr");
+
+                entity.Property(e => e.empe_Apellidos)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.empe_CorreoElectronico)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.empe_Direccion)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.empe_Estado)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.empe_FechaCreacion)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.empe_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.empe_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.empe_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(13)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.empe_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.empe_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.empe_Telefono)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.muni_Id)
+                    .IsRequired()
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.empe_UsuCreacionNavigation)
+                    .WithMany(p => p.tbEmpleadosempe_UsuCreacionNavigation)
+                    .HasForeignKey(d => d.empe_UsuCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbEmpleados_acce_tbUsuarios_UserCreate");
+
+                entity.HasOne(d => d.empe_UsuModificacionNavigation)
+                    .WithMany(p => p.tbEmpleadosempe_UsuModificacionNavigation)
+                    .HasForeignKey(d => d.empe_UsuModificacion)
+                    .HasConstraintName("FK_maqu_tbEmpleados_acce_tbUsuarios_UserUpdate");
+
+                entity.HasOne(d => d.estacivi)
+                    .WithMany(p => p.tbEmpleados)
+                    .HasForeignKey(d => d.estacivi_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbEmpleados_gral_tbEstadosCiviles_estacivi_Id");
+
+                entity.HasOne(d => d.muni)
+                    .WithMany(p => p.tbEmpleados)
+                    .HasForeignKey(d => d.muni_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbEmpleados_gral_tbMunicipios_muni_Id");
+
+                entity.HasOne(d => d.sucu)
+                    .WithMany(p => p.tbEmpleados)
+                    .HasForeignKey(d => d.sucu_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_maqu_tbEmpleados_maqu_tbSucursales_sucu_Id");
             });
 
             modelBuilder.Entity<tbEstadosCiviles>(entity =>
@@ -559,6 +684,11 @@ namespace Taller.DataAccess.Context
                     .IsRequired()
                     .HasMaxLength(200);
 
+                entity.Property(e => e.prov_Rut)
+                    .IsRequired()
+                    .HasMaxLength(14)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.prov_Telefono)
                     .IsRequired()
                     .HasMaxLength(15);
@@ -615,6 +745,16 @@ namespace Taller.DataAccess.Context
                     .HasForeignKey(d => d.prov_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tRepuestos_prov_ID_tllr_tbProveedores");
+
+                entity.HasOne(d => d.resp_UserCreacionNavigation)
+                    .WithMany(p => p.tbRepuestosresp_UserCreacionNavigation)
+                    .HasForeignKey(d => d.resp_UserCreacion)
+                    .HasConstraintName("FK_tllr_acce_tbRepuestos_resp_UserCreacion");
+
+                entity.HasOne(d => d.resp_UserModificacionNavigation)
+                    .WithMany(p => p.tbRepuestosresp_UserModificacionNavigation)
+                    .HasForeignKey(d => d.resp_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbRepuestos_resp_UserModificacion");
             });
 
             modelBuilder.Entity<tbRoles>(entity =>
@@ -668,6 +808,16 @@ namespace Taller.DataAccess.Context
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.serv_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.serv_UserCreacionNavigation)
+                    .WithMany(p => p.tbServiciosserv_UserCreacionNavigation)
+                    .HasForeignKey(d => d.serv_UserCreacion)
+                    .HasConstraintName("FK_tllr_acce_tbServicios_serv_UserCreacion");
+
+                entity.HasOne(d => d.serv_UserModificacionNavigation)
+                    .WithMany(p => p.tbServiciosserv_UserModificacionNavigation)
+                    .HasForeignKey(d => d.serv_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbServicios_serv_UserModificacion");
             });
 
             modelBuilder.Entity<tbSucursales>(entity =>
@@ -781,12 +931,6 @@ namespace Taller.DataAccess.Context
                     .HasMaxLength(4)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.clie)
-                    .WithMany(p => p.tbVehiculos)
-                    .HasForeignKey(d => d.clie_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tllr_tbVehiculos_clie_ID");
-
                 entity.HasOne(d => d.mode)
                     .WithMany(p => p.tbVehiculos)
                     .HasForeignKey(d => d.mode_ID)
@@ -834,6 +978,17 @@ namespace Taller.DataAccess.Context
                     .HasForeignKey(d => d.sucu_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id");
+
+                entity.HasOne(d => d.vent_UserCreacionNavigation)
+                    .WithMany(p => p.tbVentasvent_UserCreacionNavigation)
+                    .HasForeignKey(d => d.vent_UserCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_acce_tbVentas_vent_UserCreacion");
+
+                entity.HasOne(d => d.vent_UserModificacionNavigation)
+                    .WithMany(p => p.tbVentasvent_UserModificacionNavigation)
+                    .HasForeignKey(d => d.vent_UserModificacion)
+                    .HasConstraintName("FK_tllr_acce_tbVentas_vent_UserModificacion");
             });
 
             OnModelCreatingPartial(modelBuilder);

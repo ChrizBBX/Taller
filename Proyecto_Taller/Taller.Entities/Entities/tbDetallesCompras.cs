@@ -21,6 +21,8 @@ namespace Taller.Entities.Entities
         public DateTime? deco_FechaModificacion { get; set; }
 
         public virtual tbCompras comp { get; set; }
+        public virtual tbUsuarios deco_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios deco_UserModificacionNavigation { get; set; }
         public virtual tbRepuestos resp { get; set; }
     }
 }

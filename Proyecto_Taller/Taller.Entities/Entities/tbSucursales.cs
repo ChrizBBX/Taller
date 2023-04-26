@@ -10,6 +10,7 @@ namespace Taller.Entities.Entities
     {
         public tbSucursales()
         {
+            tbEmpleados = new HashSet<tbEmpleados>();
             tbVentas = new HashSet<tbVentas>();
         }
 
@@ -26,6 +27,7 @@ namespace Taller.Entities.Entities
         public virtual tbMunicipios muni { get; set; }
         public virtual tbUsuarios sucu_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios sucu_UserModificacionNavigation { get; set; }
+        public virtual ICollection<tbEmpleados> tbEmpleados { get; set; }
         public virtual ICollection<tbVentas> tbVentas { get; set; }
     }
 }

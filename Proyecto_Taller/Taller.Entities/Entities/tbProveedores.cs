@@ -15,6 +15,7 @@ namespace Taller.Entities.Entities
         }
 
         public int prov_ID { get; set; }
+        public string prov_Rut { get; set; }
         public string prov_Nombre { get; set; }
         public string prov_CorreoElectronico { get; set; }
         public string prov_Telefono { get; set; }

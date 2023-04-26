@@ -28,6 +28,8 @@ namespace Taller.Entities.Entities
 
         public virtual tbMarcas marc { get; set; }
         public virtual tbProveedores prov { get; set; }
+        public virtual tbUsuarios resp_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios resp_UserModificacionNavigation { get; set; }
         public virtual ICollection<tbDetallesCompras> tbDetallesCompras { get; set; }
         public virtual ICollection<tbDetallesventas> tbDetallesventas { get; set; }
     }

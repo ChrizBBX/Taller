@@ -19,11 +19,13 @@ namespace Taller.Entities.Entities
         public decimal? comp_Descuento { get; set; }
         public decimal comp_MontoFinal { get; set; }
         public bool? comp_Estado { get; set; }
-        public int usua_IdCreacion { get; set; }
+        public int comp_UserCreacion { get; set; }
         public DateTime? comp_FechaCreacion { get; set; }
-        public int? usua_IdModificacion { get; set; }
+        public int? comp_UserModificacion { get; set; }
         public DateTime? comp_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios comp_UserCreacionNavigation { get; set; }
+        public virtual tbUsuarios comp_UserModificacionNavigation { get; set; }
         public virtual tbProveedores prov { get; set; }
         public virtual ICollection<tbDetallesCompras> tbDetallesCompras { get; set; }
     }

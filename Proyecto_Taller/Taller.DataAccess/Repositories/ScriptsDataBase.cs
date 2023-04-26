@@ -8,5 +8,6 @@ namespace Taller.DataAccess.Repositories
 {
     public class ScriptsDataBase
     {
+        public static string UDP_Usuarios_Select = "acce.UDP_tbUsuarios_VW";
     }
 }
