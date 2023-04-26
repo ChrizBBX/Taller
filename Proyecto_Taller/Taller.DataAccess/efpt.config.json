@@ -1,0 +1,117 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "TallerContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "Taller.DataAccess",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[acce].[tbPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[acce].[tbPantallasPorRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[acce].[tbRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[acce].[tbUsuarios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbDepartamentos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbMetodosPago]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbMunicipios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbClientePorVehiculo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbClientes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbCompras]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbDetallesCompras]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbDetallesventas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbMarcas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbModelos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbProveedores]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbRepuestos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbServicios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbSucursales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbVehiculos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[tllr].[tbVentas]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "DESKTOP-IU26N4Q\\SQLEXPRESSLOCAL.Taller",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
