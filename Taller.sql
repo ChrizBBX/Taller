@@ -586,7 +586,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbClientes
 AS
-SELECT clie_ID, vehi_ID, 
+SELECT clie_ID,
 clie_Nombres, clie_Apellidos, 
 clie_Sexo, clie_FechaNacimiento, 
 clie_Telefono, clie_CorreoElectronico, 
