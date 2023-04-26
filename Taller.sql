@@ -443,3 +443,358 @@ CREATE TABLE tllr.tbEmpleados(
 	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserUpdate					FOREIGN KEY(empe_UsuModificacion)			REFERENCES acce.tbUsuarios(user_Id),
 	CONSTRAINT FK_maqu_tbEmpleados_maqu_tbSucursales_sucu_Id					FOREIGN KEY(sucu_Id)						REFERENCES tllr.tbSucursales(sucu_Id)		
 );
+
+
+/*Insertar Usuarios*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_acce_tbUsuarios_Insert
+	@user_NombreUsuario NVARCHAR(150),
+	@user_Contrasena NVARCHAR(MAX),
+	@user_EsAdmin BIT,
+	@role_Id INT, 
+	@empe_Id INT,
+	@user_usuCreacion INT
+AS 
+BEGIN
+	
+	BEGIN TRY
+		
+		DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @user_Contrasena));
+
+		IF NOT EXISTS (SELECT * FROM acce.tbUsuarios
+						WHERE @user_NombreUsuario = user_NombreUsuario)
+		BEGIN
+			INSERT INTO acce.tbUsuarios
+			VALUES(@user_NombreUsuario,@password,@user_EsAdmin,@role_Id,@empe_Id,@user_usuCreacion,GETDATE(),NULL,NULL,1)
+
+			SELECT 1
+		END
+		ELSE IF EXISTS (SELECT * FROM acce.tbUsuarios
+						WHERE @user_NombreUsuario = user_NombreUsuario
+							  AND user_Estado = 1)
+			SELECT 2
+		ELSE
+			BEGIN
+				UPDATE acce.tbUsuarios
+				SET user_Estado = 1,
+					user_Contrasena = @password,
+					user_EsAdmin = @user_EsAdmin,
+					role_Id = @role_Id,
+					empe_Id = @empe_Id
+				WHERE user_NombreUsuario = @user_NombreUsuario
+
+				SELECT 1
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH 
+END
+
+--Iniciar sesion
+GO
+CREATE OR ALTER PROCEDURE UDP_Login
+	@user_Nombre NVARCHAR(100), @user_Contrasena NVARCHAR(200)
+AS
+BEGIN
+
+	DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena);
+
+	SELECT [user_Id], [user_NombreUsuario], [role_Id],empe.sucu_Id
+	FROM [acce].[tbUsuarios] [user] INNER JOIN tllr.tbEmpleados empe
+	ON [user].empe_ID = empe.empe_Id
+	WHERE [user_Contrasena] = @contraEncriptada
+	AND [user_NombreUsuario] = @user_Nombre
+	AND [user_Estado] = 1
+END
+GO
+
+/*Usuarios*/
+
+/*Usuarios View*/
+GO
+CREATE VIEW acce.VW_tbUsuarios 
+AS
+SELECT [user].user_ID, [user].user_NombreUsuario, 
+[user].user_Contrasena, [user].user_EsAdmin, 
+[user].role_ID, [user].empe_ID, 
+[user].user_UserCreacion,[user1].user_NombreUsuario AS user_UserCreacion_Nombre, [user].user_FechaCreacion, 
+[user].user_UserModificacion,[user2].user_NombreUsuario AS user_UserModificacion_Nombre,[user].user_FechaModificacion, 
+[user].user_Estado
+FROM [acce].[tbUsuarios] [user] INNER JOIN acce.tbUsuarios [user1]
+ON [user].user_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON [user].user_UserModificacion = user2.user_ID
+WHERE [user].user_Estado = 1
+
+/*Usuarios View UDP*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_VW
+AS
+BEGIN
+SELECT * FROM acce.VW_tbUsuarios 
+END
+
+/*Estados Civiles*/
+
+/*Estados Civiles View*/
+GO
+CREATE VIEW gral.VW_tbEstadosCiviles
+AS
+SELECT estacivi_ID, estacivi_Nombre, 
+estacivi_UserCreacion,[user1].user_NombreUsuario AS estacivi_UserCreacion_Nombre, estacivi_FechaCreacion, 
+estacivi_UserModificacion,[user2].user_NombreUsuario AS estacivi_UserModificacion_Nombre, estacivi_FechaModificacion, 
+estacivi_Estado
+FROM [gral].[tbEstadosCiviles] estacivi INNER JOIN acce.tbUsuarios [user1]
+ON estacivi.estacivi_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON estacivi.estacivi_UserModificacion = user2.user_ID
+WHERE estacivi.estacivi_Estado = 1
+
+/*Estados Civiles UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_VW
+AS
+BEGIN
+SELECT * FROM gral.VW_tbEstadosCiviles
+END
+
+/*Metodos de Pago*/
+
+/*Metodos de pago View*/
+GO
+CREATE VIEW gral.VW_tbMetodosPago
+AS
+SELECT meto_ID, meto_Nombre,
+meto_UserCreacion,[user1].user_NombreUsuario AS meto_UserCreacion_Nombre, meto_FechaCreacion, 
+meto_UserModificacion,[user2].user_NombreUsuario AS meto_UserModificacion_Nombre, meto_FechaModificacion, 
+meto_Estado
+FROM [gral].[tbMetodosPago] meto INNER JOIN acce.tbUsuarios [user1]
+ON meto.meto_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON meto.meto_UserModificacion = user2.user_ID
+WHERE meto_Estado = 1
+
+/*Metodos de pago View UDP*/
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_tbMetodosPago_VW
+AS
+BEGIN
+SELECT * FROM gral.VW_tbMetodosPago
+END
+
+/*Clientes*/
+
+/*Clientes View*/
+GO
+CREATE VIEW tllr.VW_tbClientes
+AS
+SELECT clie_ID, vehi_ID, 
+clie_Nombres, clie_Apellidos, 
+clie_Sexo, clie_FechaNacimiento, 
+clie_Telefono, clie_CorreoElectronico, 
+muni_ID, clie_FechaCreacion, 
+clie_UserCreacion,[user1].user_NombreUsuario AS clie_UserCreacion_Nombre, clie_FechaModificacion, 
+clie_UserModificacion,[user2].user_NombreUsuario AS clie_UserModificacion_Nombre, clie_Estado
+FROM [tllr].[tbClientes] clie INNER JOIN acce.tbUsuarios [user1]
+ON clie.clie_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON clie.clie_UserModificacion = user2.user_ID
+WHERE clie_Estado = 1
+
+/*Clientes View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbClientes
+END
+
+/*Marcas*/
+
+/*Marcas View*/
+GO
+CREATE VIEW tllr.VW_tbMarcas
+AS
+SELECT marc_ID, marc_Nombre, 
+marc_FechaCreacion, marc_UserCreacion,[user1].user_NombreUsuario AS marc_UserCreacion_Nombre, 
+marc_FechaModificacion, marc_UserModificacion,[user1].user_NombreUsuario AS marc_UserModificacion_Nombre, 
+marc_Estado 
+FROM [tllr].[tbMarcas] marc INNER JOIN acce.tbUsuarios [user1]
+ON marc.marc_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON marc.marc_UserModificacion = user2.user_ID
+WHERE marc_Estado = 1
+
+/*Marcas View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbMarcas
+END
+
+/*Modelos*/
+
+/*Modelos View*/
+GO
+CREATE VIEW tllr.VW_Modelos
+AS
+SELECT mode_ID, mode.marc_ID,marc.marc_Nombre, 
+mode_Nombre, mode_FechaCreacion, 
+mode_UserCreacion,[user1].user_NombreUsuario AS mode_UserCreacion_Nombre, mode_FechaModificacion, 
+mode_UserModificacion,[user2].user_NombreUsuario AS mode_UserModificaciones_Nombre, mode_Estado 
+FROM [tllr].[tbModelos] mode INNER JOIN acce.tbUsuarios [user1]
+ON mode.mode_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON mode.mode_UserModificacion = user2.user_ID INNER JOIN tllr.tbMarcas marc 
+ON mode.marc_ID = marc.marc_ID
+WHERE mode_Estado = 1
+
+/*Modelos View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbModelos_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_Modelos
+END
+
+/*Proveedores*/
+
+
+/*Provedores View*/
+GO
+CREATE VIEW tllr.VW_tbProveedores
+AS
+SELECT prov_ID, prov_Nombre, 
+prov_CorreoElectronico, prov_Telefono, 
+prov_Dirrecion, prov_UserCreacion,[user1].user_NombreUsuario AS prov_UserCreacion_Nombre, 
+prov_FechaCreacion, prov_UserModificacion,[user2].user_NombreUsuario AS prov_UserModificacion_Nombre, 
+prov_FechaModificacion, prov_Estado  
+FROM [tllr].[tbProveedores] prov INNER JOIN acce.tbUsuarios [user1]
+ON prov.prov_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON prov.prov_UserModificacion = user2.user_ID
+WHERE prov_Estado = 1
+
+/*Proveedores View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbProveedores
+END
+
+/*Repuestos*/
+
+/*Repuestos View*/
+GO
+CREATE VIEW tllr.VW_tbRepuestos
+AS
+SELECT resp_ID, resp_Descripcion, 
+resp_Precio, resp.prov_ID,prov_Nombre, 
+resp.marc_ID,marc.marc_Nombre, resp_Anio, 
+resp_FechaCreacion, resp_UserCreacion,[user1].user_NombreUsuario AS resp_UserCreacion_Nombre, 
+resp_FechaModificacion, resp_UserModificacion,[user2].user_NombreUsuario AS resp_UserModificacion_Nombre, 
+resp_Estado 
+FROM [tllr].[tbRepuestos] resp INNER JOIN acce.tbUsuarios [user1]
+ON resp.resp_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON resp.resp_UserModificacion = user2.user_ID INNER JOIN tllr.tbProveedores prov
+ON prov.prov_ID = resp.prov_ID INNER JOIN tllr.tbMarcas marc
+ON resp.marc_ID = marc.marc_ID
+WHERE resp_Estado = 1 
+
+/*Repuestos View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbRepuestos_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbRepuestos
+END
+
+/*Servicios*/
+
+/*Servicios View*/
+GO
+CREATE VIEW tllr.VW_tbServicios
+AS
+SELECT serv_ID, serv_Descripcion, 
+serv_FechaCreacion, serv_UserCreacion,[user1].user_NombreUsuario AS serv_UserCreacion_Nombre, 
+serv_FechaModificacion, serv_UserModificacion,[user2].user_NombreUsuario AS serv_UserModificacion_Nombre, 
+serv_Estado 
+FROM [tllr].[tbServicios] serv INNER JOIN acce.tbUsuarios [user1]
+ON serv.serv_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON serv.serv_UserModificacion = user2.user_ID
+
+/*Servicios View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_VW
+AS
+SELECT * FROM tllr.VW_tbServicios
+
+/*Sucursales*/
+
+/*Sucursales View*/
+GO
+CREATE VIEW tllr.VW_tbSucursales
+AS
+SELECT sucu_ID, sucu_Descripcion, 
+sucu.muni_ID,muni.muni_Nombre, sucu_DireccionExacta, 
+sucu_FechaCreacion, sucu_UserCreacion,[user1].user_NombreUsuario AS sucu_UserCreacion_Nombre, 
+sucu_FechaModificacion, sucu_UserModificacion,[user2].user_NombreUsuario AS sucu_UserModificacion_Nombre, 
+sucu_Estado 
+FROM [tllr].[tbSucursales] sucu INNER JOIN acce.tbUsuarios [user1]
+ON sucu.sucu_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON sucu.sucu_UserModificacion = user2.user_ID INNER JOIN gral.tbMunicipios muni
+ON sucu.muni_ID = muni.muni_ID 
+
+/*Sucursales View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbSucursales
+END
+
+/*Vehiculos*/
+
+/*Vehiculos View*/
+GO
+CREATE VIEW tllr.VW_tbVehiculos
+AS
+SELECT vehi_ID, vehi.mode_ID,mode.mode_Nombre, 
+vehi_Matricula, 
+vehi_anio, vehi_FechaCreacion, 
+vehi_UserCreacion,[user1].user_NombreUsuario AS vehi_UserCreacion_Nombre, vehi_FechaModificacion, 
+vehi_UserModificacion,[user2].user_NombreUsuario AS vehi_UserModificacion_Nombre, vehi_Estado
+FROM [tllr].[tbVehiculos] vehi INNER JOIN acce.tbUsuarios [user1]
+ON vehi.vehi_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON vehi.vehi_UserModificacion = user2.user_ID INNER JOIN tllr.tbModelos mode
+ON vehi.mode_ID = mode.mode_ID
+WHERE vehi_Estado = 1
+
+/*Vehiculos View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbVehiculos
+END
+
+/*Ventas*/
+
+/*Ventas View*/
+GO
+CREATE VIEW tllr.VW_tbVentas
+AS
+SELECT vent_Id, vent_Fecha, 
+vent.clie_ID,clie.clie_Nombres, vent_Descuento, 
+vent_MontoFinal, vent.sucu_ID,sucu.sucu_Descripcion, 
+vent_UserCreacion,[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, vent_FechaCreacion, 
+vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion
+FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
+ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
+ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
+ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
+ON vent.sucu_ID = sucu.sucu_ID
+
+/*Ventas View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbVentas
+END
