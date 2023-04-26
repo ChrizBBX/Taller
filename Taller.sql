@@ -1,6 +1,5 @@
---DROP DATEBASE Taller
+--DROP DATABASE Taller
 CREATE DATABASE Taller
-
 GO
 USE Taller
 GO
@@ -157,7 +156,6 @@ CREATE TABLE gral.tbMetodosPago
 	meto_UserModificacion	INT,
 	meto_FechaModificacion	DATETIME,
 	meto_Estado				BIT NOT NULL CONSTRAINT DF_meto_Estado DEFAULT(1)
-
 	CONSTRAINT PK_tllr_tbMetodosPago_meto_ID 													PRIMARY KEY(meto_ID),
 	CONSTRAINT FK_tllr_tbMetodosPago_acce_tbUsuarios_meto_UserCreacion_user_ID  				FOREIGN KEY(meto_UserCreacion) 			REFERENCES acce.tbUsuarios(user_ID),
 	CONSTRAINT FK_tllr_tbMetodosPago_acce_tbUsuarios_meto_UserModificacion_user_ID  			FOREIGN KEY(meto_UserModificacion) 		REFERENCES acce.tbUsuarios(user_ID)
@@ -251,7 +249,6 @@ CONSTRAINT FK_tllr_acce_mode_UserModificacion FOREIGN KEY (mode_UserModificacion
 CREATE TABLE tllr.tbVehiculos
 (
 vehi_ID INT IDENTITY (1,1),
-clie_Id INT NOT NULL,
 mode_ID INT NOT NULL,
 vehi_Matricula VARCHAR(7),
 vehi_anio VARCHAR(4),
@@ -270,7 +267,6 @@ CONSTRAINT FK_tllr_acce_tbVehiculos_vehi_UserModificacion FOREIGN KEY (vehi_User
 CREATE TABLE tllr.tbClientes
 (
 	clie_ID INT IDENTITY (1,1),
-	vehi_ID INT NOT NULL,
 	clie_Nombres NVARCHAR(500) NOT NULL,
 	clie_Apellidos NVARCHAR(500) NOT NULL,
 	clie_Sexo CHAR NOT NULL,
@@ -285,15 +281,10 @@ CREATE TABLE tllr.tbClientes
 	clie_Estado BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT PK_tllr_tbClientes_clie_ID PRIMARY KEY (clie_ID),
-CONSTRAINT FK_tllr_tbClientes_vehi_ID FOREIGN KEY (vehi_ID) REFERENCES tllr.tbVehiculos (vehi_ID),
 CONSTRAINT FK_tllr_gral_tbClientes_muni_ID FOREIGN KEY (muni_ID) REFERENCES gral.tbMunicipios (muni_ID),
 CONSTRAINT FK_tllr_acce_tbClientes_clie_UserCreacion FOREIGN KEY (clie_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
 CONSTRAINT FK_tllr_acce_tbClientes_clie_UserModificacion FOREIGN KEY (clie_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 )
-
-/*Añadir constraint de vehiculos con cliente*/
-ALTER TABLE tllr.tbVehiculos
-ADD CONSTRAINT FK_tllr_tbVehiculos_clie_ID FOREIGN KEY (clie_ID) REFERENCES tllr.tbClientes (clie_ID)
 
 CREATE TABLE tllr.tbRepuestos(
      resp_ID           INT IDENTITY(1,1),
@@ -309,7 +300,9 @@ CREATE TABLE tllr.tbRepuestos(
  	 resp_Estado BIT NOT NULL DEFAULT 1
 	 CONSTRAINT PK_tllr_tbRepuestos_resp_ID PRIMARY KEY (resp_ID),
 	 CONSTRAINT FK_tllr_tRepuestos_prov_ID_tllr_tbProveedores FOREIGN KEY (prov_ID) REFERENCES tllr.tbProveedores(prov_ID),
-	 CONSTRAINT FK_tllr_tRepuestos_marc_ID_tllr_tbMarcas FOREIGN KEY (marc_ID) REFERENCES tllr.tbMarcas(marc_ID)
+	 CONSTRAINT FK_tllr_tRepuestos_marc_ID_tllr_tbMarcas FOREIGN KEY (marc_ID) REFERENCES tllr.tbMarcas(marc_ID),
+	 CONSTRAINT FK_tllr_acce_tbRepuestos_resp_UserCreacion FOREIGN KEY (resp_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+     CONSTRAINT FK_tllr_acce_tbRepuestos_resp_UserModificacion FOREIGN KEY (resp_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 
 
@@ -321,7 +314,9 @@ CREATE TABLE tllr.tbServicios(
 	 serv_FechaModificacion   DATETIME,
 	 serv_UserModificacion    INT,
 	 serv_Estado              BIT NOT NULL DEFAULT 1
-	CONSTRAINT PK_serv_ID_tllr_tbServicios PRIMARY KEY (serv_ID)  
+	CONSTRAINT PK_serv_ID_tllr_tbServicios PRIMARY KEY (serv_ID),
+	CONSTRAINT FK_tllr_acce_tbServicios_serv_UserCreacion FOREIGN KEY (serv_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+    CONSTRAINT FK_tllr_acce_tbServicios_serv_UserModificacion FOREIGN KEY (serv_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 
 --TABLA VENTAS
@@ -338,7 +333,9 @@ CREATE TABLE tllr.tbVentas(
 	vent_FechaModificacion  DATETIME
 	CONSTRAINT PK_tllr_tbVentas_vent_Id PRIMARY KEY (vent_Id)
     CONSTRAINT FK_tllr_tbVentas_clie_Id_ABRR_tbClientes_clie_Id FOREIGN KEY (clie_ID) REFERENCES tllr.tbClientes(clie_ID),
-	CONSTRAINT FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id FOREIGN KEY (sucu_ID) REFERENCES tllr.tbSucursales(sucu_ID)
+	CONSTRAINT FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id FOREIGN KEY (sucu_ID) REFERENCES tllr.tbSucursales(sucu_ID),
+	CONSTRAINT FK_tllr_acce_tbVentas_vent_UserCreacion FOREIGN KEY (vent_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+    CONSTRAINT FK_tllr_acce_tbVentas_vent_UserModificacion FOREIGN KEY (vent_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 GO
 
@@ -358,7 +355,9 @@ CREATE TABLE tllr.tbDetallesventas(
    CONSTRAINT PK_tllr_tbDetallesventas_deve_ID PRIMARY KEY (deve_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_serv_ID_tllr_tbServicios_serv_ID FOREIGN KEY (serv_ID) REFERENCES tllr.tbServicios(serv_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_vent_ID_tllr_tbVentas_vent_ID FOREIGN KEY (vent_ID) REFERENCES tllr.tbVentas(vent_ID),
-   CONSTRAINT FK_tllr_tbDetallesventas_resp_ID_tllr_tbVentas_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID)
+   CONSTRAINT FK_tllr_tbDetallesventas_resp_ID_tllr_tbVentas_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID),
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserCreacion FOREIGN KEY (deve_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserModificacion FOREIGN KEY (deve_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 GO
 
@@ -369,12 +368,14 @@ CREATE TABLE tllr.tbCompras(
    comp_Descuento			DECIMAL(18,2),
    comp_MontoFinal          DECIMAL (18,2) NOT NULL,
    comp_Estado              BIT DEFAULT 1,
-   usua_IdCreacion			INT NOT NULL,
+   comp_UserCreacion	    INT NOT NULL,
    comp_FechaCreacion       DATETIME DEFAULT GETDATE(),
-   usua_IdModificacion		INT,
+   comp_UserModificacion	INT,
    comp_FechaModificacion   DATETIME
    CONSTRAINT PK_tllr_tbCompras_comp_ID PRIMARY KEY (comp_ID),
-   CONSTRAINT FK_tllr_tbCompras_tllr_tbProveedores_prov_ID FOREIGN KEY (prov_ID) REFERENCES tllr.tbProveedores(prov_ID)
+   CONSTRAINT FK_tllr_tbCompras_tllr_tbProveedores_prov_ID FOREIGN KEY (prov_ID) REFERENCES tllr.tbProveedores(prov_ID),
+   CONSTRAINT FK_tllr_acce_tbCompras_comp_UserCreacion FOREIGN KEY (comp_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+   CONSTRAINT FK_tllr_acce_tbCompras_comp_UserModificacion FOREIGN KEY (comp_UserModificacion) REFERENCES acce.tbUsuarios (user_ID) 
 );
 GO
 
@@ -392,7 +393,9 @@ CREATE TABLE tllr.tbDetallesCompras(
 	deco_FechaModificacion  DATETIME
 	CONSTRAINT PK_tllr_tbDetallesCompras_deco_ID PRIMARY KEY (deco_ID),
 	CONSTRAINT FK_tllr_tbDetallesCompras_comp_ID_tllr_tbCompras_comp_ID FOREIGN KEY (comp_ID) REFERENCES tllr.tbCompras (comp_ID),
-    CONSTRAINT FK_tllr_tbDetallesCompras_resp_ID_tllr_tbCompras_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID)
+    CONSTRAINT FK_tllr_tbDetallesCompras_resp_ID_tllr_tbCompras_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID),
+	CONSTRAINT FK_tllr_acce_tbDetallesCompras_deco_UserCreacion FOREIGN KEY (deco_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+    CONSTRAINT FK_tllr_acce_tbDetallesCompras_deco_UserModificacion FOREIGN KEY (deco_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 GO
 
@@ -408,4 +411,34 @@ CREATE TABLE tllr.tbClientePorVehiculo(
 	CONSTRAINT PK_clvh_ID_tllr_tbClientePorVehiculo PRIMARY KEY (clvh_ID),
 	CONSTRAINT FK_clvh_ID_tllr_tbClientePorVehiculo_clie_ID_tbClientes FOREIGN KEY (clie_ID) REFERENCES tllr.tbClientes(clie_ID),
     CONSTRAINT FK_clvh_ID_tllr_tbClientePorVehiculo_vehi_ID_tbVehiculos FOREIGN KEY (vehi_ID) REFERENCES tllr.tbVehiculos(vehi_ID),
+	CONSTRAINT FK_tllr_acce_tbClientePorVehiculo_clvh_UserCreacion FOREIGN KEY (clvh_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
+    CONSTRAINT FK_tllr_acce_tbClientePorVehiculo_clvh_UserModificacion FOREIGN KEY (clvh_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
+);
+
+CREATE TABLE tllr.tbEmpleados(
+	empe_Id						INT IDENTITY(1,1),
+	empe_Nombres				NVARCHAR(100)	NOT NULL,
+	empe_Apellidos				NVARCHAR(100)	NOT NULL,
+	empe_Identidad				VARCHAR(13)		NOT NULL,
+	empe_FechaNacimiento		DATE			NOT NULL,
+	empe_Sexo					CHAR(1)			NOT NULL,
+	estacivi_Id					INT				NOT NULL,
+	muni_Id						CHAR(4)			NOT NULL,
+	empe_Direccion				NVARCHAR(250)	NOT NULL,
+	empe_Telefono				NVARCHAR(15)	NOT NULL,
+	empe_CorreoElectronico		NVARCHAR(200)	NOT NULL,
+	sucu_Id						INT				NOT NULL,
+	empe_UsuCreacion			INT				NOT NULL,
+	empe_FechaCreacion			DATETIME		NOT NULL CONSTRAINT DF_empe_FechaCreacion DEFAULT(GETDATE()),
+	empe_UsuModificacion		INT,
+	empe_FechaModificacion		DATETIME,
+	empe_Estado					BIT NOT NULL CONSTRAINT DF_empe_Estado DEFAULT(1),
+	
+	CONSTRAINT PK_maqu_tbEmpleados_empe_Id 										PRIMARY KEY(empe_Id),
+	CONSTRAINT CK_maqu_tbEmpleados_empe_Sexo									CHECK(empe_sexo IN ('F', 'M')),
+	CONSTRAINT FK_maqu_tbEmpleados_gral_tbEstadosCiviles_estacivi_Id			FOREIGN KEY(estacivi_Id)					REFERENCES gral.tbEstadosCiviles(estacivi_Id),			
+	CONSTRAINT FK_maqu_tbEmpleados_gral_tbMunicipios_muni_Id					FOREIGN KEY(muni_Id)						REFERENCES gral.tbMunicipios(muni_Id),
+	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserCreate					FOREIGN KEY(empe_UsuCreacion)				REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT FK_maqu_tbEmpleados_acce_tbUsuarios_UserUpdate					FOREIGN KEY(empe_UsuModificacion)			REFERENCES acce.tbUsuarios(user_Id),
+	CONSTRAINT FK_maqu_tbEmpleados_maqu_tbSucursales_sucu_Id					FOREIGN KEY(sucu_Id)						REFERENCES tllr.tbSucursales(sucu_Id)		
 );
