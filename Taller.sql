@@ -179,6 +179,7 @@ CREATE TABLE gral.tbEstadosCiviles
 CREATE TABLE tllr.tbProveedores
 (
 	prov_ID						INT IDENTITY,
+	prov_Rut				    VARCHAR(14) NOT NULL,
 	prov_Nombre					NVARCHAR(200) NOT NULL,
 	prov_CorreoElectronico      NVARCHAR(200) NOT NULL,
 	prov_Telefono				NVARCHAR(15)NOT NULL,
