@@ -20,6 +20,7 @@ namespace Taller.BusinessLogic.Services
         private readonly ClientesRepository _clientesRepository;
         private readonly MarcasRepository _marcasRepository;
         private readonly EmpleadosRepository _empleadosRepository;
+        private readonly ComprasRepository _comprasRepository;
 
 
 
@@ -32,7 +33,8 @@ namespace Taller.BusinessLogic.Services
             ModelosRepository modelosrepository,
             ClientesRepository clientesRepository, 
             MarcasRepository marcasRepository,
-            EmpleadosRepository empleadosRepository)
+            EmpleadosRepository empleadosRepository,
+            ComprasRepository comprasRepository)
         {
             _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
@@ -44,9 +46,10 @@ namespace Taller.BusinessLogic.Services
             _clientesRepository = clientesRepository;
             _marcasRepository = marcasRepository;
             _empleadosRepository = empleadosRepository;
+            _comprasRepository = comprasRepository;
         }
 
-        #region
+        #region Empleados
         public IEnumerable<VW_tbEmpleados> ListadoEmpleados()
         {
             try
@@ -61,6 +64,7 @@ namespace Taller.BusinessLogic.Services
         }
         #endregion
 
+        #region Clientes
         public IEnumerable<VW_tbClientes> ListadoClientes()
         {
             try
@@ -73,8 +77,9 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbClientes>();
             }
         }
+        #endregion
 
-
+        #region Marcas
         public IEnumerable<VW_tbMarcas> ListadoMarcas()
         {
             try
@@ -88,6 +93,7 @@ namespace Taller.BusinessLogic.Services
             }
 
         }
+        #endregion
 
         #region Ventas
         public IEnumerable<VW_tbVentas> ListadoVentas()
@@ -190,6 +196,21 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_Modelos>();
+            }
+        }
+        #endregion
+
+        #region Compras
+        public IEnumerable<VW_tbCompras> ListadoCompras()
+        {
+            try
+            {
+                return _comprasRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbCompras>();
             }
         }
         #endregion

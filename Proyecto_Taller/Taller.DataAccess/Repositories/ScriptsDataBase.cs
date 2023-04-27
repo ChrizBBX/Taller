@@ -61,6 +61,9 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
         public static string UDP_tbEmpleados_VW = "tllr.UDP_tbEmpleados_VW";
         #endregion
 
+        #region Compras
+        public static string UDP_tbCompras_VW = "tllr.UDP_tbCompras_VW";
+        #endregion
 
 
     }

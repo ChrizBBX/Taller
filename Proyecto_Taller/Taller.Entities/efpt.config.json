@@ -122,6 +122,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[tllr].[VW_tbCompras]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[tllr].[VW_tbEmpleados]",
          "ObjectType": 3
       },
