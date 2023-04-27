@@ -15,6 +15,13 @@ namespace Taller.BusinessLogic
         public static void DataAccess(this IServiceCollection services, string connection)
         {
             services.AddScoped<UsuariosRepository>();
+            services.AddScoped<VentasRepository>();
+            services.AddScoped<VehiculosRepository>();
+            services.AddScoped<SucursalesRepository>();
+            services.AddScoped<ServiciosRepository>();
+            services.AddScoped<RepuestosRepository>();
+            services.AddScoped<ProveedoresRepository>();
+            services.AddScoped<ModelosRepository>();
             TallerMecanicoContext.BuildConnectionString(connection);
 
         }
@@ -22,6 +29,7 @@ namespace Taller.BusinessLogic
         public static void BusinnesLogic(this IServiceCollection services)
         {
             services.AddScoped<AccesoServices>();
+            services.AddScoped<TallerServices>();
         }
     }
 }

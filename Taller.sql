@@ -798,3 +798,32 @@ AS
 BEGIN
 SELECT * FROM tllr.VW_tbVentas
 END
+
+/*Empleados*/
+/*Empelados View*/
+GO
+CREATE VIEW tllr.VW_tbEmpleados
+AS
+SELECT empe.[empe_Id], [empe_Nombres], 
+[empe_Apellidos], [empe_Identidad], 
+[empe_FechaNacimiento], [empe_Sexo], 
+empe.[estacivi_ID],estacivi.estacivi_Nombre, empe.[muni_Id],muni.muni_Nombre,
+[empe_Direccion], [empe_Telefono], 
+[empe_CorreoElectronico], empe.[sucu_Id],sucu.sucu_Descripcion, 
+[empe_UsuCreacion],[user1].user_NombreUsuario AS empe_UserCreacion_Nombre, [empe_FechaCreacion], 
+[empe_UsuModificacion],[user2].user_NombreUsuario AS empe_UserModificacion_Nombre, [empe_FechaModificacion], 
+[empe_Estado] 
+FROM [tllr].[tbEmpleados] empe INNER JOIN acce.tbUsuarios [user1]
+ON empe.empe_UsuCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
+ON empe.empe_UsuModificacion = user2.user_ID INNER JOIN [gral].[tbEstadosCiviles] estacivi
+ON empe.[estacivi_ID] = estacivi.estacivi_ID INNER JOIN gral.tbMunicipios muni
+ON empe.muni_Id = muni.muni_ID INNER JOIN tllr.tbSucursales sucu
+ON empe.sucu_ID = sucu.sucu_ID
+
+/*Empleados View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleados_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbEmpleados
+END
