@@ -38,6 +38,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Prueba',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Typography',
     to: '/theme/typography',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
@@ -56,6 +62,11 @@ const _nav = [
         component: CNavItem,
         name: 'Accordion',
         to: '/base/accordion',
+      },
+      {
+        component: CNavItem,
+        name: 'Prueba',
+        to: '/prueba/prueba',
       },
       {
         component: CNavItem,
