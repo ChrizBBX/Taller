@@ -17,13 +17,18 @@ namespace Taller.BusinessLogic.Services
         private readonly RepuestosRepository _repuestosrepository;
         private readonly ProveedoresRepository _proveedoresrepository;
         private readonly ModelosRepository _modelosrepository;
+        private readonly ClientesRepository _clientesRepository;
+        private readonly MarcasRepository _marcasRepository;
+        
         public TallerServices(VentasRepository ventasrepository,
             VehiculosRepository vehiculosrepository,
             SucursalesRepository sucursalesrepository,
             ServiciosRepository serviciosrepository,
             RepuestosRepository repuestosrepository,
             ProveedoresRepository proveedoresrepository,
-            ModelosRepository modelosrepository)
+            ModelosRepository modelosrepository,
+            ClientesRepository clientesRepository, 
+            MarcasRepository marcasRepository)
         {
             _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
@@ -32,6 +37,36 @@ namespace Taller.BusinessLogic.Services
             _repuestosrepository = repuestosrepository;
             _proveedoresrepository = proveedoresrepository;
             _modelosrepository = modelosrepository;
+            _clientesRepository = clientesRepository;
+            _marcasRepository = marcasRepository;
+        }
+        
+        public IEnumerable<VW_tbClientes> ListadoClientes()
+        {
+            try
+            {
+                return _clientesRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbClientes>();
+            }
+        }
+
+
+        public IEnumerable<VW_tbMarcas> ListadoMarcas()
+        {
+            try
+            {
+                return _marcasRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbMarcas>();
+            }
+
         }
 
         #region Ventas

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dL+d8ZmoM4JvTGkRiJbz/vzRYjN5agWS41WP5fHbaVOBbnaN8V/p3+4pPSSEMymN64hEKsLNnsJj7rzk6J3bpg==",
+  "dgSpecHash": "Eynv5kNhOvPmXkWPu3baGR2Unp418mMHCDWFfjM2I5nUCeBDsVUGuRZxK4kIsK0eMZGUeyEXr1PIl0TS6b+grw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
+  "projectFilePath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LAB02\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\LAB02\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

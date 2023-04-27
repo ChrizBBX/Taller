@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "un/a5LnOV+HxyGlBj0QMaq8HKk9uUe22zwp49mPtVFBAe3y1RplP0JjPtbFsh0A0mLJhc+eXN1jD+9eoCY0MUQ==",
+  "dgSpecHash": "tY00Rs0fuVFK9Q/b4/P60cE7QqVBputIQOaOSC+hc3uZzeMz8QH+dg4jLW2H2IZAU4vSh5mlKO/3Y30ooN+CEg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LAB02\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\LAB02\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
