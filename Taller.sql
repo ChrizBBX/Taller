@@ -827,3 +827,44 @@ AS
 BEGIN
 SELECT * FROM tllr.VW_tbEmpleados
 END
+
+/*Compras*/
+
+/*Compras View*/
+GO
+CREATE VIEW tllr.VW_tbCompras
+AS
+SELECT [comp_ID], comp.[prov_ID],prov.prov_Nombre, 
+[comp_Fecha], [comp_Descuento], 
+[comp_MontoFinal], [comp_Estado], 
+[comp_UserCreacion],[user1].user_NombreUsuario AS comp_UserCreacion_Nombre, [comp_FechaCreacion], 
+[comp_UserModificacion],[user2].user_NombreUsuario AS comp_UserModificacion_Nombre, [comp_FechaModificacion] 
+FROM [tllr].[tbCompras] comp INNER JOIN acce.tbUsuarios [user1]
+ON comp.comp_UserCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
+ON comp.comp_UserModificacion = user2.user_ID INNER JOIN tllr.tbProveedores prov
+ON comp.prov_ID = prov.prov_ID
+
+/*Compras View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbCompras_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbCompras
+END
+
+/*Ventas*/
+
+--/*Ventas View*/
+--GO
+--CREATE VIEW tllr.VW_tbVentas
+--AS
+--SELECT [vent_Id], [vent_Fecha], 
+--vent.[clie_ID],clie.clie_Nombres, [vent_Descuento], 
+--[vent_MontoFinal], vent.[sucu_ID],sucu.sucu_Descripcion, 
+--[vent_UserCreacion],[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, [vent_FechaCreacion], 
+--[vent_UserModificacion],[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, [vent_FechaModificacion] 
+--FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
+--ON vent.vent_UserCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
+--ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
+--ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
+--ON vent.sucu_ID = sucu.sucu_ID

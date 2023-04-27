@@ -42,8 +42,8 @@ namespace Taller.API
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.SetIsOriginAllowed(origen => new Uri(origen).Host == "localhost")
-                    //builder.AllowAnyOrigin()
+                    builder.SetIsOriginAllowed(origen => new Uri(origen).Host == "localhost");
+                    builder.AllowAnyOrigin()
                    .AllowAnyMethod()
                    .AllowAnyHeader();
                 });
