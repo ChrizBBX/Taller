@@ -1,4 +1,4 @@
-using AutoMapper;
+    using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,11 +38,22 @@ namespace Taller.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Taller.API", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.SetIsOriginAllowed(origen => new Uri(origen).Host == "localhost")
+                    //builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

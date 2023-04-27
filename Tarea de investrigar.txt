@@ -1,3 +1,14 @@
 HOOK
 SEM
 SEO
+
+
+
+Manual Tecnico
+-Portada
+-Indice
+-Introduccion
+-control de versiones
+-Control de revision
+-Diagrama db 
+-Diccionario de datos

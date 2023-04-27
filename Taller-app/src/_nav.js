@@ -27,18 +27,22 @@ const _nav = [
     },
   },
   {
+    component: CNavItem,
+    name: 'Prueba',
+    to: '/prueba',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
+  },
+  {
     component: CNavTitle,
     name: 'Theme',
   },
   {
     component: CNavItem,
     name: 'Colors',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Prueba',
     to: '/theme/colors',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
@@ -62,11 +66,6 @@ const _nav = [
         component: CNavItem,
         name: 'Accordion',
         to: '/base/accordion',
-      },
-      {
-        component: CNavItem,
-        name: 'Prueba',
-        to: '/prueba/prueba',
       },
       {
         component: CNavItem,
