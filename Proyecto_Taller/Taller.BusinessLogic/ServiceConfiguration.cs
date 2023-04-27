@@ -26,6 +26,7 @@ namespace Taller.BusinessLogic
             services.AddScoped<MetodosPagoRepository>();
             services.AddScoped<ClientesRepository>();
             services.AddScoped<MarcasRepository>();
+            services.AddScoped<EmpleadosRepository>();
 
             TallerMecanicoContext.BuildConnectionString(connection);
 

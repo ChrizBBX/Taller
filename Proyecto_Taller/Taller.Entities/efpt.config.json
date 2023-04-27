@@ -122,6 +122,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[tllr].[VW_tbEmpleados]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[tllr].[VW_tbMarcas]",
          "ObjectType": 3
       },
@@ -150,7 +154,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "VJ7400.Proyecto-Taller",
+   "UiHint": "VJ7400.ProyectoTaller",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

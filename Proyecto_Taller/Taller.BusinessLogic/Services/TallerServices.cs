@@ -19,7 +19,10 @@ namespace Taller.BusinessLogic.Services
         private readonly ModelosRepository _modelosrepository;
         private readonly ClientesRepository _clientesRepository;
         private readonly MarcasRepository _marcasRepository;
-        
+        private readonly EmpleadosRepository _empleadosRepository;
+
+
+
         public TallerServices(VentasRepository ventasrepository,
             VehiculosRepository vehiculosrepository,
             SucursalesRepository sucursalesrepository,
@@ -28,7 +31,8 @@ namespace Taller.BusinessLogic.Services
             ProveedoresRepository proveedoresrepository,
             ModelosRepository modelosrepository,
             ClientesRepository clientesRepository, 
-            MarcasRepository marcasRepository)
+            MarcasRepository marcasRepository,
+            EmpleadosRepository empleadosRepository)
         {
             _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
@@ -39,8 +43,24 @@ namespace Taller.BusinessLogic.Services
             _modelosrepository = modelosrepository;
             _clientesRepository = clientesRepository;
             _marcasRepository = marcasRepository;
+            _empleadosRepository = empleadosRepository;
         }
-        
+
+        #region
+        public IEnumerable<VW_tbEmpleados> ListadoEmpleados()
+        {
+            try
+            {
+                return _empleadosRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbEmpleados>();
+            }
+        }
+        #endregion
+
         public IEnumerable<VW_tbClientes> ListadoClientes()
         {
             try

@@ -10,3 +10,15 @@ C:\Users\LAB02\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug
 C:\Users\LAB02\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.dll
 C:\Users\LAB02\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\ref\Taller.Entities.dll
 C:\Users\LAB02\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.pdb
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.deps.json
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.dll
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\ref\Taller.Entities.dll
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.pdb
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.csproj.AssemblyReference.cache
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.AssemblyInfoInputs.cache
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.AssemblyInfo.cs
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.csproj.CoreCompileInputs.cache
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.dll
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\ref\Taller.Entities.dll
+C:\Users\LAB02\Desktop\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.pdb
