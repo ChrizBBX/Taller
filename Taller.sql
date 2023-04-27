@@ -555,7 +555,7 @@ CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_VW
 AS
 BEGIN
 SELECT * FROM gral.VW_tbEstadosCiviles
-END
+END	
 
 /*Metodos de Pago*/
 

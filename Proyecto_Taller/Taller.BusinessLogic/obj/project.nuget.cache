@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OhO22Q2VsKQl15qeueCQ1AAue0m/01YdHaclevnOQcT2hWDNpfOQ+b0NCichhuSPvWqIGA1p1ISX8IvN3Xuh/g==",
+  "dgSpecHash": "rPtpNddQEJhS8lVGC4sCvgK4WRtVzKomdc87tU4/YcF/RGPRmoeMGBNFvyypxOR9ITy2OSRRAHL8JpUPbx6VwQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
+  "projectFilePath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LAB02\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\LAB02\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
