@@ -22,8 +22,6 @@ namespace Taller.BusinessLogic.Services
         private readonly EmpleadosRepository _empleadosRepository;
         private readonly ComprasRepository _comprasRepository;
 
-
-
         public TallerServices(VentasRepository ventasrepository,
             VehiculosRepository vehiculosrepository,
             SucursalesRepository sucursalesrepository,
