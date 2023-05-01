@@ -28,8 +28,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Prueba',
-    to: '/prueba',
+    name: 'Marcas',
+    to: '/marcas',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
