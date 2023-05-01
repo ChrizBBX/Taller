@@ -45,20 +45,16 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbEstadosCiviles_VW = "gral.UDP_tbEstadosCiviles_VW";
         #endregion
 
-#region MetodosPago
-     public static string UDP_tbMetodosPago_VW = "gral.UDP_tbMetodosPago_VW";
-#endregion
+        #region MetodosPago
+        public static string UDP_tbMetodosPago_VW = "gral.UDP_tbMetodosPago_VW";
+        #endregion
    
-
-#region  Clientes
+        #region  Clientes
 public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
 #endregion
         
-#region  Marcas
-public static string UDP_tbMarcas_VW = "tllr.UDP_tbModelos_VW";
-#endregion
-
-        
-
+        #region  Marcas
+        public static string UDP_tbMarcas_VW = "tllr.UDP_tbModelos_VW";
+        #endregion
     }
 }
