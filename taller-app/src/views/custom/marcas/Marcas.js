@@ -90,13 +90,13 @@ function Marcas() {
               onClick={() => handleSort('marc_ID')}
               style={{ cursor: 'pointer' }}
             >
-              ID
+              ID 
               {orderBy === 'marc_ID' &&
                 (order === 'asc' ? ' ▲' : ' ▼')}
             </TableCell>
             <TableCell
               onClick={() => handleSort('marc_Nombre')}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer' , color: 'black'}}
             >
               Nombre
               {orderBy === 'marc_Nombre' &&
