@@ -19,7 +19,9 @@ namespace Taller.BusinessLogic.Services
         private readonly ModelosRepository _modelosrepository;
         private readonly ClientesRepository _clientesRepository;
         private readonly MarcasRepository _marcasRepository;
-        
+        private readonly EmpleadosRepository _empleadosRepository;
+        private readonly ComprasRepository _comprasRepository;
+
         public TallerServices(VentasRepository ventasrepository,
             VehiculosRepository vehiculosrepository,
             SucursalesRepository sucursalesrepository,
@@ -28,7 +30,9 @@ namespace Taller.BusinessLogic.Services
             ProveedoresRepository proveedoresrepository,
             ModelosRepository modelosrepository,
             ClientesRepository clientesRepository, 
-            MarcasRepository marcasRepository)
+            MarcasRepository marcasRepository,
+            EmpleadosRepository empleadosRepository,
+            ComprasRepository comprasRepository)
         {
             _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
@@ -39,8 +43,26 @@ namespace Taller.BusinessLogic.Services
             _modelosrepository = modelosrepository;
             _clientesRepository = clientesRepository;
             _marcasRepository = marcasRepository;
+            _empleadosRepository = empleadosRepository;
+            _comprasRepository = comprasRepository;
         }
-        
+
+        #region Empleados
+        public IEnumerable<VW_tbEmpleados> ListadoEmpleados()
+        {
+            try
+            {
+                return _empleadosRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbEmpleados>();
+            }
+        }
+        #endregion
+
+        #region Clientes
         public IEnumerable<VW_tbClientes> ListadoClientes()
         {
             try
@@ -53,8 +75,9 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbClientes>();
             }
         }
+        #endregion
 
-
+        #region Marcas
         public IEnumerable<VW_tbMarcas> ListadoMarcas()
         {
             try
@@ -68,6 +91,7 @@ namespace Taller.BusinessLogic.Services
             }
 
         }
+        #endregion
 
         #region Ventas
         public IEnumerable<VW_tbVentas> ListadoVentas()
@@ -170,6 +194,21 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_Modelos>();
+            }
+        }
+        #endregion
+
+        #region Compras
+        public IEnumerable<VW_tbCompras> ListadoCompras()
+        {
+            try
+            {
+                return _comprasRepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbCompras>();
             }
         }
         #endregion
