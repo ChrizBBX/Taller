@@ -6,19 +6,19 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-function Repuestos() {
-  const [repuestos, setRepuestos] = useState([]);
-  const [sortModel, setSortModel] = useState([{ field: 'resp_ID', sort: 'asc' }]);
+function Ventas() {
+  const [ventas, setVentas] = useState([]);
+  const [sortModel, setSortModel] = useState([{ field: 'vent_Id', sort: 'asc' }]);
 
   useEffect(() => {
     axios
-      .get('http://proyectotaller.somee.com/api/Repuestos')
+      .get('http://proyectotaller.somee.com/api/Ventas')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
           ...row,
-          id: row.resp_ID,
+          id: row.vent_Id,
         }));
-        setRepuestos(insertarid);
+        setVentas(insertarid);
       })
       .catch((error) => {
         console.log(error);
@@ -30,12 +30,12 @@ function Repuestos() {
   };
 
   const columns = [
-    { field: 'resp_ID', headerName: 'ID', width: 1 },
-    { field: 'resp_Descripcion', headerName: 'Descripción', width: 400 },
-    { field: 'resp_Precio', headerName: 'Precio', width: 120 },
-    { field: 'prov_Nombre', headerName: 'Proveedor', width: 200 },
-    { field: 'marc_Nombre', headerName: 'Marca', width: 150 },
-    { field: 'resp_Anio', headerName: 'Año', width: 100 },
+    { field: 'vent_Id', headerName: 'ID', width: 100 },
+    { field: 'vent_Fecha', headerName: 'Fecha', width: 200 },
+    { field: 'clie_Nombres', headerName: 'Cliente', width: 250 },
+    { field: 'vent_Descuento', headerName: 'Descuento', width: 150 },
+    { field: 'vent_MontoFinal', headerName: 'Monto Final', width: 200 },
+    { field: 'sucu_Descripcion', headerName: 'Sucursal', width: 250 },
     {
       field: 'acciones',
       headerName: 'Acciones',
@@ -59,12 +59,12 @@ function Repuestos() {
   return (
     <div className="card">
       <div className="card-body">
-        <h1>Repuestos</h1>
+        <h1>Ventas</h1>
         <div className="btn btn-primary">Nuevo</div>
         <div className="container" style={{ height: 10 }}></div>
         <div style={{ flex: 1 }}>
           <DataGrid
-            rows={repuestos}
+            rows={ventas}
             columns={columns}
             sortModel={sortModel}
             onSortModelChange={handleSortModelChange}
@@ -79,4 +79,4 @@ function Repuestos() {
   );
 }
 
-export default Repuestos;
+export default Ventas;

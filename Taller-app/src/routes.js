@@ -10,6 +10,7 @@ const Sucursales = React.lazy(() => import('./views/custom/sucursales/Sucursales
 const Proveedores = React.lazy(() => import('./views/custom/proveedores/Proveedores'))
 const Repuestos = React.lazy(() => import('./views/custom/repuestos/Repuestos'))
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
+const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -64,6 +65,7 @@ const routes = [
   { path: '/proveedores', name: 'Proveedores', element: Proveedores },
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },
   { path: '/servicios', name: 'Servicios', element: Servicios },
+  { path: '/ventas', name: 'Ventas', element: Ventas },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
