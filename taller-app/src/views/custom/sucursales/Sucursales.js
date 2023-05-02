@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar,esES } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
+import esLocale from "date-fns/locale/es";
 
 function Sucursales() {
+    
   const [sucursales, setSucursales] = useState([]);
   const [sortModel, setSortModel] = useState([{ field: 'sucu_ID', sort: 'asc' }]);
 
@@ -29,10 +31,10 @@ function Sucursales() {
   };
 
   const columns = [
-    { field: 'sucu_ID', headerName: 'ID', width: 100 },
+    { field: 'sucu_ID', headerName: 'ID', width: 1 },
     { field: 'sucu_Descripcion', headerName: 'Sucursal', width: 200 },
-    { field: 'muni_Nombre', headerName: 'Municipio', width: 200 },
-    { field: 'sucu_DireccionExacta', headerName: 'Direccion', width: 400 },
+    { field: 'muni_Nombre', headerName: 'Municipio', width: 150 },
+    { field: 'sucu_DireccionExacta', headerName: 'Direccion', width: 360 },
     {
       field: 'acciones',
       headerName: 'Acciones',
@@ -56,16 +58,17 @@ function Sucursales() {
   return (
     <div className='card'>
         <div className='card-body'>
-        <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={sucursales}
-        columns={columns}
-        sortModel={sortModel}
-        onSortModelChange={handleSortModelChange}
-        components={{
-          Toolbar: GridToolbar,
-        }}
-      />
+        <div style={{ flex: 1}}>
+        <DataGrid
+  rows={sucursales}
+  columns={columns}
+  sortModel={sortModel}
+  onSortModelChange={handleSortModelChange}
+  components={{
+    Toolbar: GridToolbar,
+  }}
+  localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+/>
     </div>
         </div>
     </div>
