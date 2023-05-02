@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid, GridToolbar,esES } from '@mui/x-data-grid';
 import { Button } from '@material-ui/core';
-import esLocale from "date-fns/locale/es";
 
 function Sucursales() {
     
@@ -30,11 +29,12 @@ function Sucursales() {
     setSortModel(model);
   };
 
+
   const columns = [
-    { field: 'sucu_ID', headerName: 'ID', width: 1 },
-    { field: 'sucu_Descripcion', headerName: 'Sucursal', width: 200 },
-    { field: 'muni_Nombre', headerName: 'Municipio', width: 150 },
-    { field: 'sucu_DireccionExacta', headerName: 'Direccion', width: 360 },
+    { field: 'sucu_ID', headerName: 'ID', width: 1,},
+    { field: 'sucu_Descripcion', headerName: 'Sucursal', width: 200},
+    { field: 'muni_Nombre', headerName: 'Municipio', width: 150},
+    { field: 'sucu_DireccionExacta', headerName: 'Direccion', width: 360},
     {
       field: 'acciones',
       headerName: 'Acciones',
