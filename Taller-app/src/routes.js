@@ -6,6 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 //custom
 const Marcas = React.lazy(() => import('./views/custom/marcas/Marcas'))
+const Sucursales = React.lazy(() => import('./views/custom/sucursales/Sucursales'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -55,6 +56,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/marcas', name: 'Marcas', element: Marcas },
+  { path: '/sucursales', name: 'Sucursales', element: Sucursales },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

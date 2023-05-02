@@ -37,6 +37,14 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_Proveedores_Select = "tllr.UDP_tbProveedores_VW";
         #endregion
 
+        #region Compras
+        public static string UDP_tbCompras_Select = "tllr.UDP_tbCompras_VW";
+        #endregion
+
+        #region Empleados
+        public static string UDP_tbEmpleados_Select = "tllr.UDP_tbEmpleados_VW";
+        #endregion
+
         #region Modelos
         public static string UDP_Modelos_Select = "tllr.UDP_tbModelos_VW";
         #endregion
