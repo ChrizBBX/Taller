@@ -6,19 +6,19 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-function Empleados() {
-    const [empleados, setEmpleados] = useState([]);
-    const [sortModel, setSortModel] = useState([{ field: 'empe_Id', sort: 'asc' }]);
+function Compras() {
+    const [Compras, setCompras] = useState([]);
+    const [sortModel, setSortModel] = useState([{ field: 'comp_ID', sort: 'asc' }]);
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/Empleados')
+            .get('http://proyectotaller.somee.com/api/Compras')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,
-                    id: row.empe_Id,
+                    id: row.comp_ID,
                 }));
-                setEmpleados(insertarid);
+                setCompras(insertarid);
             })
             .catch((error) => {
                 console.log(error);
@@ -30,11 +30,9 @@ function Empleados() {
     };
 
     const columns = [
-        { field: 'empe_Id', headerName: 'ID', width: 100 },
-        { field: 'empe_Nombres', headerName: 'Nombre', width: 200 },
-        { field: 'empe_Identidad', headerName: 'Identidad', width: 200 },
-        { field: 'empe_Sexo', headerName: 'Sexo', width: 150 },
-        { field: 'estacivi_Nombre', headerName: 'Estado Civil', width: 360 },
+        { field: 'comp_ID', headerName: 'ID', width: 100 },
+        { field: 'prov_Nombre', headerName: 'Proveedor', width: 200 },
+        { field: 'comp_Fecha', headerName: 'Fecha de la Compra', width: 200 },   
         {
             field: 'acciones',
             headerName: 'Acciones',
@@ -58,12 +56,12 @@ function Empleados() {
     return (
         <div className='card'>
             <div className='card-body'>
-                <h1>Empleados</h1>
-                <div className='btn btn-primary' >Nuevo</div>
+                <h1>Compras</h1>
+                <div className='btn btn-primary'>Nuevo</div>
                 <div className='container' style={{ height: 10 }}></div>
                 <div style={{ flex: 1 }}>
                     <DataGrid
-                        rows={empleados}
+                        rows={Compras}
                         columns={columns}
                         sortModel={sortModel}
                         onSortModelChange={handleSortModelChange}
@@ -78,4 +76,4 @@ function Empleados() {
     );
 }
 
-export default Empleados;
+export default Compras;

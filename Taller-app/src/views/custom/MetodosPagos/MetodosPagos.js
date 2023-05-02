@@ -5,20 +5,23 @@ import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from '@coreui/react';
 
-function Empleados() {
-    const [empleados, setEmpleados] = useState([]);
-    const [sortModel, setSortModel] = useState([{ field: 'empe_Id', sort: 'asc' }]);
+function MetodosPagos() {
+    const [MetodosPagos, setMetodosPagos] = useState([]);
+    const [sortModel, setSortModel] = useState([{ field: 'meto_ID', sort: 'asc' }]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/Empleados')
+            .get('http://proyectotaller.somee.com/api/MetodosPagos')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,
-                    id: row.empe_Id,
+                    id: row.meto_ID,
                 }));
-                setEmpleados(insertarid);
+                setMetodosPagos(insertarid);
             })
             .catch((error) => {
                 console.log(error);
@@ -29,12 +32,13 @@ function Empleados() {
         setSortModel(model);
     };
 
+    const handleModalVisible = () => {
+        setModalVisible(!modalVisible);
+    };
+
     const columns = [
-        { field: 'empe_Id', headerName: 'ID', width: 100 },
-        { field: 'empe_Nombres', headerName: 'Nombre', width: 200 },
-        { field: 'empe_Identidad', headerName: 'Identidad', width: 200 },
-        { field: 'empe_Sexo', headerName: 'Sexo', width: 150 },
-        { field: 'estacivi_Nombre', headerName: 'Estado Civil', width: 360 },
+        { field: 'meto_ID', headerName: 'ID', width: 100 },
+        { field: 'meto_Nombre', headerName: 'Nombre', width: 200 },
         {
             field: 'acciones',
             headerName: 'Acciones',
@@ -58,12 +62,12 @@ function Empleados() {
     return (
         <div className='card'>
             <div className='card-body'>
-                <h1>Empleados</h1>
-                <div className='btn btn-primary' >Nuevo</div>
+                <h1>Metodos de Pagos</h1>
+                <div className='btn btn-primary' onClick={() => setVisible(true)}>Nuevo</div>
                 <div className='container' style={{ height: 10 }}></div>
                 <div style={{ flex: 1 }}>
                     <DataGrid
-                        rows={empleados}
+                        rows={MetodosPagos}
                         columns={columns}
                         sortModel={sortModel}
                         onSortModelChange={handleSortModelChange}
@@ -74,8 +78,21 @@ function Empleados() {
                     />
                 </div>
             </div>
+            <CModal visible={visible} onClose={() => setVisible(false)}>
+                <CModalHeader onClose={() => setVisible(false)}>
+                    <CModalTitle>Nuevo Metodo de Pago</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    {/* Aquí va el contenido del modal */}
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={() => setVisible(false)}>
+                        Cancelar
+                    </CButton>
+                    <CButton color="primary">Guardar</CButton>
+                </CModalFooter>
+            </CModal>
         </div>
     );
-}
-
-export default Empleados;
+}   
+export default MetodosPagos;
