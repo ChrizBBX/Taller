@@ -59,7 +59,7 @@ function Empleados() {
         <div className='card'>
             <div className='card-body'>
                 <h1>Empleados</h1>
-                <div className='btn btn-primary' >Nuevo</div>
+                <div className='btn btn-primary' href={'src/views/custom/Empleados/CreateEmpleados'} >Nuevo</div>
                 <div className='container' style={{ height: 10 }}></div>
                 <div style={{ flex: 1 }}>
                     <DataGrid
