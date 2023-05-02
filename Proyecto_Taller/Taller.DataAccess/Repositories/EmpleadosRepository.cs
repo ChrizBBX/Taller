@@ -31,7 +31,7 @@ namespace Taller.DataAccess.Repositories
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             var parametros = new DynamicParameters();
-            return db.Query<VW_tbEmpleados>(ScriptsDataBase.UDP_tbEmpleados_VW, null, commandType: CommandType.StoredProcedure);
+            return db.Query<VW_tbEmpleados>(ScriptsDataBase.UDP_tbEmpleados_Select, null, commandType: CommandType.StoredProcedure);
         }
 
         public RequestStatus Update(tbEmpleados item)

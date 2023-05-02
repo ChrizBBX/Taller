@@ -22,7 +22,7 @@ function Marcas() {
   const [order, setOrder] = useState('asc');
 
   useEffect(() => {
-    axios.get('https://localhost:44387/api/Marcas')
+    axios.get('http://proyectotaller.somee.com/api/Marcas')
       .then(response => {
         setMarcas(response.data);
       })

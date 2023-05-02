@@ -1,0 +1,17 @@
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.BusinessLogic.deps.json
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.BusinessLogic.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\ref\Taller.BusinessLogic.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.BusinessLogic.pdb
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.DataAccess.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.Entities.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.DataAccess.pdb
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Release\net5.0\Taller.Entities.pdb
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.AssemblyInfo.cs
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.csproj.CopyComplete
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\ref\Taller.BusinessLogic.dll
+C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Release\net5.0\Taller.BusinessLogic.pdb
