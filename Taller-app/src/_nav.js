@@ -34,8 +34,38 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Empleados',
+    to: '/Empleados',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Sucursales',
     to: '/sucursales',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Clientes',
+    to: '/Clientes',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'EstadosCiviles',
+    to: '/EstadosCiviles',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Usuarios',
+    to: '/Usuarios',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Vehiculos',
+    to: '/Vehiculos',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
   {

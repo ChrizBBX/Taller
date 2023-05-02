@@ -7,6 +7,11 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 //custom
 const Marcas = React.lazy(() => import('./views/custom/marcas/Marcas'))
 const Sucursales = React.lazy(() => import('./views/custom/sucursales/Sucursales'))
+const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
+const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
+const EstadosCiviles = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCiviles'))
+const Clientes = React.lazy(() => import('./views/custom/Cliente/Cliente'))
+const Usuarios = React.lazy(() => import('./views/custom/Usuarios/Usuarios'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -57,6 +62,11 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/marcas', name: 'Marcas', element: Marcas },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
+  { path: '/Empleados', name: 'Empleados', element: Empleados },
+  { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },
+  { path: '/EstadosCiviles', name: 'EstadosCiviles', element: EstadosCiviles },
+  { path: '/Clientes', name: 'Clientes', element: Clientes },
+  { path: '/Usuarios', name: 'Usuarios', element: Usuarios },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
