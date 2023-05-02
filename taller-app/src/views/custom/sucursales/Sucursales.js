@@ -2,7 +2,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid, GridToolbar,esES } from '@mui/x-data-grid';
-import { Button } from '@material-ui/core';
+import {IconButton} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 function Sucursales() {
     
@@ -41,15 +44,15 @@ function Sucursales() {
       width: 300,
       renderCell: (params) => (
         <div>
-          <Button variant="contained" color="secondary">
-            Eliminar
-          </Button>
-          <Button variant="contained" color="primary">
-            Editar
-          </Button>
-          <Button variant="contained" color="default">
-            Detalles
-          </Button>
+    <IconButton color="secondary">
+        <DeleteIcon />
+      </IconButton>
+      <IconButton color="primary">
+        <EditIcon />
+      </IconButton>
+      <IconButton>
+        <VisibilityIcon />
+      </IconButton>
         </div>
       ),
     },
@@ -58,6 +61,9 @@ function Sucursales() {
   return (
     <div className='card'>
         <div className='card-body'>
+        <h1>Sucursales</h1>
+        <div className='btn btn-primary'>Nuevo</div>
+        <div className='container' style={{height: 10}}></div>
         <div style={{ flex: 1}}>
         <DataGrid
   rows={sucursales}
