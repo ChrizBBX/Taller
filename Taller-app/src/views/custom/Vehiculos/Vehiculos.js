@@ -12,7 +12,7 @@ function Vehiculos() {
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/Vehiculos')
+            .get('https://localhost:44387/api/Vehiculos')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,

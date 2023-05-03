@@ -15,7 +15,7 @@ function MetodosPagos() {
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/MetodosPagos')
+            .get('https://localhost:44387/api/MetodosPagos')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,

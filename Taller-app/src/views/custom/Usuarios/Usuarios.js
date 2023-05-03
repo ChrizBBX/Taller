@@ -13,7 +13,7 @@ function Usuarios() {
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/Usuarios')
+            .get('https://localhost:44387/api/Usuarios')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,

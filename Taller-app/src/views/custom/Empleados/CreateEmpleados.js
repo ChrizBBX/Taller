@@ -3,8 +3,6 @@ import Global from '../../API/Global';
 
 const CreateEmpleado = () => {
     
-    //Se asigna los datos al dropDown
-  
     const [estadosCiviles, setEstadosCiviles] = useState([]);
     const [estadoCivilSeleccionado, setEstadoCivilSeleccionado] = useState(null);
   
@@ -12,10 +10,7 @@ const CreateEmpleado = () => {
     const [selectedSucursal, setSelectedSucursal] = useState(null);
   
     const [radioValue, setRadioValue] = useState(null);
-  
-    /////
-    const [countries, setCountries] = useState([]);
-  
+
     useEffect(() => {
       //Sucursal DDL
       fetch(Global.url + "Sucursales")

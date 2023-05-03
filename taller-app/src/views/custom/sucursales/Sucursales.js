@@ -12,7 +12,7 @@ function Sucursales() {
 
   useEffect(() => {
     axios
-      .get('http://proyectotaller.somee.com/api/Sucursales')
+      .get('https://localhost:44387/api/Sucursales')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
           ...row,

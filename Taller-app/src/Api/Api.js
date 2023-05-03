@@ -1,5 +1,5 @@
 var Global = {
-    url: "http://proyectotaller.somee.com/api/"
+    url: "https://localhost:44387/api/"
 }
 
 

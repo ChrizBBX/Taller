@@ -12,7 +12,7 @@ function Clientes() {
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/Clientes')
+            .get('https://localhost:44387/api/Clientes')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,

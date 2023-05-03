@@ -12,7 +12,7 @@ function EstadosCiviles() {
 
     useEffect(() => {
         axios
-            .get('http://proyectotaller.somee.com/api/EstadosCiviles')
+            .get('https://localhost:44387/api/EstadosCiviles')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,
