@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Controllers
 {
@@ -26,6 +27,13 @@ namespace Taller.API.Controllers
         public IActionResult Marcas()
         {
             var listado = _tallerServices.ListadoMarcas();
+            return Ok(listado);
+        }
+
+        [HttpPost]
+        public IActionResult Insert(tbMarcas item)
+        {
+            var listado = _tallerServices.InsertarMarcas(item);
             return Ok(listado);
         }
     }

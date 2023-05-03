@@ -91,6 +91,33 @@ namespace Taller.BusinessLogic.Services
             }
 
         }
+
+        public ServiceResult InsertarMarcas(tbMarcas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _marcasRepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "0")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
         #endregion
 
         #region Ventas

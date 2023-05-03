@@ -24,7 +24,15 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Insert(tbMarcas item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@marc_Nombre", item.marc_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@marc_UserCreacion", 1, DbType.String, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbMarcas_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_tbMarcas> List()
