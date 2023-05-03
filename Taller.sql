@@ -853,6 +853,33 @@ SELECT * FROM tllr.VW_tbCompras
 END
 GO
 
+
+--******************************************UDP tbMunicipios*********************************************--
+CREATE OR ALTER PROCEDURE GRAL.UDP_tbMunicipios_LlenarMunicipiosPorDepto
+	@depa_ID	INT
+AS
+BEGIN
+	SELECT	 [muni_ID],
+			 [muni_Nombre]
+	FROM	 gral.tbMunicipios
+	WHERE	 [depa_ID] = @depa_ID	
+END
+GO
+
+--******************************************UDP /tbMunicipios*********************************************--
+
+--******************************************UDP tbDepartamentos*********************************************--
+CREATE OR ALTER PROCEDURE GRAL.UDP_tbDepartamentos_LlenarDepartamentos
+	@depa_ID	INT
+AS
+BEGIN
+	SELECT	 [depa_ID],
+			 [depa_Nombre]
+	FROM	gral.tbDepartamentos
+END
+GO
+
+--******************************************UDP tbDepartamentos*********************************************--
 CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
 
 	  @empe_Nombres            INT,

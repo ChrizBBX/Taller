@@ -64,5 +64,13 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
         #region  Marcas
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbModelos_VW";
         #endregion
+
+        #region Municipios
+        public static string ListarMunicipiosPorDepto = "GRAL.UDP_tbMunicipios_LlenarMunicipiosPorDepto";
+        #endregion
+
+        #region Departamentos
+        public static string LlenarDepartamentos = "GRAL.UDP_tbDepartamentos_LlenarDepartamentos";
+        #endregion
     }
 }

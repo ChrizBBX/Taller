@@ -12,11 +12,19 @@ namespace Taller.BusinessLogic.Services
     {
         private readonly  EstadosCivilesRepository _estadosCivilesRepository;
         private readonly MetodosPagoRepository _metodosPagoRepository;
+        private readonly MunicipiosRepositories _municipiosRepositories;
+        private readonly DepartamentosRepositories _departamentosRepositories;
 
-        public GeneralServices(EstadosCivilesRepository estadosCivilesRepository, MetodosPagoRepository  metodosPagoRepository)
+
+        public GeneralServices(EstadosCivilesRepository estadosCivilesRepository,
+                               MetodosPagoRepository  metodosPagoRepository,
+                               MunicipiosRepositories municipiosRepositories,
+                               DepartamentosRepositories departamentosRepositories)
         {
             _estadosCivilesRepository = estadosCivilesRepository;
             _metodosPagoRepository = metodosPagoRepository;
+            _municipiosRepositories = municipiosRepositories;
+            _departamentosRepositories = departamentosRepositories;
         }
 
         #region Estados Civiles
@@ -35,7 +43,7 @@ namespace Taller.BusinessLogic.Services
         }
         #endregion
 
-
+        #region Metodos de Pago
         public IEnumerable<VW_tbMetodosPago> ListadoMetodosPagos()
         {
             try
@@ -48,6 +56,39 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbMetodosPago>();
             }
         }
+        #endregion
+
+        #region Departamentos
+        public IEnumerable<tbDepartamentos> ListarDepartamentos()
+        {
+            try
+            {
+                var list = _departamentosRepositories.ListarDepartamentos();
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                return Enumerable.Empty<tbDepartamentos>();
+            }
+        }
+        #endregion
+
+        #region Municipios
+        public IEnumerable<tbMunicipios> ListarMunicipiosPorDepto(string id)
+        {
+            try
+            {
+                var list = _municipiosRepositories.ListarMunicipiosPorDepto(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                return Enumerable.Empty<tbMunicipios>();
+            }
+        }
+        #endregion
 
     }
 }
