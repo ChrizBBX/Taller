@@ -3,13 +3,13 @@ import {
   CFormSelect,
   CFormCheck,
   CButton,
-  CContainer,
-  CRow,
-  CCol,
-  CFormInput
+  CFormInput,
+  CForm
 } from '@coreui/react'
 import { CDatePicker } from '@coreui/react-pro'
 import axios from 'axios';
+import moment from 'moment';
+import "moment/locale/es";
 
 const CreateEmpleado = () => {
 
@@ -19,6 +19,43 @@ const CreateEmpleado = () => {
   const [municipios, setMunicipios] = useState([]);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
   const [radioValue, setRadioValue] = useState(null);
+  const [dni, setDni] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [estadoCivil, setEstadoCivil] = useState('');
+  const [municipio, setMunicipio] = useState('');
+  const [sucursal, setSucursal] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
+  const [correoElectronico, setCorreoElectronico] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [direccion, setDirreccion] = useState('');
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const formattedDate = moment(fechaNacimiento, "YYYY-MM-DD").toISOString();
+    const formData = {
+      empe_Nombres: nombre,
+      empe_Apellidos: apellido,
+      empe_Identidad: dni,
+      empe_FechaNacimiento: formattedDate,
+      empe_Sexo: radioValue,
+      estacivi_Id: estadoCivil,
+      muni_Id: municipio,
+      empe_Direccion: direccion,
+      empe_Telefono: telefono,
+      empe_CorreoElectronico: correoElectronico,
+      sucu_Id: sucursal
+    };
+    //console.log(formData);
+    console.log(formData);
+    axios.post('https://localhost:44387/api/Empleados/AgregarEmpleado', formData)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     axios.get('https://localhost:44387/api/Sucursales')
@@ -52,7 +89,7 @@ const CreateEmpleado = () => {
       axios.get(`https://localhost:44387/api/Municipios/ListarMunicipiosPorDepto/${selectedDepartamento}`)
         .then(response => {
           setMunicipios(response.data);
-        })  
+        })
         .catch(error => {
           console.error('Error fetching data from API:', error);
         });
@@ -67,26 +104,26 @@ const CreateEmpleado = () => {
   return (
     <div className="card">
       <h5>Nuevo Empleado</h5>
-      <form className="mid-form grid-cols-2">
+      <CForm className="mid-form grid-cols-2" onSubmit={handleFormSubmit}>
         <div className="grid p-fluid grid-cols-2">
           <div className="field mt-3">
             <label htmlFor="DNI">Identidad</label>
-            <CFormInput id="inputnumber" className="p-valid" />
+            <CFormInput id="inputnumber" className="p-valid" value={dni} onChange={(event) => setDni(event.target.value)} />
           </div>
 
           <div className="field mt-3">
             <label htmlFor="Nombre">Nombre</label>
-            <CFormInput type="text" id="Nombre" className="p-valid" />
+            <CFormInput type="text" id="Nombre" className="p-valid" value={nombre} onChange={(event) => setNombre(event.target.value)} />
           </div>
 
           <div className="field mt-3">
             <label htmlFor="Apellido">Apellido</label>
-            <CFormInput type="text" id="Apellido" className="p-valid" />
+            <CFormInput type="text" id="Apellido" className="p-valid" value={apellido} onChange={(event) => setApellido(event.target.value)} />
           </div>
 
           <div className="field mt-3">
             <label htmlFor="estadocivil">Estados Civiles</label>
-            <CFormSelect id="estadocivil">
+            <CFormSelect id="estadocivil" value={estadoCivil} onChange={(event) => setEstadoCivil(event.target.value)}>
               <option value="">Seleccione un Estado Civil</option>
               {estadosCiviles.map(estadocivil => (
                 <option key={estadocivil.estacivi_ID} value={estadocivil.estacivi_ID}>{estadocivil.estacivi_Nombre}</option>
@@ -106,7 +143,7 @@ const CreateEmpleado = () => {
 
           <div className="field mt-3">
             <label htmlFor="municipio">Municipios</label>
-            <CFormSelect id="municipio">
+            <CFormSelect id="municipio" value={municipio} onChange={(event) => setMunicipio(event.target.value)}>
               {municipios.map(municipio => (
                 <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
               ))}
@@ -115,7 +152,7 @@ const CreateEmpleado = () => {
 
           <div className="field mt-3">
             <label htmlFor="sucursal">Sucursales</label>
-            <CFormSelect id="sucursal">
+            <CFormSelect id="sucursal" value={sucursal} onChange={(event) => setSucursal(event.target.value)}>
               <option value="">Seleccione una Sucursal</option>
               {sucursales.map(sucursal => (
                 <option key={sucursal.sucu_ID} value={sucursal.sucu_ID}>{sucursal.sucu_Descripcion}</option>
@@ -157,30 +194,42 @@ const CreateEmpleado = () => {
 
               <div className="field mt-3">
                 <label htmlFor="FechaNacimiento">Fecha de Nacimiento</label>
-                <CDatePicker id="FechaNacimiento" className="p-valid" showIcon="true" dateFormat="dd/mm/yy" />
+                <CDatePicker
+                  id="FechaNacimiento"
+                  className="p-valid"
+                  showIcon={true}
+                  dateFormat="yyyy/MM/dd"
+                  value={fechaNacimiento}
+                  onChange={(event) => setFechaNacimiento(event.target.value)}
+                />
+              </div>
+
+              <div className="field mt-3">
+                <label htmlFor="Dirrecion">Dirrecion</label>
+                <CFormInput type="text" id="Dirrecion" className="p-valid" value={direccion} onChange={(event) => setDirreccion(event.target.value)} />
               </div>
 
 
               <div className="field mt-3">
                 <label htmlFor="CorreoElectronico">Correo Electrónico</label>
-                <CFormInput type="email" id="CorreoElectronico" className="p-valid" />
+                <CFormInput type="email" id="CorreoElectronico" className="p-valid" value={correoElectronico} onChange={(event) => setCorreoElectronico(event.target.value)} />
               </div>
 
               <div className="field mt-3">
                 <label htmlFor="Telefono">Teléfono</label>
-                <CFormInput type="text" id="Telefono" className="p-valid" keyfilter="num" />
+                <CFormInput type="text" id="Telefono" className="p-valid" keyfilter="num" value={telefono} onChange={(event) => setTelefono(event.target.value)} />
               </div>
             </div>
           </div>
 
         </div>
-      </form>
-      <div className="field mt-3">
+        <div className="field mt-3">
 
-      </div>
-      <div className="field button-field">
-      <CButton color="primary" type='submit'>Guardar</CButton>
-      </div>
+        </div>
+        <div className="field button-field">
+          <CButton color="primary" type='submit'>Guardar</CButton>
+        </div>
+      </CForm>
     </div>
   );
 

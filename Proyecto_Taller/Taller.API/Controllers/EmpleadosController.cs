@@ -30,7 +30,7 @@ namespace Taller.API.Controllers
             var item2 = _mapper.Map<tbEmpleados>(item);
             var response = _tallerservices.AgregarEmpleado(item2);
             return Ok(response);
-        }
+        }   
 
         [HttpGet]
         public IActionResult Empleados()
