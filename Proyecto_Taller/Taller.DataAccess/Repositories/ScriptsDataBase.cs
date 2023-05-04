@@ -66,6 +66,7 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
         #region  Marcas
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbMarcas_VW";
         public static string UDP_tbMarcas_Insert = "tllr.UDP_tbMarcas_Insert";
+        public static string UDP_tbMarcas_Update = "tllr.UDP_tbMarcas_Update";
         #endregion
 
         #region Municipios

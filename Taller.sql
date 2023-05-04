@@ -650,6 +650,32 @@ BEGIN
 	END CATCH
 END
 
+/*Marcas Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_Update
+@marc_ID INT,
+@marc_Nombre NVARCHAR(300),
+@marc_UserModificacion INT
+AS
+BEGIN
+BEGIN TRY
+	IF NOT EXISTS (SELECT marc_Nombre FROM tllr.tbMarcas WHERE marc_ID != @marc_ID AND marc_Nombre = @marc_Nombre)
+		BEGIN
+			UPDATE tllr.tbMarcas
+			SET marc_Nombre = @marc_Nombre,
+			marc_UserModificacion = @marc_UserModificacion,
+			marc_FechaModificacion = GETDATE()
+			WHERE marc_ID = @marc_ID
+			SELECT '1'
+		END
+		ELSE 
+		SELECT '2'
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+END
+
 /*Modelos*/
 
 /*Modelos View*/

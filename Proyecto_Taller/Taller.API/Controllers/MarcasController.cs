@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
 using Taller.Entities.Entities;
 
@@ -35,6 +36,14 @@ namespace Taller.API.Controllers
         {
             var listado = _tallerServices.InsertarMarcas(item);
             return Ok(new ApiResponse { Message = "La lista se generó correctamente", Data = listado });
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(MarcasViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbMarcas>(item);
+            var listado = _tallerServices.EditarMarcas(listadoMapeado);
+            return Ok(listado);
         }
     }
 }

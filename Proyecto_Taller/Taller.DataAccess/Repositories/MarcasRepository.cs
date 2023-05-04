@@ -44,7 +44,16 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Update(tbMarcas item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@marc_Nombre", item.marc_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@marc_UserModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbMarcas_Update, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
     }
 }

@@ -29,6 +29,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Marcas() {
   const [MarcaCreate, setMarcaCreate] = useState('')
+  const [MarcaEdit, setMarcaEdit] = useState('')
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [marcas, setMarcas] = useState([]);
@@ -59,6 +60,36 @@ function Marcas() {
           setVisible(false)
         }else if(response.data.data.code == '409'){
           toast.warning('El Registro ya existe');
+        }
+      })
+      .catch((error) => {
+          toast.error('ha ocurrido un error');
+      })
+  }
+
+  const EditAction = (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    setValidated(true)
+    event.preventDefault()
+
+    let payload = {
+      marc_ID: marcaSeleccionada.marc_ID,
+      marc_Nombre: MarcaEdit.marc_Nombre,
+    }
+    axios
+      .post('Marcas/Update', payload)
+      .then((response) => {
+        setIsSubmitting(false)
+        console.log(response.data.data.code)
+        if (response.data.data.code == '200') {
+          toast.success('Registro editado exitosamente');
+          setVisible(false)
+        }else if(response.data.data.code == '409'){
+          toast.warning('Ya existe un registro con ese nombre');
         }
       })
       .catch((error) => {
@@ -174,18 +205,19 @@ function Marcas() {
       </CModalHeader>
       <CModalBody>
       <CForm
-    className="row g-3 needs-validation"
-    noValidate
-    validated={validated}
-    onSubmit={CreateAction}
+   className="row g-3 needs-validation"
+   noValidate
+   validated={validated}
+   onSubmit={EditAction}
   >
     <CCol>
       <CFormInput
         type="text"
-        defaultValue={marcaSeleccionada ? marcaSeleccionada.marc_Nombre : ''}
         id="validationCustom01"
         label="Marca"
         required
+        value={marcaSeleccionada ? marcaSeleccionada.marc_Nombre : ''}
+        onChange={(e) => setMarcaSeleccionada(e.target.value)}
       />
     </CCol>
     <CRow className='mt-3 offset-7'>
