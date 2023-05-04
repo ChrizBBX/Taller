@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Controllers
 {
@@ -20,6 +22,14 @@ namespace Taller.API.Controllers
         {
             _tallerservices = tallerservices;
             _mapper = mapper;
+        }
+
+        [HttpPost("AgregarEmpleado")]
+        public IActionResult AgregarEmpleado(EmpleadosViewModel item)
+        {
+            var item2 = _mapper.Map<tbEmpleados>(item);
+            var response = _tallerservices.AgregarEmpleado(item2);
+            return Ok(response);
         }
 
         [HttpGet]

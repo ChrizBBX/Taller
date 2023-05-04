@@ -2427,11 +2427,12 @@
       ]
     },
     "System.Collections.Specialized/4.3.0": {
-      "sha512": "NoPBj0ykejqAWW4p4gGtrrL+3c84ZLSvGnHgq422ew1Rj4WKj1FA8/BCybqC111EtgcqUl6ZJNFYYS22HLgbjA==",
+      "sha512": "Epx8PoVZR0iuOnJJDzp7pWvdfMMOAvpUo95pC4ScH2mJuXkKA2Y4aR3cG9qt2klHgSons1WFh4kcGW7cSXvrxg==",
       "type": "package",
       "path": "system.collections.specialized/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -2614,11 +2615,12 @@
       ]
     },
     "System.ComponentModel.Primitives/4.3.0": {
-      "sha512": "KMVuoQ+8bMQ/Z59M3s64num5AD74X5YSqVc7ibwGkPTfmmkl2W8VuSxLRJtpw4KzQrSKUgR0BLbF0adPfcTSGQ==",
+      "sha512": "j8GUkCpM8V4d4vhLIIoBLGey2Z5bCkMVNjEZseyAlm4n5arcsJOeI3zkUP+zvZgzsbLTYh4lYeP/ZD/gdIAPrw==",
       "type": "package",
       "path": "system.componentmodel.primitives/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -5744,30 +5746,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ian Hernandez\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\LAB02\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ian Hernandez\\Documents\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
       "projectName": "Taller.DataAccess",
-      "projectPath": "C:\\Users\\Ian Hernandez\\Documents\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
-      "packagesPath": "C:\\Users\\Ian Hernandez\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ian Hernandez\\Documents\\Taller\\Proyecto_Taller\\Taller.DataAccess\\obj\\",
+      "projectPath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
+      "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ian Hernandez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -5780,8 +5777,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Ian Hernandez\\Documents\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
-              "projectPath": "C:\\Users\\Ian Hernandez\\Documents\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj"
+            "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
+              "projectPath": "C:\\Users\\LAB02\\Desktop\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj"
             }
           }
         }
@@ -5824,7 +5821,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
       }
     }
   }

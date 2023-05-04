@@ -8,6 +8,7 @@ import {
   CCol,
   CFormInput
 } from '@coreui/react'
+import { CDatePicker } from '@coreui/react-pro'
 import axios from 'axios';
 
 const CreateEmpleado = () => {
@@ -17,7 +18,6 @@ const CreateEmpleado = () => {
   const [departamentos, setDepartamentos] = useState([]);
   const [municipios, setMunicipios] = useState([]);
   const [selectedDepartamento, setSelectedDepartamento] = useState('');
-
   const [radioValue, setRadioValue] = useState(null);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const CreateEmpleado = () => {
       axios.get(`https://localhost:44387/api/Municipios/ListarMunicipiosPorDepto/${selectedDepartamento}`)
         .then(response => {
           setMunicipios(response.data);
-        })
+        })  
         .catch(error => {
           console.error('Error fetching data from API:', error);
         });
@@ -67,60 +67,60 @@ const CreateEmpleado = () => {
   return (
     <div className="card">
       <h5>Nuevo Empleado</h5>
-      <form className="mid-form">
-        <div className="grid p-fluid">
-          <div className="col-12 md:col-6">
-            <div className="field">
-              <label htmlFor="DNI">Identidad</label>
-              <CFormInput id="inputnumber" className="p-valid" />
-            </div>
+      <form className="mid-form grid-cols-2">
+        <div className="grid p-fluid grid-cols-2">
+          <div className="field mt-3">
+            <label htmlFor="DNI">Identidad</label>
+            <CFormInput id="inputnumber" className="p-valid" />
+          </div>
 
-            <div className="field">
-              <label htmlFor="Nombre">Nombre</label>
-              <CFormInput type="text" id="Nombre" className="p-valid" />
-            </div>
+          <div className="field mt-3">
+            <label htmlFor="Nombre">Nombre</label>
+            <CFormInput type="text" id="Nombre" className="p-valid" />
+          </div>
 
-            <div className="field mt-3">
-              <label htmlFor="Apellido">Apellido</label>
-              <CFormInput type="text" id="Apellido" className="p-valid" />
-            </div>
+          <div className="field mt-3">
+            <label htmlFor="Apellido">Apellido</label>
+            <CFormInput type="text" id="Apellido" className="p-valid" />
+          </div>
 
-            <div className="field">
-              <label htmlFor="estadocivil">Estados Civiles</label>
-              <CFormSelect id="estadocivil">
-                <option value="">Seleccione un Estado Civil</option>
-                {estadosCiviles.map(estadocivil => (
-                  <option key={estadocivil.estacivi_ID} value={estadocivil.estacivi_ID}>{estadocivil.estacivi_Nombre}</option>
-                ))}
-              </CFormSelect>
-            </div>
+          <div className="field mt-3">
+            <label htmlFor="estadocivil">Estados Civiles</label>
+            <CFormSelect id="estadocivil">
+              <option value="">Seleccione un Estado Civil</option>
+              {estadosCiviles.map(estadocivil => (
+                <option key={estadocivil.estacivi_ID} value={estadocivil.estacivi_ID}>{estadocivil.estacivi_Nombre}</option>
+              ))}
+            </CFormSelect>
+          </div>
 
-            <div className="field">
-              <label htmlFor="departamento">Departamentos</label>
-              <CFormSelect id="departamento" value={selectedDepartamento} onChange={handleDepartamentoChange}>
-                <option value="">Selecciona un departamento</option>
-                {departamentos.map(departamento => (
-                  <option key={departamento.depa_ID} value={departamento.depa_ID}>{departamento.depa_Nombre}</option>
-                ))}
-              </CFormSelect>
-            </div>
-            <div className="field">
-              <label htmlFor="municipio">Municipios</label>
-              <CFormSelect id="municipio">
-                {municipios.map(municipio => (
-                  <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
-                ))}
-              </CFormSelect>
-            </div>
-            <div className="field">
-              <label htmlFor="sucursal">Sucursales</label>
-              <CFormSelect id="sucursal">
-                <option value="">Seleccione una Sucursal</option>
-                {sucursales.map(sucursal => (
-                  <option key={sucursal.sucu_ID} value={sucursal.sucu_ID}>{sucursal.sucu_Descripcion}</option>
-                ))}
-              </CFormSelect>
-            </div>
+          <div className="field mt-3">
+            <label htmlFor="departamento">Departamentos</label>
+            <CFormSelect id="departamento" value={selectedDepartamento} onChange={handleDepartamentoChange}>
+              <option value="">Selecciona un departamento</option>
+              {departamentos.map(departamento => (
+                <option key={departamento.depa_ID} value={departamento.depa_ID}>{departamento.depa_Nombre}</option>
+              ))}
+            </CFormSelect>
+          </div>
+
+          <div className="field mt-3">
+            <label htmlFor="municipio">Municipios</label>
+            <CFormSelect id="municipio">
+              {municipios.map(municipio => (
+                <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
+              ))}
+            </CFormSelect>
+          </div>
+
+          <div className="field mt-3">
+            <label htmlFor="sucursal">Sucursales</label>
+            <CFormSelect id="sucursal">
+              <option value="">Seleccione una Sucursal</option>
+              {sucursales.map(sucursal => (
+                <option key={sucursal.sucu_ID} value={sucursal.sucu_ID}>{sucursal.sucu_Descripcion}</option>
+              ))}
+            </CFormSelect>
           </div>
 
           <div className="col-12 md:col-6">
@@ -130,11 +130,12 @@ const CreateEmpleado = () => {
                 <div className="col-12 md:col-4">
                   <div className="field-radiobutton">
                     <CFormCheck
-                      inputId="option1"
-                      name="option"
+                      type='radio'
+                      name="sexo"
+                      id="masculino"
                       value="M"
                       checked={radioValue === "M"}
-                      onChange={(e) => setRadioValue(e.value)}
+                      onChange={(e) => setRadioValue(e.target.value)}
                     />
                     <label htmlFor="option1">Masculino</label>
                   </div>
@@ -142,11 +143,12 @@ const CreateEmpleado = () => {
                 <div className="col-12 md:col-4">
                   <div className="field-radiobutton">
                     <CFormCheck
-                      inputId="option2"
-                      name="option"
-                      value="Los F"
+                      type='radio'
+                      name="sexo"
+                      id="femenino"
+                      value="F"
                       checked={radioValue === "F"}
-                      onChange={(e) => setRadioValue(e.value)}
+                      onChange={(e) => setRadioValue(e.target.value)}
                     />
                     <label htmlFor="option2">Femenino</label>
                   </div>
@@ -154,23 +156,34 @@ const CreateEmpleado = () => {
               </div>
 
               <div className="field mt-3">
-                <label htmlFor="Correo">Correo Elctronico</label>
-                <CFormInput type="text" id="Correo" className="p-valid" />
+                <label htmlFor="FechaNacimiento">Fecha de Nacimiento</label>
+                <CDatePicker id="FechaNacimiento" className="p-valid" showIcon="true" dateFormat="dd/mm/yy" />
+              </div>
+
+
+              <div className="field mt-3">
+                <label htmlFor="CorreoElectronico">Correo Electrónico</label>
+                <CFormInput type="email" id="CorreoElectronico" className="p-valid" />
               </div>
 
               <div className="field mt-3">
-                <label htmlFor="Telefono">Telefono</label>
-                <CFormInput type="text" id="Telefono" className="p-valid" />
+                <label htmlFor="Telefono">Teléfono</label>
+                <CFormInput type="text" id="Telefono" className="p-valid" keyfilter="num" />
               </div>
-
             </div>
           </div>
-        </div>
 
-        <CButton label="Success" severity="success" />
+        </div>
       </form>
+      <div className="field mt-3">
+
+      </div>
+      <div className="field button-field">
+      <CButton color="primary" type='submit'>Guardar</CButton>
+      </div>
     </div>
   );
+
 };
 
 export default CreateEmpleado;

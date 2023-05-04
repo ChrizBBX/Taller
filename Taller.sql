@@ -881,8 +881,7 @@ GO
 
 --******************************************UDP tbDepartamentos*********************************************--
 CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
-
-	  @empe_Nombres            INT,
+	  @empe_Nombres            NVARCHAR(150),
 	  @empe_Apellidos          NVARCHAR(150),
 	  @empe_Identidad          VARCHAR(13),
 	  @empe_FechaNacimiento    DATE,
@@ -892,12 +891,17 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
 	  @empe_Direccion          NVARCHAR(150),
 	  @empe_Telefono           NVARCHAR(150),
 	  @empe_CorreoElectronico  NVARCHAR(150),
-	  @sucu_Id                 INT,
-	  @empe_UsuCreacion        INT
+	  @sucu_Id                 INT
 AS
 BEGIN
+ BEGIN TRY 
     INSERT INTO tllr.tbEmpleados([empe_Nombres],[empe_Apellidos],[empe_Identidad],[empe_FechaNacimiento],[empe_Sexo],[estacivi_Id],[muni_Id],[empe_Direccion],[empe_Telefono],[empe_CorreoElectronico],[sucu_Id],[empe_UsuCreacion])
 	VALUES (@empe_Nombres,@empe_Apellidos,@empe_Identidad,@empe_FechaNacimiento,@empe_Sexo,@estacivi_Id,@muni_Id,@empe_Direccion,@empe_Telefono,@empe_CorreoElectronico,@sucu_Id,1)
+	SELECT 1
+ END TRY 
+ BEGIN CATCH
+    SELECT 0
+ END CATCH
 END
 GO
 

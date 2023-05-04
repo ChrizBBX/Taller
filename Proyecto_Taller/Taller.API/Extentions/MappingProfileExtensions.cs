@@ -13,6 +13,8 @@ namespace Taller.API.Extentions
         public MappingProfileExtensions()
         {
             CreateMap<MunicipiosViewModel, tbMunicipios>().ReverseMap();
+            CreateMap<EmpleadosViewModel, tbEmpleados>().ReverseMap();
+
         }
     }
 }

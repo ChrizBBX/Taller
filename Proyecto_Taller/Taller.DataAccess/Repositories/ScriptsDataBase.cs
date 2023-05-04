@@ -43,6 +43,7 @@ namespace Taller.DataAccess.Repositories
 
         #region Empleados
         public static string UDP_tbEmpleados_Select = "tllr.UDP_tbEmpleados_VW";
+        public static string AgregarEmpleados = "tllr.UDP_tbEmpleado_InsertarEmpleados";
         #endregion
 
         #region Modelos
