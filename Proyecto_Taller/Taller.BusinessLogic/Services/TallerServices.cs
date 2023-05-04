@@ -102,7 +102,7 @@ namespace Taller.BusinessLogic.Services
                 {
                     return result.Ok(insertar.MessageStatus);
                 }
-                else if (insertar.MessageStatus == "0")
+                else if (insertar.MessageStatus == "2")
                 {
                     return result.Conflict(insertar.MessageStatus);
                 }

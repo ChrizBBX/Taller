@@ -636,14 +636,18 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_Insert
 @marc_UserCreacion INT
 AS
 BEGIN
-BEGIN TRY
-INSERT INTO tllr.tbMarcas([marc_Nombre], [marc_FechaCreacion], [marc_UserCreacion], [marc_FechaModificacion], [marc_UserModificacion], [marc_Estado])
-VALUES(@marc_Nombre,GETDATE(),@marc_UserCreacion,NULL,NULL,1)
-SELECT '1'
-END TRY
-BEGIN CATCH
-SELECT '0'
-END CATCH
+	BEGIN TRY
+		IF NOT EXISTS(SELECT marc_Nombre FROM tllr.tbMarcas WHERE marc_Nombre = @marc_Nombre)
+		BEGIN
+			INSERT INTO tllr.tbMarcas([marc_Nombre], [marc_FechaCreacion], [marc_UserCreacion], [marc_FechaModificacion], [marc_UserModificacion], [marc_Estado])
+			VALUES(@marc_Nombre,GETDATE(),@marc_UserCreacion,NULL,NULL,1)
+			SELECT '1'
+		END
+		ELSE SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
 END
 
 /*Modelos*/

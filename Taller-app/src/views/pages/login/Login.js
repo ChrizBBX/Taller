@@ -12,11 +12,17 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CToast,
+  CToastBody,
+  CToastClose
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Login = () => {
   const navigate = useNavigate()
@@ -54,6 +60,13 @@ const Login = () => {
           localStorage.setItem('token', response.data[0]);
           navigate('/home')
           console.log('Entro')
+        }else{
+          console.log("Login faliido")
+          if(password == '' || UserName == ''){
+            toast.error('Rellene los campos');
+          }else{
+            toast.error('Usuario o Contraseña incorrectos');
+          }
         }
       })
       .catch((error) => {})
@@ -67,8 +80,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm onSubmit={LoginAction} validated={validated}    className="row g-3 needs-validation"
-    noValidate>
+                  <CForm onSubmit={LoginAction} validated={validated} className="row g-3 needs-validation" noValidate>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
@@ -111,6 +123,7 @@ const Login = () => {
                       </CCol>
                     </CRow>
                   </CForm>
+
                 </CCardBody>
               </CCard>
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>

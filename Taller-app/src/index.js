@@ -7,10 +7,13 @@ import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import store from './store'
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
+     <ToastContainer />
     <App />
   </Provider>,
 )

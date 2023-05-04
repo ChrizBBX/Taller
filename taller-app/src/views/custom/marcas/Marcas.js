@@ -23,15 +23,48 @@ import {IconButton} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Marcas() {
+  const [MarcaCreate, setMarcaCreate] = useState('')
   const [visible, setVisible] = useState(false)
   const [visible2, setVisible2] = useState(false)
   const [marcas, setMarcas] = useState([]);
   const [sortModel, setSortModel] = useState([{ field: 'marc_ID', sort: 'asc' }]);
   const [validated, setValidated] = useState(false) 
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [marcaSeleccionada, setMarcaSeleccionada] = useState(null);
+
+  const CreateAction = (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    setValidated(true)
+    event.preventDefault()
+
+    let payload = {
+      marc_Nombre: MarcaCreate,
+    }
+    axios
+      .post('Marcas/Insert', payload)
+      .then((response) => {
+        setIsSubmitting(false)
+        console.log(response.data.data.code)
+        if (response.data.data.code == '200') {
+          toast.success('Registro agregado exitosamente');
+          setVisible(false)
+        }else if(response.data.data.code == '409'){
+          toast.warning('El Registro ya existe');
+        }
+      })
+      .catch((error) => {
+          toast.error('ha ocurrido un error');
+      })
+  }
 
   const handleEditClick = (params) => {
     const marca = marcas.find((marca) => marca.id === params.marc_ID); // Busca la marca seleccionada
@@ -62,7 +95,7 @@ function Marcas() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [marcas]);
   
 
   const handleSortModelChange = (model) => {
@@ -105,14 +138,16 @@ function Marcas() {
     className="row g-3 needs-validation"
     noValidate
     validated={validated}
-    onSubmit={handleSubmit}
+    onSubmit={CreateAction}
   >
     <CCol>
       <CFormInput
         type="text"
         id="validationCustom01"
         label="Marca"
+        value={MarcaCreate}
         required
+        onChange={(e) => setMarcaCreate(e.target.value)}
       />
     </CCol>
     <CRow className='mt-3 offset-7'>
@@ -142,7 +177,7 @@ function Marcas() {
     className="row g-3 needs-validation"
     noValidate
     validated={validated}
-    onSubmit={handleSubmit}
+    onSubmit={CreateAction}
   >
     <CCol>
       <CFormInput

@@ -30,7 +30,6 @@ namespace Taller.API
             return Ok(listado);
         }
 
-
         [HttpPost("Login")]
         public IActionResult Login(VW_tbUsuarios item)
         {

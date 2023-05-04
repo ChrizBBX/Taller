@@ -30,11 +30,11 @@ namespace Taller.API.Controllers
             return Ok(listado);
         }
 
-        [HttpPost]
+        [HttpPost("Insert")]
         public IActionResult Insert(tbMarcas item)
         {
             var listado = _tallerServices.InsertarMarcas(item);
-            return Ok(listado);
+            return Ok(new ApiResponse { Message = "La lista se generó correctamente", Data = listado });
         }
     }
 }

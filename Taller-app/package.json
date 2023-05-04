@@ -45,9 +45,12 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",
+    "react-bootstrap-toast": "^0.1.1",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.0",
+    "react-toastify": "^9.1.2",
     "redux": "4.2.1",
     "simplebar-react": "^2.4.3"
   },
