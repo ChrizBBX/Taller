@@ -9,78 +9,60 @@ import {
   CFormInput
 } from '@coreui/react'
 import axios from 'axios';
-import { Select } from '@material-ui/core';
 
 const CreateEmpleado = () => {
 
   const [estadosCiviles, setEstadosCiviles] = useState([]);
-  const [estadoCivilSeleccionado, setEstadoCivilSeleccionado] = useState(null);
-
-  const [sucursalOptions, setSucursalOptions] = useState([]);
-  const [selectedSucursal, setSelectedSucursal] = useState(null);
-
+  const [sucursales, setSucursales] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
-  const [selectedDepartamento, setSelectedDepartamento] = useState(null);
-
   const [municipios, setMunicipios] = useState([]);
-  const [selectedMunicipio, setSelectedMunicipio] = useState(null);
+  const [selectedDepartamento, setSelectedDepartamento] = useState('');
 
   const [radioValue, setRadioValue] = useState(null);
 
   useEffect(() => {
-    fetch("https://localhost:44387/api/Sucursales")
-      .then((response) => response.json())
-      .then((data) =>
-        setSucursalOptions(
-          data.map((s) => ({ value: s.sucu_ID, label: s.sucu_Descripcion }))
-        )
-      )
-      .catch((error) => console.error(error));
-
-    fetch("https://localhost:44387/api/EstadosCiviles")
-      .then((response) => response.json())
-      .then((data) =>
-        setEstadosCiviles(
-          data.map((e) => ({
-            value: e.estacivi_ID,
-            label: e.estacivi_Nombre,
-          }))
-        )
-      )
-      .catch((error) => console.error(error));
-
-  }, []);
-
-  useEffect(() => {
-
-      axios.get("https://localhost:44387/api/Departamentos/ListarDepartamentos")
-      .then((response) => {
-        const options = response.data.map((departamento) => ({
-          value: departamento.depa_ID,
-          label: departamento.depa_Nombre,
-        }));
-        setDepartamentos(options);
+    axios.get('https://localhost:44387/api/Sucursales')
+      .then(response => {
+        setSucursales(response.data);
       })
-      .catch((error) => console.error(error));
-    
+      .catch(error => {
+        console.error('Error fetching data from API:', error);
+      });
+
+
+    axios.get('https://localhost:44387/api/EstadosCiviles')
+      .then(response => {
+        setEstadosCiviles(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data from API:', error);
+      });
+
+    axios.get('https://localhost:44387/api/Departamentos/ListarDepartamentos')
+      .then(response => {
+        setDepartamentos(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data from API:', error);
+      });
   }, []);
-   
+
   useEffect(() => {
-    if (selectedDepartamento != null) {
-      var IdDepartamento = document.getElementById("ddldepto").value;
-      console.log('hola'+selectedDepartamento.target.value);
-      localStorage.setItem("id",1);
-      axios.get(`https://localhost:44387/api/Municipios/ListarMunicipiosPorDepto/${selectedDepartamento.target}`)
-        .then((response) => {
-          const options = response.data.map((municipio) => ({
-            value: municipio.muni_ID,
-            label: municipio.muni_Nombre,
-          }));
-          setMunicipios(options);
+    if (selectedDepartamento) {
+      axios.get(`https://localhost:44387/api/Municipios/ListarMunicipiosPorDepto/${selectedDepartamento}`)
+        .then(response => {
+          setMunicipios(response.data);
         })
-        .catch((error) => console.error(error));
+        .catch(error => {
+          console.error('Error fetching data from API:', error);
+        });
     }
-  }, []);
+  }, [selectedDepartamento]);
+
+  function handleDepartamentoChange(event) {
+    setSelectedDepartamento(event.target.value);
+    setMunicipios([]);
+  }
 
   return (
     <div className="card">
@@ -104,42 +86,40 @@ const CreateEmpleado = () => {
             </div>
 
             <div className="field">
-              <label htmlFor="estadoCivil">Estado Civil</label>
-              <CFormSelect
-                value={estadoCivilSeleccionado}
-                onChange={(e) => setEstadoCivilSeleccionado(e)}
-                options={estadosCiviles}
-                placeholder="Seleccionar"
-              />
+              <label htmlFor="estadocivil">Estados Civiles</label>
+              <CFormSelect id="estadocivil">
+                <option value="">Seleccione un Estado Civil</option>
+                {estadosCiviles.map(estadocivil => (
+                  <option key={estadocivil.estacivi_ID} value={estadocivil.estacivi_ID}>{estadocivil.estacivi_Nombre}</option>
+                ))}
+              </CFormSelect>
             </div>
 
             <div className="field">
               <label htmlFor="departamento">Departamentos</label>
-              <Select id="ddldepto" name = "ddldepto"
-                value={selectedDepartamento}
-                onChange={(e) => setSelectedDepartamento(e)}
-                options={departamentos}
-                placeholder="Seleccionar"
-              />
+              <CFormSelect id="departamento" value={selectedDepartamento} onChange={handleDepartamentoChange}>
+                <option value="">Selecciona un departamento</option>
+                {departamentos.map(departamento => (
+                  <option key={departamento.depa_ID} value={departamento.depa_ID}>{departamento.depa_Nombre}</option>
+                ))}
+              </CFormSelect>
             </div>
             <div className="field">
               <label htmlFor="municipio">Municipios</label>
-              <CFormSelect
-                value={selectedMunicipio}
-                onChange={(e) => setSelectedMunicipio(e)}
-                options={municipios}
-                placeholder="Seleccionar"
-              />
+              <CFormSelect id="municipio">
+                {municipios.map(municipio => (
+                  <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
+                ))}
+              </CFormSelect>
             </div>
-
             <div className="field">
-              <label htmlFor="sucursal">Sucursal</label>
-              <CFormSelect
-                placeholder="Seleccionar"
-                value={selectedSucursal}
-                onChange={(e) => setSelectedSucursal(e)}
-                options={sucursalOptions}
-              />
+              <label htmlFor="sucursal">Sucursales</label>
+              <CFormSelect id="sucursal">
+                <option value="">Seleccione una Sucursal</option>
+                {sucursales.map(sucursal => (
+                  <option key={sucursal.sucu_ID} value={sucursal.sucu_ID}>{sucursal.sucu_Descripcion}</option>
+                ))}
+              </CFormSelect>
             </div>
           </div>
 
