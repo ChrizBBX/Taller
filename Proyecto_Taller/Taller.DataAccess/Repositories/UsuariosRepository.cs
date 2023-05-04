@@ -34,6 +34,15 @@ namespace Taller.DataAccess.Repositories
             return db.Query<VW_tbUsuarios>(ScriptsDataBase.UDP_Usuarios_Select, null, commandType: CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbUsuarios> Login(VW_tbUsuarios item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_Nombre", item.user_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_Contrasena", item.user_Contrasena, DbType.String, ParameterDirection.Input);
+            return db.Query<VW_tbUsuarios>(ScriptsDataBase.UDP_Login, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public RequestStatus Update(tbUsuarios item)
         {
             throw new NotImplementedException();

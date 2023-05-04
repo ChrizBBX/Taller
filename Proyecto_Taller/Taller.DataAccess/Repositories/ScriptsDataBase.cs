@@ -11,6 +11,7 @@ namespace Taller.DataAccess.Repositories
 
         #region Usuarios
         public static string UDP_Usuarios_Select = "acce.UDP_tbUsuarios_VW";
+        public static string UDP_Login = "UDP_Login";
         #endregion
 
         #region Ventas

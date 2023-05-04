@@ -885,3 +885,5 @@ END
 --ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
 --ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
 --ON vent.sucu_ID = sucu.sucu_ID
+
+

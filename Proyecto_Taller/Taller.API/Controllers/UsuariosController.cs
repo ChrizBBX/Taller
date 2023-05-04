@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API
 {
@@ -29,5 +30,12 @@ namespace Taller.API
             return Ok(listado);
         }
 
+
+        [HttpPost("Login")]
+        public IActionResult Login(VW_tbUsuarios item)
+        {
+            var listado = _accesoservice.Login(item);
+            return Ok(listado);
+        }
     }
 }

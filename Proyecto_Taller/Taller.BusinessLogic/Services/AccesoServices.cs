@@ -24,9 +24,22 @@ namespace Taller.BusinessLogic.Services
             }
             catch (Exception e)
             {
-
                 return Enumerable.Empty<VW_tbUsuarios>();
             }
         }
+
+        #region Login
+        public IEnumerable<VW_tbUsuarios> Login(VW_tbUsuarios item)
+        {
+            try
+            {
+                return _usuariosrepository.Login(item);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbUsuarios>();
+            }
+        }
+        #endregion
     }
 }
