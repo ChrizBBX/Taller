@@ -872,22 +872,57 @@ AS
 BEGIN
 SELECT * FROM tllr.VW_tbCompras
 END
+GO
 
-/*Ventas*/
 
---/*Ventas View*/
---GO
---CREATE VIEW tllr.VW_tbVentas
---AS
---SELECT [vent_Id], [vent_Fecha], 
---vent.[clie_ID],clie.clie_Nombres, [vent_Descuento], 
---[vent_MontoFinal], vent.[sucu_ID],sucu.sucu_Descripcion, 
---[vent_UserCreacion],[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, [vent_FechaCreacion], 
---[vent_UserModificacion],[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, [vent_FechaModificacion] 
---FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
---ON vent.vent_UserCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
---ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
---ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
---ON vent.sucu_ID = sucu.sucu_ID
+--******************************************UDP tbMunicipios*********************************************--
+CREATE OR ALTER PROCEDURE GRAL.UDP_tbMunicipios_LlenarMunicipiosPorDepto
+	@depa_ID	INT
+AS
+BEGIN
+	SELECT	 [muni_ID],
+			 [muni_Nombre]
+	FROM	 gral.tbMunicipios
+	WHERE	 [depa_ID] = @depa_ID	
+END
+GO
 
+--******************************************UDP /tbMunicipios*********************************************--
+
+--******************************************UDP tbDepartamentos*********************************************--
+CREATE OR ALTER PROCEDURE GRAL.UDP_tbDepartamentos_LlenarDepartamentos
+	@depa_ID	INT
+AS
+BEGIN
+	SELECT	 [depa_ID],
+			 [depa_Nombre]
+	FROM	gral.tbDepartamentos
+END
+GO
+
+--******************************************UDP tbDepartamentos*********************************************--
+CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
+	  @empe_Nombres            NVARCHAR(150),
+	  @empe_Apellidos          NVARCHAR(150),
+	  @empe_Identidad          VARCHAR(13),
+	  @empe_FechaNacimiento    DATE,
+	  @empe_Sexo               CHAR(1),
+	  @estacivi_Id             INT,
+	  @muni_Id                 CHAR(4),    
+	  @empe_Direccion          NVARCHAR(150),
+	  @empe_Telefono           NVARCHAR(150),
+	  @empe_CorreoElectronico  NVARCHAR(150),
+	  @sucu_Id                 INT
+AS
+BEGIN
+ BEGIN TRY 
+    INSERT INTO tllr.tbEmpleados([empe_Nombres],[empe_Apellidos],[empe_Identidad],[empe_FechaNacimiento],[empe_Sexo],[estacivi_Id],[muni_Id],[empe_Direccion],[empe_Telefono],[empe_CorreoElectronico],[sucu_Id],[empe_UsuCreacion])
+	VALUES (@empe_Nombres,@empe_Apellidos,@empe_Identidad,@empe_FechaNacimiento,@empe_Sexo,@estacivi_Id,@muni_Id,@empe_Direccion,@empe_Telefono,@empe_CorreoElectronico,@sucu_Id,1)
+	SELECT 1
+ END TRY 
+ BEGIN CATCH
+    SELECT 0
+ END CATCH
+END
+GO
 

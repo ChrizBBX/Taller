@@ -49,3 +49,20 @@ C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\
 C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.dll
 C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\ref\Taller.BusinessLogic.dll
 C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.pdb
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.BusinessLogic.deps.json
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.BusinessLogic.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\ref\Taller.BusinessLogic.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.BusinessLogic.pdb
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.DataAccess.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.Entities.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.DataAccess.pdb
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\bin\Debug\net5.0\Taller.Entities.pdb
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.AssemblyInfo.cs
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.csproj.CopyComplete
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\ref\Taller.BusinessLogic.dll
+C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.BusinessLogic\obj\Debug\net5.0\Taller.BusinessLogic.pdb

@@ -60,6 +60,27 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbEmpleados>();
             }
         }
+
+        public int AgregarEmpleado(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var Resultado = _empleadosRepository.AgregarEmpleado(item);
+                if (Resultado != 0)
+                {
+                    return Resultado;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception x)
+            {
+                return 0;
+            }
+        }
         #endregion
 
         #region Clientes

@@ -11,6 +11,14 @@ const Proveedores = React.lazy(() => import('./views/custom/proveedores/Proveedo
 const Repuestos = React.lazy(() => import('./views/custom/repuestos/Repuestos'))
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
+const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
+const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
+const EstadosCiviles = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCiviles'))
+const Clientes = React.lazy(() => import('./views/custom/Cliente/Cliente'))
+const Usuarios = React.lazy(() => import('./views/custom/Usuarios/Usuarios'))
+const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagos'))
+const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
+const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/CreateEmpleados'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -66,6 +74,14 @@ const routes = [
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },
   { path: '/servicios', name: 'Servicios', element: Servicios },
   { path: '/ventas', name: 'Ventas', element: Ventas },
+  { path: '/Empleados', name: 'Empleados', element: Empleados },
+  { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },
+  { path: '/EstadosCiviles', name: 'EstadosCiviles', element: EstadosCiviles },
+  { path: '/Clientes', name: 'Clientes', element: Clientes },
+  { path: '/Usuarios', name: 'Usuarios', element: Usuarios },
+  { path: '/MetodosPagos', name: 'MetodosPagos', element: MetodosPagos },
+  { path: '/CreateEmpleados', name: 'CreateEmpleados', element: CreateEmpleados },
+  { path: '/Compras', name: 'Compras', element: Compras },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

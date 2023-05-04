@@ -44,6 +44,7 @@ namespace Taller.DataAccess.Repositories
 
         #region Empleados
         public static string UDP_tbEmpleados_Select = "tllr.UDP_tbEmpleados_VW";
+        public static string AgregarEmpleados = "tllr.UDP_tbEmpleado_InsertarEmpleados";
         #endregion
 
         #region Modelos
@@ -65,6 +66,14 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
         #region  Marcas
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbMarcas_VW";
         public static string UDP_tbMarcas_Insert = "tllr.UDP_tbMarcas_Insert";
+        #endregion
+
+        #region Municipios
+        public static string ListarMunicipiosPorDepto = "GRAL.UDP_tbMunicipios_LlenarMunicipiosPorDepto";
+        #endregion
+
+        #region Departamentos
+        public static string LlenarDepartamentos = "GRAL.UDP_tbDepartamentos_LlenarDepartamentos";
         #endregion
     }
 }

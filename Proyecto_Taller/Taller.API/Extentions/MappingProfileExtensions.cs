@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Extentions
 {
@@ -10,7 +12,9 @@ namespace Taller.API.Extentions
     {
         public MappingProfileExtensions()
         {
-            
+            CreateMap<MunicipiosViewModel, tbMunicipios>().ReverseMap();
+            CreateMap<EmpleadosViewModel, tbEmpleados>().ReverseMap();
+
         }
     }
 }

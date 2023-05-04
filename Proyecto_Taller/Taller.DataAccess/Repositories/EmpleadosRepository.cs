@@ -12,6 +12,24 @@ namespace Taller.DataAccess.Repositories
 {
     public class EmpleadosRepository : IRepository<tbEmpleados, VW_tbEmpleados>
     {
+        public int AgregarEmpleado(tbEmpleados item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametro = new DynamicParameters();
+            parametro.Add("@empe_Nombres", item.empe_Nombres, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_Apellidos", item.empe_Apellidos, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_Identidad", item.empe_Identidad, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_FechaNacimiento", item.empe_FechaNacimiento, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_Sexo", item.empe_Sexo, DbType.String, ParameterDirection.Input);
+            parametro.Add("@estacivi_Id", item.estacivi_Id, DbType.String, ParameterDirection.Input);
+            parametro.Add("@muni_Id", item.muni_Id, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_Direccion", item.empe_Direccion, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_Telefono", item.empe_Telefono, DbType.String, ParameterDirection.Input);
+            parametro.Add("@empe_CorreoElectronico", item.empe_CorreoElectronico, DbType.String, ParameterDirection.Input);
+            parametro.Add("@sucu_Id", item.sucu_Id, DbType.String, ParameterDirection.Input);
+            return db.QueryFirst<int>(ScriptsDataBase.AgregarEmpleados, parametro, commandType: CommandType.StoredProcedure);
+        }
+
         public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
