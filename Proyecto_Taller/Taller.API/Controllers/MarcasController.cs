@@ -45,5 +45,14 @@ namespace Taller.API.Controllers
             var listado = _tallerServices.EditarMarcas(listadoMapeado);
             return Ok(listado);
         }
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(MarcasViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbMarcas>(item);
+            var listado = _tallerServices.EliminarMarcas(listadoMapeado);
+            return Ok(listado);
+        }
+
     }
 }

@@ -676,6 +676,23 @@ SELECT '0'
 END CATCH
 END
 
+/*Marcas Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_Delete
+@marc_ID INT
+AS
+BEGIN
+	BEGIN TRY
+	UPDATE tllr.tbMarcas
+	SET marc_Estado = 0
+	WHERE marc_ID = @marc_ID
+	SELECT '1'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
 /*Modelos*/
 
 /*Modelos View*/
@@ -700,6 +717,78 @@ BEGIN
 SELECT * FROM tllr.VW_Modelos
 END
 
+/*Modelos Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbModelos_Insert 
+@marc_ID INT,
+@mode_Nombre NVARCHAR(300),
+@mode_UserCreacion INT
+AS
+BEGIN
+BEGIN TRY
+IF NOT EXISTS (SELECT mode_Nombre FROM tllr.tbModelos WHERE mode_Nombre = @mode_Nombre)
+	BEGIN
+	INSERT INTO tllr.tbModelos ([marc_ID], [mode_Nombre], 
+	[mode_FechaCreacion], [mode_UserCreacion], 
+	[mode_FechaModificacion], [mode_UserModificacion], 
+	[mode_Estado])
+	VALUES (@marc_ID,@mode_Nombre,GETDATE(),@mode_UserCreacion,NULL,NULL,1)
+	SELECT '1'
+	END
+	ELSE 
+	SELECT '2'
+END TRY
+BEGIN CATCH
+	SELECT '0'
+END CATCH
+END
+
+/*Modelos Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbModelos_Update
+@mode_ID INT,
+@marc_ID INT,
+@mode_Nombre NVARCHAR(300),
+@mode_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT mode_Nombre FROM tllr.tbModelos WHERE mode_ID != @mode_ID AND mode_Nombre = @mode_Nombre)
+		BEGIN
+		UPDATE tllr.tbModelos
+		SET marc_ID = @marc_ID,
+			mode_Nombre = @mode_Nombre,
+			mode_UserModificacion = @mode_UserModificacion,
+			mode_FechaModificacion = GETDATE()
+		WHERE mode_ID = @mode_ID
+			SELECT '1'
+		END
+		ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Modelos Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbModelos_Delete
+@mode_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE tllr.tbModelos
+		SET mode_Estado = 0 
+		WHERE mode_ID = @mode_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+
 /*Proveedores*/
 
 
@@ -723,6 +812,58 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbProveedores
+END
+
+/*Proveedores Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_Insert
+@prov_Rut VARCHAR(14),
+@prov_Nombre NVARCHAR(200),
+@prov_CorreoElectronico NVARCHAR(200),
+@prov_Telefono NVARCHAR(15),
+@prov_Direccion NVARCHAR(150),
+@prov_UserCreacion	INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT prov_Nombre FROM tllr.tbProveedores WHERE prov_Nombre = @prov_Nombre)
+		BEGIN 
+		INSERT INTO tllr.tbProveedores ([prov_Rut], [prov_Nombre], [prov_CorreoElectronico], [prov_Telefono], [prov_Dirrecion], [prov_UserCreacion], [prov_FechaCreacion], [prov_UserModificacion], [prov_FechaModificacion], [prov_Estado])
+		VALUES (@prov_Rut,@prov_Nombre,@prov_CorreoElectronico,@prov_Telefono,@prov_Direccion,@prov_UserCreacion,GETDATE(),NULL,NULL,1)
+		SELECT '1'
+		END
+		ELSE 
+		SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Proveedores Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_Update
+@prov_ID INT,
+@prov_Rut VARCHAR(14),
+@prov_Nombre NVARCHAR(200),
+@prov_CorreoElectronico NVARCHAR(200),
+@prov_Telefono NVARCHAR(15),
+@prov_Direccion NVARCHAR(150),
+@prov_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT prov_Nombre FROM tllr.tbProveedores WHERE prov_ID != @prov_ID AND prov_Nombre = @prov_Nombre)
+			BEGIN
+			UPDATE tllr.tbProveedores
+			SET
+			WHERE prov_ID  = @prov_ID
+			END
+			ELSE
+			SELECT  '2'
+	END TRY
+	BEGIN CATCH
+	END CATCH
 END
 
 /*Repuestos*/

@@ -139,6 +139,7 @@ namespace Taller.BusinessLogic.Services
                 throw;
             }
         }
+
         public ServiceResult EditarMarcas(tbMarcas item)
         {
             var result = new ServiceResult();
@@ -158,6 +159,28 @@ namespace Taller.BusinessLogic.Services
                     return result.BadRequest(insertar.MessageStatus);
                 }
 
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarMarcas(tbMarcas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _marcasRepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
             }
             catch (Exception e)
             {
@@ -269,6 +292,77 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_Modelos>();
+            }
+        }
+
+        public ServiceResult InsertarModelos(tbModelos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _modelosrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarModelos(tbModelos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _modelosrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarModelos(tbModelos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _modelosrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion

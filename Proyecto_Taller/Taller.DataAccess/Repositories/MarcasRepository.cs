@@ -55,5 +55,17 @@ namespace Taller.DataAccess.Repositories
             result.MessageStatus = answer;
             return result;
         }
+
+        public RequestStatus Delete(tbMarcas item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbMarcas_Delete, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
+        }
     }
 }

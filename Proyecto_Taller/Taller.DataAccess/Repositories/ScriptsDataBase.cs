@@ -49,6 +49,9 @@ namespace Taller.DataAccess.Repositories
 
         #region Modelos
         public static string UDP_Modelos_Select = "tllr.UDP_tbModelos_VW";
+        public static string UDP_Modelos_Insert = "tllr.UDP_tbModelos_Insert";
+        public static string UDP_Modelos_Update = "tllr.UDP_tbModelos_Update";
+        public static string UDP_Modelos_Delete = "tllr.UDP_tbModelos_Delete";
         #endregion
 
         #region Estados Civiles
@@ -67,6 +70,7 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbMarcas_VW";
         public static string UDP_tbMarcas_Insert = "tllr.UDP_tbMarcas_Insert";
         public static string UDP_tbMarcas_Update = "tllr.UDP_tbMarcas_Update";
+        public static string UDP_tbMarcas_Delete = "tllr.UDP_tbMarcas_Delete";
         #endregion
 
         #region Municipios
