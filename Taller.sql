@@ -632,8 +632,8 @@ END
 /*Marcas Insert*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_Insert
-@marc_Nombre NVARCHAR(300),
-@marc_UserCreacion INT
+	@marc_Nombre NVARCHAR(300),
+	@marc_UserCreacion INT
 AS
 BEGIN
 	BEGIN TRY
@@ -901,6 +901,7 @@ END
 GO
 
 --******************************************UDP tbDepartamentos*********************************************--
+--******************************************UDP tbEmpleados*********************************************--
 CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
 	  @empe_Nombres            NVARCHAR(150),
 	  @empe_Apellidos          NVARCHAR(150),
@@ -925,4 +926,15 @@ BEGIN
  END CATCH
 END
 GO
+
+CREATE OR ALTER PROCEDURE tllr.UDP_tbEmmppleados_UpdateEmpleados
+  @empe_ID                INT,
+  @empe
+
+AS
+BEGIN
+END
+GO
+--****************************************UDP tbEmpleados*****************************************************--
+
 

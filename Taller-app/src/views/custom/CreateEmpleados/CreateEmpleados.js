@@ -6,10 +6,12 @@ import {
   CFormInput,
   CForm
 } from '@coreui/react'
-import { CDatePicker } from '@coreui/react-pro'
 import axios from 'axios';
-import moment from 'moment';
-import "moment/locale/es";
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const CreateEmpleado = () => {
 
@@ -25,19 +27,23 @@ const CreateEmpleado = () => {
   const [estadoCivil, setEstadoCivil] = useState('');
   const [municipio, setMunicipio] = useState('');
   const [sucursal, setSucursal] = useState('');
-  const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [correoElectronico, setCorreoElectronico] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDirreccion] = useState('');
 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const formattedDate = moment(fechaNacimiento, "YYYY-MM-DD").toISOString();
     const formData = {
       empe_Nombres: nombre,
       empe_Apellidos: apellido,
       empe_Identidad: dni,
-      empe_FechaNacimiento: formattedDate,
+      empe_FechaNacimiento: selectedDate,
       empe_Sexo: radioValue,
       estacivi_Id: estadoCivil,
       muni_Id: municipio,
@@ -46,7 +52,6 @@ const CreateEmpleado = () => {
       empe_CorreoElectronico: correoElectronico,
       sucu_Id: sucursal
     };
-    //console.log(formData);
     console.log(formData);
     axios.post('https://localhost:44387/api/Empleados/AgregarEmpleado', formData)
       .then(response => {
@@ -191,19 +196,24 @@ const CreateEmpleado = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="field mt-3">
-                <label htmlFor="FechaNacimiento">Fecha de Nacimiento</label>
-                <CDatePicker
-                  id="FechaNacimiento"
-                  className="p-valid"
-                  showIcon={true}
-                  dateFormat="yyyy/MM/dd"
-                  value={fechaNacimiento}
-                  onChange={(event) => setFechaNacimiento(event.target.value)}
+              <div  className="field mt-3">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Date picker inline"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
                 />
-              </div>
-
+              </MuiPickersUtilsProvider>
+              </div > 
+             
               <div className="field mt-3">
                 <label htmlFor="Dirrecion">Dirrecion</label>
                 <CFormInput type="text" id="Dirrecion" className="p-valid" value={direccion} onChange={(event) => setDirreccion(event.target.value)} />
