@@ -12,7 +12,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-
+ 
 const CreateEmpleado = () => {
 
   const [estadosCiviles, setEstadosCiviles] = useState([]);

@@ -47,7 +47,7 @@ function Marcas() {
     event.preventDefault()
 
     let payload = {
-      marc_Nombre: MarcaCreate,
+        marc_Nombre: MarcaCreate,
     }
     axios
       .post('Marcas/Insert', payload)

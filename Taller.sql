@@ -927,14 +927,322 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE tllr.UDP_tbEmmppleados_UpdateEmpleados
-  @empe_ID                INT,
-  @empe
-
+CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_ActualizarEmpleados
+      @empe_ID                 INT, 
+      @empe_Nombres            NVARCHAR(150),
+	  @empe_Apellidos          NVARCHAR(150),
+	  @empe_Identidad          VARCHAR(13),
+	  @empe_FechaNacimiento    DATE,
+	  @empe_Sexo               CHAR(1),
+	  @estacivi_Id             INT,
+	  @muni_Id                 CHAR(4),    
+	  @empe_Direccion          NVARCHAR(150),
+	  @empe_Telefono           NVARCHAR(150),
+	  @empe_CorreoElectronico  NVARCHAR(150),
+	  @sucu_Id                 INT
 AS
 BEGIN
+   BEGIN TRY 
+       IF NOT EXISTS (SELECT empe_Identidad FROM tllr.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+		 BEGIN
+		  UPDATE tllr.tbEmpleados 
+		  SET   empe_Nombres = @empe_Nombres,
+		        empe_Apellidos = @empe_Apellidos,
+				empe_Identidad = @empe_Identidad,
+				empe_FechaNacimiento = @empe_FechaNacimiento,
+				empe_Sexo = @empe_Sexo,
+				estacivi_Id = @estacivi_Id,
+				muni_Id = @muni_Id,
+				empe_Direccion = @empe_Direccion,
+				empe_CorreoElectronico = @empe_CorreoElectronico,
+				sucu_Id = @sucu_Id
+		WHERE   empe_Id = @empe_ID
+		SELECT '1'
+        END
+        ELSE 
+        SELECT '2'
+   END TRY 
+   BEGIN CATCH
+          SELECT '0'
+   END CATCH
+END 
+GO 
+--****************************************UDP tbEmpleados*****************************************************--
+--/Usuarios Update/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
+@user_NombreUsuario NVARCHAR(150),
+@user_Contraseña NVARCHAR(200),
+@user_EsAdmin BIT,
+@role_ID INT,
+@empe_ID INT
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
+        BEGIN 
+        INSERT INTO acce.tbUsuarios ([user_NombreUsuario], [user_Contrasena], [user_EsAdmin], [role_ID], [empe_ID],[user_UserCreacion])
+        VALUES (@user_NombreUsuario,@user_Contraseña,@user_EsAdmin,@role_ID,@empe_ID,1)
+        SELECT '1'
+        END
+        ELSE 
+        SELECT '2'
+    END TRY
+    BEGIN CATCH
+    SELECT '0'
+    END CATCH
+END
+--/Usuarios Update/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_Usuarios_Update
+@user_NombreUsuario NVARCHAR(150),
+@user_EsAdmin BIT,
+@role_ID INT,
+@empe_ID INT,
+@user_ID INT 
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
+            BEGIN
+            UPDATE acce.tbUsuarios
+            SET [user_NombreUsuario] = @user_NombreUsuario,
+                [user_EsAdmin] = [user_EsAdmin],
+                [role_ID] = @role_ID,
+                [empe_ID] = @empe_ID,
+                [user_UserModificacion] = 1,
+                [user_FechaModificacion] = GETDATE()
+            WHERE user_ID  = @user_ID
+            SELECT    '1'
+            END
+            ELSE
+            SELECT  '2'
+    END TRY
+    BEGIN CATCH
+            SELECT '0'
+    END CATCH
+END
+--/Usuarios Delete/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Delete
+@user_ID INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE acce.tbUsuarios
+        SET [user_Estado] = 0
+        WHERE user_ID = @user_ID
+        SELECT '1'
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+    END CATCH
+END
+--*********************************************UDP /tbClientes**************************************--
+--Clientes CREATE 
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Insert
+@clie_Nombres NVARCHAR(150),
+@clie_Apellidos NVARCHAR(200),
+@clie_Sexo  CHAR(1),
+@clie_FechaNacimiento DATETIME,
+@clie_Telefono NVARCHAR(20),
+@clie_CorreoElectronico NVARCHAR(50),
+@muni_ID  INT
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT clie_Nombres FROM tllr.tbClientes WHERE clie_Nombres = @clie_Nombres)
+        BEGIN 
+        INSERT INTO tllr.tbClientes ([clie_Nombres], [clie_Apellidos], [clie_Sexo], [clie_FechaNacimiento], [clie_Telefono],[clie_CorreoElectronico],[muni_ID],[clie_UserCreacion])
+        VALUES (@clie_Nombres,@clie_Apellidos,@clie_Sexo,@clie_FechaNacimiento,@clie_Telefono,@clie_CorreoElectronico,@muni_ID,1)
+        SELECT '1'
+        END
+        ELSE 
+        SELECT '2'
+    END TRY
+    BEGIN CATCH
+    SELECT '0'
+    END CATCH
+END
+
+--Clientes UPDATE
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Update
+@clie_ID  INT,
+@clie_Nombres NVARCHAR(150),
+@clie_Apellidos NVARCHAR(200),
+@clie_Sexo  CHAR(1),
+@clie_FechaNacimiento DATE,
+@clie_Telefono NVARCHAR(20),
+@clie_CorreoElectronico NVARCHAR(50),
+@muni_ID  INT
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT clie_Nombres FROM tllr.tbClientes WHERE clie_Nombres = @clie_Nombres)
+            BEGIN
+            UPDATE tllr.tbClientes
+            SET [clie_Nombres] = @clie_Nombres,
+                [clie_Apellidos] = @clie_Apellidos,
+                [clie_Sexo] = @clie_Sexo,
+                [clie_FechaNacimiento] = @clie_FechaNacimiento,
+                [clie_Telefono] = @clie_Telefono,
+				[clie_CorreoElectronico] = @clie_CorreoElectronico,
+                [muni_ID] = @muni_ID,
+                [clie_UserModificacion] = 1,
+                [clie_FechaModificacion] = GETDATE()
+            WHERE  [clie_ID] = @clie_ID
+            SELECT    '1'
+            END
+            ELSE
+            SELECT  '2'
+    END TRY
+    BEGIN CATCH
+            SELECT '0'
+    END CATCH
 END
 GO
---****************************************UDP tbEmpleados*****************************************************--
 
+CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Delete
+@clie_ID INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE [tllr].[tbClientes]
+        SET [clie_Estado] = 0
+        WHERE clie_ID = @clie_ID
+        SELECT '1'
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+    END CATCH
+END
+--********************************************UDP /tbClientes**************************************--
+--********************************************UDP /tbEstadosCiviles*********************************--
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Insert
+		@estacivi_Nombre NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+        BEGIN 
+        INSERT INTO gral.tbEstadosCiviles ([estacivi_Nombre],[estacivi_UserModificacion])
+        VALUES (@estacivi_Nombre,1)
+        SELECT '1'
+        END
+        ELSE 
+        SELECT '2'
+    END TRY
+    BEGIN CATCH
+    SELECT '0'
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
+@estacivi_ID     INT,
+@estacivi_Nombre NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
+            BEGIN
+            UPDATE gral.tbEstadosCiviles
+            SET estacivi_Nombre = @estacivi_Nombre,
+                [estacivi_UserCreacion] = 1,
+                [estacivi_FechaCreacion] = GETDATE()
+            WHERE [estacivi_ID]  = @estacivi_ID
+            SELECT    '1'
+            END
+            ELSE
+            SELECT  '2'
+    END TRY
+    BEGIN CATCH
+            SELECT '0'
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE gral.UDP_tbClientes_Update
+@estacivi_ID     INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE gral.tbEstadosCiviles
+        SET [estacivi_Estado] = 0
+        WHERE estacivi_ID = @estacivi_ID
+        SELECT '1'
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+    END CATCH
+END
+
+--********************************************UDP /tbEstadosCiviles*********************************--
+--********************************************UDP /tbMetodosPago************************************--
+go
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Insert
+		@meto_Nombre NVARCHAR(100)
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT [meto_Nombre] FROM gral.tbMetodosPago WHERE [meto_Nombre] = @meto_Nombre)
+        BEGIN 
+        INSERT INTO gral.tbMetodosPago ([meto_Nombre],[meto_UserCreacion])
+        VALUES (@meto_Nombre,1)
+        SELECT '1'
+        END
+        ELSE 
+        SELECT '2'
+    END TRY
+    BEGIN CATCH
+    SELECT '0'
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
+   @meto_ID      INT,
+   @meto_Nombre  NVARCHAR(150)
+AS
+BEGIN
+    BEGIN TRY
+        IF NOT EXISTS (SELECT [meto_Nombre] FROM gral.tbMetodosPago WHERE [meto_Nombre] = @meto_Nombre)
+            BEGIN
+            UPDATE gral.tbMetodosPago
+            SET [meto_Nombre] = @meto_Nombre,
+                [meto_UserModificacion] = 1,
+                 [meto_FechaModificacion]= GETDATE()
+            WHERE  [meto_ID] = @meto_ID
+            SELECT    '1'
+            END
+            ELSE
+            SELECT  '2'
+    END TRY
+    BEGIN CATCH
+            SELECT '0'
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE gral.UDP_tbMetodosPago_Delete
+ @meto_ID INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE [gral].[tbMetodosPago]
+        SET [meto_Estado] = 0
+        WHERE [meto_ID] = @meto_ID
+        SELECT '1'
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+    END CATCH
+END
+GO
+--********************************************UDP /tbMetodosPago************************************--
+--********************************************UDP /tbCompras****************************************--}
+--********************************************UDP /tbCompras****************************************--
 
