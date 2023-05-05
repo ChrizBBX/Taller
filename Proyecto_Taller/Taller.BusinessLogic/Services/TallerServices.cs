@@ -21,6 +21,7 @@ namespace Taller.BusinessLogic.Services
         private readonly MarcasRepository _marcasRepository;
         private readonly EmpleadosRepository _empleadosRepository;
         private readonly ComprasRepository _comprasRepository;
+        private readonly DetallesVentaRepository _detallesventarepository;
 
         public TallerServices(VentasRepository ventasrepository,
             VehiculosRepository vehiculosrepository,
@@ -32,7 +33,8 @@ namespace Taller.BusinessLogic.Services
             ClientesRepository clientesRepository, 
             MarcasRepository marcasRepository,
             EmpleadosRepository empleadosRepository,
-            ComprasRepository comprasRepository)
+            ComprasRepository comprasRepository,
+            DetallesVentaRepository detallesventarepository)
         {
             _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
@@ -45,6 +47,7 @@ namespace Taller.BusinessLogic.Services
             _marcasRepository = marcasRepository;
             _empleadosRepository = empleadosRepository;
             _comprasRepository = comprasRepository;
+            _detallesventarepository = detallesventarepository;
         }
 
         #region Empleados
@@ -191,6 +194,20 @@ namespace Taller.BusinessLogic.Services
 
         #endregion
 
+        #region DetallesVentas
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentas()
+        {
+            try
+            {
+                return _detallesventarepository.List();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
+        #endregion
+
         #region Ventas
         public IEnumerable<VW_tbVentas> ListadoVentas()
         {
@@ -202,6 +219,27 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbVentas>();
+            }
+        }
+
+        public ServiceResult InsertarVentas(tbVentas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _ventasrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion
@@ -219,6 +257,81 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbVehiculos>();
             }
         }
+
+        public ServiceResult InsertarVehiculos(tbVehiculos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _vehiculosrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarVehiculos(tbVehiculos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _vehiculosrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarVehiculos(tbVehiculos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _vehiculosrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Suursales
@@ -232,6 +345,77 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbSucursales>();
+            }
+        }
+
+        public ServiceResult InsertarSucursales(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _sucursalesrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarSucursales(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _sucursalesrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarSucursales(tbSucursales item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _sucursalesrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion
@@ -249,6 +433,77 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbServicios>();
             }
         }
+
+        public ServiceResult InsertarServicios(tbServicios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _serviciosRepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarServicios(tbServicios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _serviciosRepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarServicios(tbServicios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _serviciosRepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Repuestos
@@ -264,6 +519,77 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbRepuestos>();
             }
         }
+
+        public ServiceResult InsertarRepuestos(tbRepuestos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _repuestosrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarRepuestos(tbRepuestos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _repuestosrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarRepuestos(tbRepuestos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _repuestosrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Proveedores
@@ -277,6 +603,81 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbProveedores>();
+            }
+        }
+
+        public ServiceResult InsertarProveedores(tbProveedores item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _proveedoresrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarProveedores(tbProveedores item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _proveedoresrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarProveedores(tbProveedores item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _proveedoresrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion

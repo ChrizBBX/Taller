@@ -117,6 +117,7 @@ function Marcas() {
     axios
       .get('http://proyectotaller.somee.com/api/Marcas')
       .then((response) => {
+        console.log('holaaa')
         const insertarid = response.data.map((row) => ({
           ...row,
           id: row.marc_ID,

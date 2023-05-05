@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Controllers
 {
@@ -25,6 +27,31 @@ namespace Taller.API.Controllers
         public IActionResult Vehiculos()
         {
             var listado = _tallerservices.ListadoVehiculos();
+            return Ok(listado);
+        }
+
+        [HttpPost("Insert")]
+        public IActionResult Insert(VehiculosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbVehiculos>(item);
+            var listado = _tallerservices.InsertarVehiculos(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(VehiculosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbVehiculos>(item);
+            var listado = _tallerservices.EditarVehiculos(listadoMapeado);
+            return Ok(listado);
+        }
+
+
+        [HttpPost("Eliminar")]
+        public IActionResult Delete(VehiculosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbVehiculos>(item);
+            var listado = _tallerservices.EliminarVehiculos(listadoMapeado);
             return Ok(listado);
         }
     }

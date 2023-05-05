@@ -291,6 +291,7 @@ CREATE TABLE tllr.tbRepuestos(
      resp_ID           INT IDENTITY(1,1),
 	 resp_Descripcion  NVARCHAR(150) NOT NULL,
 	 resp_Precio       DECIMAL(18,2) NOT NULL,
+	 resp_Stock		   INT DEFAULT 0 NOT NULL,
 	 prov_ID           INT NOT NULL,
 	 marc_ID           INT NOT NULL,
 	 resp_Anio         CHAR(4) NOT NULL,
@@ -856,13 +857,37 @@ BEGIN
 		IF NOT EXISTS (SELECT prov_Nombre FROM tllr.tbProveedores WHERE prov_ID != @prov_ID AND prov_Nombre = @prov_Nombre)
 			BEGIN
 			UPDATE tllr.tbProveedores
-			SET
+			SET prov_Rut = @prov_Rut,
+				prov_Nombre = @prov_Nombre,
+				prov_CorreoElectronico = @prov_CorreoElectronico,
+				prov_Telefono = @prov_Telefono,
+				prov_Dirrecion = @prov_Direccion,
+				prov_UserModificacion = @prov_UserModificacion
 			WHERE prov_ID  = @prov_ID
+			SELECT	'1'
 			END
 			ELSE
 			SELECT  '2'
 	END TRY
 	BEGIN CATCH
+			SELECT '0'
+	END CATCH
+END
+
+/*Proveedores Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_Delete
+@prov_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE tllr.tbProveedores	
+		SET prov_Estado = 0
+		WHERE prov_ID = @prov_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
 	END CATCH
 END
 
@@ -893,6 +918,84 @@ BEGIN
 SELECT * FROM tllr.VW_tbRepuestos
 END
 
+/*Repuestos Insert*/
+GO 
+CREATE OR ALTER PROCEDURE tllr.UDP_tbRepuestos_Insert
+@resp_Descripcion NVARCHAR(150),
+@resp_Precio DECIMAL (18,2),
+@prov_ID INT,
+@marc_ID INT,
+@resp_Anio CHAR(4),
+@resp_UserCreacion INT,
+@resp_Stock INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT resp_Descripcion FROM tllr.tbRepuestos WHERE resp_Descripcion = @resp_Descripcion)
+			BEGIN
+				INSERT INTO tllr.tbRepuestos ([resp_Descripcion], [resp_Precio], [prov_ID], [marc_ID], [resp_Anio], [resp_FechaCreacion], [resp_UserCreacion], [resp_FechaModificacion], [resp_UserModificacion], [resp_Estado],[resp_Stock])
+				VALUES (@resp_Descripcion,@resp_Precio,@prov_ID,@marc_ID,@resp_Anio,GETDATE(),@resp_UserCreacion,NULL,NULL,1,@resp_Stock)
+			SELECT '1'
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Repuestos Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbRespuestos_Udpate
+@resp_ID INT,
+@resp_Descripcion NVARCHAR(150),
+@resp_Precio DECIMAL (18,2),
+@prov_ID INT,
+@marc_ID INT,
+@resp_Anio CHAR(4),
+@resp_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT resp_Descripcion FROM tllr.tbRepuestos WHERE resp_ID != @resp_ID AND resp_Descripcion = @resp_Descripcion)
+			BEGIN
+				UPDATE tllr.tbRepuestos
+				SET resp_Descripcion = @resp_Descripcion,
+					resp_Precio = @resp_Precio,
+					prov_ID = @prov_ID,
+					marc_ID = @marc_ID,
+					resp_Anio = @resp_Anio,
+					resp_UserModificacion = @resp_UserModificacion,
+					resp_FechaModificacion = GETDATE()
+				WHERE resp_ID = @resp_ID
+					SELECT '1'
+			END
+			ELSE
+					SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Repuestos Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbRepuestos_Delete
+@resp_ID INT
+AS
+BEGIN
+ BEGIN TRY
+	UPDATE tllr.tbRepuestos
+	SET resp_Estado = 0
+	WHERE resp_ID = @resp_ID
+	SELECT '1'
+ END TRY
+ BEGIN CATCH
+	SELECT '0'
+ END CATCH
+END
+
 /*Servicios*/
 
 /*Servicios View*/
@@ -913,9 +1016,72 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_VW
 AS
 SELECT * FROM tllr.VW_tbServicios
 
-/*Sucursales*/
+/*Servicios Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Insert
+@serv_Descripcion NVARCHAR(250),
+@serv_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT serv_Descripcion FROM tllr.tbServicios WHERE serv_Descripcion = @serv_Descripcion)
+			BEGIN
+			INSERT INTO tllr.tbServicios ([serv_Descripcion], [serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
+			VALUES (@serv_Descripcion,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
+			SELECT '1'
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
 
-/*Sucursales View*/
+/*Servicios Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Update
+@serv_ID INT,
+@serv_Descripcion NVARCHAR(250),
+@serv_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT serv_Descripcion FROM tllr.tbServicios WHERE serv_ID != @serv_ID AND serv_Descripcion = @serv_Descripcion)
+			BEGIN
+			UPDATE tllr.tbServicios
+			SET serv_Descripcion = @serv_Descripcion,
+				serv_UserModificacion = @serv_UserModificacion,
+				serv_FechaModificacion = GETDATE()
+			WHERE 
+				serv_ID = @serv_ID
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Servicios Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Delete
+@serv_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE tllr.tbServicios 
+		SET serv_Estado = 0
+		WHERE serv_ID = @serv_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Sucursales*/
 GO
 CREATE VIEW tllr.VW_tbSucursales
 AS
@@ -935,6 +1101,77 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbSucursales
+END
+
+/*Sucursales Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_Insert
+@sucu_Descripcion NVARCHAR(200),
+@muni_ID CHAR(4),
+@sucu_DireccionExacta NVARCHAR(500),
+@sucu_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT sucu_Descripcion FROM tllr.tbSucursales WHERE sucu_Descripcion = @sucu_Descripcion)
+			BEGIN
+				INSERT INTO tllr.tbSucursales ([sucu_Descripcion], [muni_ID], [sucu_DireccionExacta], [sucu_FechaCreacion], [sucu_UserCreacion], [sucu_FechaModificacion], [sucu_UserModificacion], [sucu_Estado])
+				VALUES (@sucu_Descripcion,@muni_ID,@sucu_DireccionExacta,GETDATE(),@sucu_UserCreacion,NULL,NULL,1)
+				SELECT '1'
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Sucursales Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_Update
+@sucu_ID INT,
+@sucu_Descripcion NVARCHAR(200),
+@muni_ID CHAR(4),
+@sucu_DireccionExacta NVARCHAR(500),
+@sucu_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS(SELECT sucu_Descripcion FROM tllr.tbSucursales WHERE sucu_ID != @sucu_ID AND sucu_Descripcion = @sucu_Descripcion)
+		BEGIN
+			UPDATE tllr.tbSucursales
+			SET	sucu_Descripcion = @sucu_Descripcion,
+				muni_ID = @muni_ID,
+				sucu_DireccionExacta = @sucu_DireccionExacta,
+				sucu_UserModificacion = @sucu_UserModificacion,
+				sucu_FechaModificacion = GETDATE()
+			WHERE sucu_ID = @sucu_ID
+			SELECT '1'
+		END
+		ELSE
+		SELECT '2'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Sucursales Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_Delete
+@sucu_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE tllr.tbSucursales
+		SET sucu_Estado = 0
+		WHERE sucu_ID = @sucu_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
 END
 
 /*Vehiculos*/
@@ -962,6 +1199,77 @@ BEGIN
 SELECT * FROM tllr.VW_tbVehiculos
 END
 
+/*Vehiculos Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_Insert
+@mode_ID INT,
+@vehi_Matricula VARCHAR(7),
+@vehi_anio VARCHAR(4),
+@vehi_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT vehi_Matricula FROM tllr.tbVehiculos WHERE vehi_Matricula = @vehi_Matricula)
+			BEGIN
+				INSERT INTO tllr.tbVehiculos ([mode_ID], [vehi_Matricula], [vehi_anio], [vehi_FechaCreacion], [vehi_UserCreacion], [vehi_FechaModificacion], [vehi_UserModificacion], [vehi_Estado])
+				VALUES (@mode_ID,@vehi_Matricula,@vehi_anio,GETDATE(),@vehi_UserCreacion,NULL,NULL,1)
+				SELECT '1'
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Vehiculos Update*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_Update
+@vehi_ID INT,
+@mode_ID INT,
+@vehi_Matricula VARCHAR(7),
+@vehi_anio VARCHAR(4),
+@vehi_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT vehi_Matricula FROM tllr.tbVehiculos WHERE vehi_ID != @vehi_ID AND vehi_Matricula = @vehi_Matricula)
+			BEGIN
+				UPDATE tllr.tbVehiculos
+				SET mode_ID = @mode_ID,
+					vehi_Matricula = @vehi_Matricula,
+					vehi_anio = @vehi_anio,
+					vehi_UserModificacion = @vehi_UserModificacion,
+					vehi_FechaModificacion = GETDATE()
+				WHERE vehi_ID = @vehi_ID
+				SELECT '1'
+			END
+			ELSE
+			SELECT '2'
+	END TRY
+	BEGIN CATCH
+	SELECT '0'
+	END CATCH
+END
+
+/*Vehiculos Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_Delete
+@vehi_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE tllr.tbVehiculos
+		SET vehi_Estado = 0
+		WHERE vehi_ID = @vehi_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
 /*Ventas*/
 
 /*Ventas View*/
@@ -985,9 +1293,52 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbVentas
+END 
+
+/*Ventas Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_Insert
+@clie_ID INT,
+@vent_Descuento DECIMAL(18,2),
+@vent_MontoFinal DECIMAL(18,2),
+@sucu_ID INT,
+@vent_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO tbVentas ([vent_Fecha], [clie_ID], [vent_Descuento], [vent_MontoFinal], [sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion])
+		VALUES (GETDATE(),@clie_ID,@vent_Descuento,NULL,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL)
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0' 
+	END CATCH
+END
+
+/*Ventas Detalles View*/
+GO
+CREATE VIEW tllr.VW_tbDetallesventas
+AS
+SELECT [deve_ID], [vent_ID], 
+deve.[serv_ID],serv.serv_Descripcion, deve.[resp_ID],resp.resp_Descripcion, 
+[deve_Cantidad], [deve_Precioventa], 
+[deve_MontoTotal], [deve_UserCreacion], 
+[deve_FechaCreacion], [deve_UserModificacion], 
+[deve_FechaModificacion]
+FROM tllr.tbDetallesventas deve LEFT JOIN tllr.tbServicios serv
+ON deve.serv_ID = serv.serv_ID LEFT JOIN tllr.tbRepuestos resp
+ON deve.resp_ID = resp.resp_ID
+
+/*Ventas Detalles View UDP*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbDetallesventas
 END
 
 /*Empleados*/
+
 /*Empelados View*/
 GO
 CREATE VIEW tllr.VW_tbEmpleados

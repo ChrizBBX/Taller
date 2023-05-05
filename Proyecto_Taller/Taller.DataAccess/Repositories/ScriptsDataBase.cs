@@ -16,26 +16,46 @@ namespace Taller.DataAccess.Repositories
 
         #region Ventas
         public static string UDP_Ventas_Select = "tllr.UDP_tbVentas_VW";
+        public static string UDP_Ventas_Insert = "tllr.UDP_tbVentas_Insert";
+        #endregion
+
+        #region DetallesVentas
+        public static string UDP_tbDetallesventas_Select = "tllr.UDP_tbDetallesventas_VW";
         #endregion
 
         #region Vehiculos
         public static string UDP_Vehiculos_Select = "tllr.UDP_tbVehiculos_VW";
+        public static string UDP_Vehiculos_Insert = "tllr.UDP_tbVehiculos_Insert";
+        public static string UDP_Vehiculos_Update = "tllr.UDP_tbVehiculos_Update";
+        public static string UDP_Vehiculos_Delete = "tllr.UDP_tbVehiculos_Delete";
         #endregion
 
         #region Sucursales
         public static string UDP_Sucursales_Select = "tllr.UDP_tbSucursales_VW";
+        public static string UDP_Sucursales_Insert = "tllr.UDP_tbSucursales_Insert";
+        public static string UDP_Sucursales_Update = "tllr.UDP_tbSucursales_Update";
+        public static string UDP_Sucursales_Delete = "tllr.UDP_tbSucursales_Delete";
         #endregion
 
         #region Servicios
         public static string UDP_Servicios_Select = "tllr.UDP_tbServicios_VW";
+        public static string UDP_Servicios_Insert = "tllr.UDP_tbServicios_Insert";
+        public static string UDP_Servicios_Update = "tllr.UDP_tbServicios_Update";
+        public static string UDP_Servicios_Delete = "tllr.UDP_tbServicios_Delete";
         #endregion
 
         #region Repuestos
         public static string UDP_Repuestos_Select = "tllr.UDP_tbRepuestos_VW";
+        public static string UDP_Repuestos_Insert = "tllr.UDP_tbRepuestos_Insert";
+        public static string UDP_Repuestos_Update = "tllr.UDP_tbRespuestos_Udpate";
+        public static string UDP_Repuestos_Delete = "tllr.UDP_tbRepuestos_Delete";
         #endregion
 
         #region Proveedores
         public static string UDP_Proveedores_Select = "tllr.UDP_tbProveedores_VW";
+        public static string UDP_Proveedores_Insert = "tllr.UDP_tbProveedores_Insert";
+        public static string UDP_Proveedores_Update = "tllr.UDP_tbProveedores_Update";
+        public static string UDP_Proveedores_Delete = "tllr.UDP_tbProveedores_Delete";
         #endregion
 
         #region Compras

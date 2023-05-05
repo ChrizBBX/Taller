@@ -25,6 +25,7 @@ namespace Taller.Entities.Entities
         public DateTime? resp_FechaModificacion { get; set; }
         public int? resp_UserModificacion { get; set; }
         public bool? resp_Estado { get; set; }
+        public int resp_Stock { get; set; }
 
         public virtual tbMarcas marc { get; set; }
         public virtual tbProveedores prov { get; set; }
