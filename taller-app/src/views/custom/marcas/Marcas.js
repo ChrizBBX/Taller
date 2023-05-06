@@ -20,9 +20,7 @@ import {
    CRow
  } from '@coreui/react';
 import {IconButton} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import { Delete} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
@@ -188,15 +186,7 @@ function Marcas() {
       width: 300,
       renderCell: (params) => (
         <div>
-    <IconButton color="secondary">
-        <DeleteIcon onClick={() => handleDeleteClick(params.row)}/>
-      </IconButton>
-      <IconButton color="primary">
-      <EditIcon onClick={() => handleEditClick(params.row)} />
-      </IconButton>
-      <IconButton>
-        <VisibilityIcon  onClick={() => handleDetailsClick(params.row)}/>
-      </IconButton>
+          <Delete />
         </div>
       ),
     },
