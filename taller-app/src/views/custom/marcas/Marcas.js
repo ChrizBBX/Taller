@@ -25,13 +25,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 
 
 function Marcas() {
+  const navigate = useNavigate()
   const [MarcaCreate, setMarcaCreate] = useState('')
   const [MarcaEdit, setMarcaEdit] = useState('')
   const [visible, setVisible] = useState(false)
+  const [Actualizar, setActualizar] = useState(false)
   const [visible2, setVisible2] = useState(false)
+  const [visible3, setVisible3] = useState(false)
   const [marcas, setMarcas] = useState([]);
   const [sortModel, setSortModel] = useState([{ field: 'marc_ID', sort: 'asc' }]);
   const [validated, setValidated] = useState(false) 
@@ -54,15 +58,22 @@ function Marcas() {
       .post('Marcas/Insert', payload)
       .then((response) => {
         setIsSubmitting(false)
-        console.log(response.data.data.code)
-        if (response.data.data.code == '200') {
+        console.log(response)
+        if (response.data.data.message == '1') {
           toast.success('Registro agregado exitosamente');
           setVisible(false)
-        }else if(response.data.data.code == '409'){
-          toast.warning('El Registro ya existe');
+          setActualizar(!Actualizar)
+        }else if(response.data.data.message == '2'){
+          setActualizar(!Actualizar)
+          setVisible(false)
+          toast.success('Registro agregado exitosamente');
+        }else{
+          setActualizar(!Actualizar)
+          toast.warning('El registro ya existe');
         }
       })
       .catch((error) => {
+        setActualizar(!Actualizar)
           toast.error('ha ocurrido un error');
       })
   }
@@ -78,22 +89,49 @@ function Marcas() {
 
     let payload = {
       marc_ID: marcaSeleccionada.marc_ID,
-      marc_Nombre: MarcaEdit.marc_Nombre,
+      marc_Nombre: MarcaEdit,
     }
     axios
       .post('Marcas/Update', payload)
       .then((response) => {
         setIsSubmitting(false)
-        console.log(response.data.data.code)
-        if (response.data.data.code == '200') {
+        console.log(response)
+        if (response.data.code == '200') {
           toast.success('Registro editado exitosamente');
-          setVisible(false)
-        }else if(response.data.data.code == '409'){
+          setVisible2(false)
+          setActualizar(!Actualizar)
+        }else if(response.data.code == '409'){
+          setActualizar(!Actualizar)
           toast.warning('Ya existe un registro con ese nombre');
         }
       })
       .catch((error) => {
+        setActualizar(!Actualizar)
           toast.error('ha ocurrido un error');
+      })
+  }
+
+  const DeleteAction = (event) => {
+    let payload = {
+      marc_ID: marcaSeleccionada.marc_ID,
+    }
+    axios
+      .post('Marcas/Delete', payload)
+      .then((response) => {
+        setIsSubmitting(false)
+        console.log(response)
+        if (response.data.code == '200') {
+          toast.success('Registro Eliminado exitosamente');
+          setVisible3(false)
+          setActualizar(!Actualizar)
+        }else if(response.data.code == '409'){
+          toast.warning('El Registro no se puede eliminar');
+          setActualizar(!Actualizar)
+        }
+      })
+      .catch((error) => {
+          toast.error('ha ocurrido un error');
+          setActualizar(!Actualizar)
       })
   }
 
@@ -101,17 +139,19 @@ function Marcas() {
     const marca = marcas.find((marca) => marca.id === params.marc_ID); // Busca la marca seleccionada
     setVisible2(true);
     setMarcaSeleccionada(marca); // Establece la marca seleccionada en el estado marcaSeleccionada
+    localStorage.setItem('MarcaSeleccionada', JSON.stringify(marca));
+    setMarcaEdit(marca.marc_Nombre)
   };
-  
-  const handleSubmit = (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-    setValidated(true)
-  }
-  
+
+  const handleDetailsClick = () => {
+    navigate('/marcasDetails')
+  };
+
+  const handleDeleteClick = (params) => {
+    const marca = marcas.find((marca) => marca.id === params.marc_ID); // Busca la marca seleccionada
+    setVisible3(true);
+    setMarcaSeleccionada(marca); // Establece la marca seleccionada en el estado marcaSeleccionada
+  };
   
   useEffect(() => {
     axios
@@ -127,7 +167,7 @@ function Marcas() {
       .catch((error) => {
         console.log(error);
       });
-  }, [marcas]);
+  }, [Actualizar]);
   
 
   const handleSortModelChange = (model) => {
@@ -145,13 +185,13 @@ function Marcas() {
       renderCell: (params) => (
         <div>
     <IconButton color="secondary">
-        <DeleteIcon />
+        <DeleteIcon onClick={() => handleDeleteClick(params.row)}/>
       </IconButton>
       <IconButton color="primary">
       <EditIcon onClick={() => handleEditClick(params.row)} />
       </IconButton>
       <IconButton>
-        <VisibilityIcon />
+        <VisibilityIcon  onClick={() => handleDetailsClick()}/>
       </IconButton>
         </div>
       ),
@@ -199,6 +239,7 @@ function Marcas() {
     </CModal>
   </>
 {/*Aqui termina mi modal de create */}
+{/*Modal Editar*/}
 <>
     <CModal visible={visible2} onClose={() => setVisible2(false)}>
       <CModalHeader onClose={() => setVisible2(false)}>
@@ -217,8 +258,8 @@ function Marcas() {
         id="validationCustom01"
         label="Marca"
         required
-        value={marcaSeleccionada ? marcaSeleccionada.marc_Nombre : ''}
-        onChange={(e) => setMarcaSeleccionada(e.target.value)}
+        value={MarcaEdit}
+        onChange={(e) => setMarcaEdit(e.target.value)}
       />
     </CCol>
     <CRow className='mt-3 offset-7'>
@@ -237,9 +278,43 @@ function Marcas() {
       </CModalBody>
     </CModal>
   </>
+{/*Fin Modal Editar*/}
+  {/*Modal Eliminar*/}
+  <>
+    <CModal visible={visible3} onClose={() => setVisible3(false)}>
+      <CModalHeader onClose={() => setVisible3(false)}>
+        <CModalTitle>Eliminar</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+      <CForm
+   className="row g-3 needs-validation"
+   noValidate
+   validated={validated}
+   onSubmit={DeleteAction}
+  >
+    <CCol>
+    <div className='h4'>Desea eliminar este registro?</div>
+    </CCol>
+    <CRow className='mt-3 offset-7'>
+      <CCol className='col-2'>
+    <CButton color="secondary" onClick={() => setVisible3(false)}>
+          Cerrar
+        </CButton>
+        </CCol>
+        <CCol>
+        <CButton color="primary" type="submit">
+        Aceptar
+      </CButton>
+      </CCol>
+    </CRow>
+      </CForm>   
+      </CModalBody>
+    </CModal>
+  </>
+  {/*Fin Modal Eliminar*/}
         <div className='card-body'>
         <h1>Marcas</h1>
-        <CButton onClick={() => {setVisible(!visible); setValidated(false)}}>Nuevo</CButton>
+        <CButton onClick={() => {setVisible(!visible); setValidated(false); setMarcaCreate('')}}>Nuevo</CButton>
         <div className='container' style={{height: 10}}></div>
         <div style={{ flex: 1}}>
         <DataGrid

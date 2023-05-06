@@ -6,6 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 //custom
 const Marcas = React.lazy(() => import('./views/custom/marcas/Marcas'))
+const MarcasDetails = React.lazy(() => import('./views/custom/marcas/MarcasDetails'))
 const Sucursales = React.lazy(() => import('./views/custom/sucursales/Sucursales'))
 const Proveedores = React.lazy(() => import('./views/custom/proveedores/Proveedores'))
 const Repuestos = React.lazy(() => import('./views/custom/repuestos/Repuestos'))
@@ -69,6 +70,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/marcas', name: 'Marcas', element: Marcas },
+  { path: '/marcasDetails', name: 'MarcasDetails', element: MarcasDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
   { path: '/proveedores', name: 'Proveedores', element: Proveedores },
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },
