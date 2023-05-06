@@ -143,7 +143,11 @@ function Marcas() {
     setMarcaEdit(marca.marc_Nombre)
   };
 
-  const handleDetailsClick = () => {
+  const handleDetailsClick = (params) => {
+    const marca = marcas.find((marca) => marca.id === params.marc_ID); // Busca la marca seleccionada
+    setVisible2(true);
+    setMarcaSeleccionada(marca); // Establece la marca seleccionada en el estado marcaSeleccionada
+    localStorage.setItem('MarcaSeleccionada', JSON.stringify(marca));
     navigate('/marcasDetails')
   };
 
@@ -191,7 +195,7 @@ function Marcas() {
       <EditIcon onClick={() => handleEditClick(params.row)} />
       </IconButton>
       <IconButton>
-        <VisibilityIcon  onClick={() => handleDetailsClick()}/>
+        <VisibilityIcon  onClick={() => handleDetailsClick(params.row)}/>
       </IconButton>
         </div>
       ),
