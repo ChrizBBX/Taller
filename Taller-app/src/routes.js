@@ -19,6 +19,9 @@ const Usuarios = React.lazy(() => import('./views/custom/Usuarios/Usuarios'))
 const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagos'))
 const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
 const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/CreateEmpleados'))
+const RegistrarEmpleados = React.lazy(() => import('./views/custom/Empleados/RegistrarEmpleados'))
+const EditEmpleados = React.lazy(() => import('./views/custom/Empleados/EditEmpleados'))
+
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -81,6 +84,8 @@ const routes = [
   { path: '/Usuarios', name: 'Usuarios', element: Usuarios },
   { path: '/MetodosPagos', name: 'MetodosPagos', element: MetodosPagos },
   { path: '/CreateEmpleados', name: 'CreateEmpleados', element: CreateEmpleados },
+  { path: '/RegistrarEmpleados', name: 'RegistrarEmpleados', element: RegistrarEmpleados },
+  { path: '/EditEmpleados', name: 'EditEmpleados', element: EditEmpleados },
   { path: '/Compras', name: 'Compras', element: Compras },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
