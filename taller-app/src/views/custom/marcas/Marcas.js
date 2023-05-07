@@ -19,11 +19,12 @@ import {
    CInputGroupText,
    CRow
  } from '@coreui/react';
-import {IconButton} from '@material-ui/core';
-import { Delete} from '@material-ui/icons';
+import {Button, IconButton} from '@material-ui/core';
+import {Delete,Edit, Book, Block} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { red } from '@material-ui/core/colors';
 
 
 function Marcas() {
@@ -48,7 +49,8 @@ function Marcas() {
     }
     setValidated(true)
     event.preventDefault()
-
+    if(MarcaCreate != ''){
+      
     let payload = {
       marc_Nombre: MarcaCreate,
     }
@@ -74,6 +76,7 @@ function Marcas() {
         setActualizar(!Actualizar)
           toast.error('ha ocurrido un error');
       })
+    }
   }
 
   const EditAction = (event) => {
@@ -185,9 +188,11 @@ function Marcas() {
       headerName: 'Acciones',
       width: 300,
       renderCell: (params) => (
-        <div>
-          <Delete />
-        </div>
+        <>
+          <CButton color='danger' variant='outline' className='m-3' onClick={() => handleDeleteClick(params.row)}><Delete/></CButton>
+          <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
+          <CButton color='info' variant='outline' className='m-3' onClick={() => handleDetailsClick(params.row)}><Book/></CButton>
+        </>
       ),
     },
   ];
