@@ -47,7 +47,7 @@ namespace Taller.API.Controllers
         }
 
 
-        [HttpPost("Eliminar")]
+        [HttpPost("Delete")]
         public IActionResult Delete(VehiculosViewModel item)
         {
             var listadoMapeado = _mapper.Map<tbVehiculos>(item);

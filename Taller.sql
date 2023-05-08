@@ -692,6 +692,11 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbMarcas_Delete
 AS
 BEGIN
 	BEGIN TRY
+	IF EXISTS (SELECT marc_ID FROM tbModelos WHERE marc_ID = @marc_ID AND mode_Estado = 1)
+	BEGIN
+	SELECT '3'
+	END
+	ELSE
 	UPDATE tllr.tbMarcas
 	SET marc_Estado = 0
 	WHERE marc_ID = @marc_ID
@@ -787,6 +792,11 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbModelos_Delete
 AS
 BEGIN
 	BEGIN TRY
+	IF EXISTS (SELECT mode_ID FROM tllr.tbVehiculos WHERE mode_ID = @mode_ID AND vehi_Estado = 1)
+	BEGIN
+	SELECT '3'
+	END
+	ELSE
 		UPDATE tllr.tbModelos
 		SET mode_Estado = 0 
 		WHERE mode_ID = @mode_ID
@@ -890,6 +900,11 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_Delete
 AS
 BEGIN
 	BEGIN TRY
+IF EXISTS(SELECT prov_ID FROM tllr.tbRepuestos WHERE prov_ID = @prov_ID AND resp_Estado = 1)
+BEGIN
+SELECT '3'
+END
+ELSE
 		UPDATE tllr.tbProveedores	
 		SET prov_Estado = 0
 		WHERE prov_ID = @prov_ID
@@ -1211,7 +1226,8 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbVehiculos
-END
+WHERE vehi_Estado = 1
+END	
 
 /*Vehiculos Insert*/
 GO
@@ -1274,6 +1290,11 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbVehiculos_Delete
 AS
 BEGIN
 	BEGIN TRY
+IF EXISTS (SELECT vehi_ID FROM tllr.tbClientePorVehiculo WHERE vehi_ID = @vehi_ID AND clvh_Estado = 1)
+BEGIN
+SELECT '3'
+END
+ELSE
 		UPDATE tllr.tbVehiculos
 		SET vehi_Estado = 0
 		WHERE vehi_ID = @vehi_ID

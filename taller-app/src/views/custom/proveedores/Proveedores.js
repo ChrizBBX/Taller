@@ -43,6 +43,7 @@ const [visible, setVisible] = useState(false)
 const [visible2, setVisible2] = useState(false)
 const [visible3, setVisible3] = useState(false)
 const [Actualizar, setActualizar] = useState(false)
+
 useEffect(() => {
 axios
 .get('/Proveedores')
@@ -139,9 +140,11 @@ const DeleteAction = (event) => {
             setIsSubmitting(false)
             console.log(response)
             if (response.data.message == '1') {
-              toast.success('Registro agregado exitosamente');
+              toast.success('Registro eliminado exitosamente');
               setVisible3(false)
               setActualizar(!Actualizar)
+            }else if(response.data.message == "3"){
+              toast.warning('El registro esta siendo utilizado en otra tabla');
             }
           })
           .catch((error) => {
@@ -149,7 +152,7 @@ const DeleteAction = (event) => {
               toast.error('ha ocurrido un error');
           })
   }else{
-      toast.error('Rellene los campos'); 
+      toast.error('Error al cargar el ID'); 
   }
 }
 

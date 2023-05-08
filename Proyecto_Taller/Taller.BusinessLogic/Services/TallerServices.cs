@@ -179,11 +179,15 @@ namespace Taller.BusinessLogic.Services
                 if (insertar.MessageStatus == "1")
                 {
                     return result.Ok(insertar.MessageStatus);
+                }else if (insertar.MessageStatus == "3")
+                {
+                    return result.Conflict(insertar.MessageStatus);
                 }
                 else
                 {
                     return result.BadRequest(insertar.MessageStatus);
                 }
+
             }
             catch (Exception e)
             {
@@ -318,7 +322,7 @@ namespace Taller.BusinessLogic.Services
                 {
                     return result.Ok(insertar.MessageStatus);
                 }
-                else if (insertar.MessageStatus == "2")
+                else if (insertar.MessageStatus == "3")
                 {
                     return result.Conflict(insertar.MessageStatus);
                 }
@@ -666,7 +670,7 @@ namespace Taller.BusinessLogic.Services
                 {
                     return result.Ok(insertar.MessageStatus);
                 }
-                else if (insertar.MessageStatus == "2")
+                else if (insertar.MessageStatus == "3")
                 {
                     return result.Conflict(insertar.MessageStatus);
                 }

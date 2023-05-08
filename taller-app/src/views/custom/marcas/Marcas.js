@@ -121,12 +121,12 @@ function Marcas() {
       .then((response) => {
         setIsSubmitting(false)
         console.log(response)
-        if (response.data.code == '200') {
+        if (response.data.message == '1') {
           toast.success('Registro Eliminado exitosamente');
           setVisible3(false)
           setActualizar(!Actualizar)
-        }else if(response.data.code == '409'){
-          toast.warning('El Registro no se puede eliminar');
+        }else if(response.data.message == '3'){
+          toast.warning('El registro esta siendo utilizado en otra tabla');
           setActualizar(!Actualizar)
         }
       })
@@ -292,7 +292,7 @@ function Marcas() {
    onSubmit={DeleteAction}
   >
     <CCol>
-    <div className='h4'>Desea eliminar este registro?</div>
+    <h5>Desea eliminar este registro?</h5>
     </CCol>
     <CRow className='mt-3 offset-7'>
       <CCol className='col-2'>

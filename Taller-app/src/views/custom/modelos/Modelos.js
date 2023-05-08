@@ -225,11 +225,12 @@ function Modelos (){
           .then((response) => {
             setIsSubmitting(false)
             console.log(response)
-            
             if (response.data.message == '1') {
               toast.success('Registro Eliminado exitosamente');
               setVisible3(false)
               setActualizar(!Actualizar)
+            }else if(response.data.message == "3"){
+              toast.warning('El registro esta siendo utilizado en otra tabla');
             }
           })
           .catch((error) => {

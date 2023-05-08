@@ -28,7 +28,7 @@ namespace Taller.DataAccess.Repositories
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@mode_ID", item.mode_ID, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@vehi_Matricula", item.vehi_Matricula, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vehi_Matricula", item.vehi_Matricula, DbType.String, ParameterDirection.Input);
             parametros.Add("@vehi_anio", item.vehi_anio, DbType.String, ParameterDirection.Input);
             parametros.Add("@vehi_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
 
@@ -52,9 +52,9 @@ namespace Taller.DataAccess.Repositories
             var parametros = new DynamicParameters();
             parametros.Add("@vehi_ID", item.vehi_ID, DbType.Int32, ParameterDirection.Input); 
             parametros.Add("@mode_ID", item.mode_ID, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@vehi_Matricula", item.vehi_Matricula, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vehi_Matricula", item.vehi_Matricula, DbType.String, ParameterDirection.Input);
             parametros.Add("@vehi_anio", item.vehi_anio, DbType.String, ParameterDirection.Input);
-            parametros.Add("@vehi_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vehi_UserModificacion", 1, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Vehiculos_Update, parametros, commandType: CommandType.StoredProcedure);
 
