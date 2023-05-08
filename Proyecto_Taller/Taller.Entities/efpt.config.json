@@ -126,6 +126,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[tllr].[VW_tbDetallesventas]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[tllr].[VW_tbEmpleados]",
          "ObjectType": 3
       },

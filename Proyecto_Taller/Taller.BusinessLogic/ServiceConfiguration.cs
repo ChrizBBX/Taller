@@ -30,6 +30,7 @@ namespace Taller.BusinessLogic
             services.AddScoped<ComprasRepository>();
             services.AddScoped<MunicipiosRepositories>();
             services.AddScoped<DepartamentosRepositories>();
+            services.AddScoped<DetallesVentaRepository>();
             TallerMecanicoContext.BuildConnectionString(connection);
 
         }
@@ -39,7 +40,6 @@ namespace Taller.BusinessLogic
             services.AddScoped<AccesoServices>();
             services.AddScoped<TallerServices>();
             services.AddScoped<GeneralServices>();
-
         }
     }
 }

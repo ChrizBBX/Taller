@@ -24,7 +24,16 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Insert(tbModelos item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@mode_Nombre", item.mode_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@mode_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Modelos_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_Modelos> List()
@@ -36,7 +45,28 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Update(tbModelos item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@mode_ID", item.mode_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@mode_Nombre", item.mode_Nombre, DbType.String, ParameterDirection.Input);
+            parametros.Add("@mode_UserModificacion", 1, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Modelos_Update, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
+        }
+        public RequestStatus Delete(tbModelos item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@mode_ID", item.mode_ID, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Modelos_Delete, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
     }
 }

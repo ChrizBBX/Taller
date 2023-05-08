@@ -24,7 +24,19 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Insert(tbVentas item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@clie_ID", item.clie_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vent_Descuento", item.vent_Descuento, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@vent_MontoFinal", item.vent_MontoFinal, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@sucu_ID", item.sucu_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vent_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Ventas_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_tbVentas> List()
