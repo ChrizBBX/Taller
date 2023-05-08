@@ -18,5 +18,7 @@ namespace Taller.API.Models
         public DateTime? resp_FechaModificacion { get; set; }
         public int? resp_UserModificacion { get; set; }
         public bool? resp_Estado { get; set; }
+
+        public int resp_Stock { get; set; }
     }
 }

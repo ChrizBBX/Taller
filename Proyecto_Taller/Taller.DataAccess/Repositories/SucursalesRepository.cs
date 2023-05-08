@@ -30,7 +30,7 @@ namespace Taller.DataAccess.Repositories
             parametros.Add("@sucu_Descripcion", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_ID", item.muni_ID, DbType.String, ParameterDirection.Input);
             parametros.Add("@sucu_DireccionExacta", item.sucu_DireccionExacta, DbType.String, ParameterDirection.Input);
-            parametros.Add("@sucu_UserCreacion", item.sucu_UserCreacion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@sucu_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Sucursales_Insert, parametros, commandType: CommandType.StoredProcedure);
 
@@ -50,11 +50,11 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-            parametros.Add("@sucu_ID", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@sucu_ID", item.sucu_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@sucu_Descripcion", item.sucu_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_ID", item.muni_ID, DbType.String, ParameterDirection.Input);
             parametros.Add("@sucu_DireccionExacta", item.sucu_DireccionExacta, DbType.String, ParameterDirection.Input);
-            parametros.Add("@sucu_UserModificacion", item.sucu_UserModificacion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@sucu_UserModificacion", 1,DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Sucursales_Update,parametros, commandType: CommandType.StoredProcedure);
 

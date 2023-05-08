@@ -9,6 +9,7 @@ namespace Taller.Entities.Entities
     public partial class VW_tbRepuestos
     {
         public int resp_ID { get; set; }
+        public int resp_Stock { get; set; }
         public string resp_Descripcion { get; set; }
         public decimal resp_Precio { get; set; }
         public int prov_ID { get; set; }

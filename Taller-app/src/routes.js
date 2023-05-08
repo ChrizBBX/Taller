@@ -10,9 +10,15 @@ const MarcasDetails = React.lazy(() => import('./views/custom/marcas/MarcasDetai
 const Modelos = React.lazy(() => import('./views/custom/modelos/Modelos'))
 const ModelosDetails = React.lazy(() => import('./views/custom/modelos/ModelosDetails'))
 const Sucursales = React.lazy(() => import('./views/custom/sucursales/Sucursales'))
+const SucursalesDetails = React.lazy(() => import('./views/custom/sucursales/SucursalesDetails'))
 const Proveedores = React.lazy(() => import('./views/custom/proveedores/Proveedores'))
+const ProveedoresDetails = React.lazy(() => import('./views/custom/proveedores/ProveedoresDetails'))
 const Repuestos = React.lazy(() => import('./views/custom/repuestos/Repuestos'))
+const RepuestosCreate = React.lazy(() => import('./views/custom/repuestos/RepuestosCreate'))
+const RepuestosEdit = React.lazy(() => import('./views/custom/repuestos/RepuestosEdit'))
+const RepuestosDetails = React.lazy(() => import('./views/custom/repuestos/RepuestosDetails'))
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
+const serviciosDetails = React.lazy(() => import('./views/custom/servicios/ServicioDetails'))
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
 const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
@@ -76,9 +82,15 @@ const routes = [
   { path: '/modelos', name: 'Modelos', element: Modelos },
   { path: '/modelosDetails', name: 'Modelos', element: ModelosDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
+  { path: '/sucursalesDetails', name: 'SucursalesDetails', element: SucursalesDetails },
   { path: '/proveedores', name: 'Proveedores', element: Proveedores },
+  { path: '/proveedoresDetails', name: 'ProveedoresDetails', element: ProveedoresDetails },
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },
+  { path: '/repuestosCreate', name: 'RepuestosCreate', element: RepuestosCreate },
+  { path: '/repuestosEdit', name: 'RepuestosEdit', element: RepuestosEdit },
+  { path: '/repuestosDetails', name: 'RepuestosDetails', element: RepuestosDetails },
   { path: '/servicios', name: 'Servicios', element: Servicios },
+  { path: '/serviciosDetails', name: 'ServiciosDetails', element: serviciosDetails },
   { path: '/ventas', name: 'Ventas', element: Ventas },
   { path: '/Empleados', name: 'Empleados', element: Empleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },

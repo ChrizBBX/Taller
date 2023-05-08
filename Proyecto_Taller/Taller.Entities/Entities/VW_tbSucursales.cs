@@ -10,6 +10,8 @@ namespace Taller.Entities.Entities
     {
         public int sucu_ID { get; set; }
         public string sucu_Descripcion { get; set; }
+        public string depa_ID { get; set; }
+        public string depa_Nombre { get; set; }
         public string muni_ID { get; set; }
         public string muni_Nombre { get; set; }
         public string sucu_DireccionExacta { get; set; }

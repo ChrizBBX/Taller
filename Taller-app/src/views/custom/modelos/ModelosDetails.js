@@ -94,7 +94,7 @@
                     console.log(response)
                     
                     if (response.data.message == '1') {
-                      toast.success('Registro editado exitosamente');
+                      toast.success('Reg1istro editado exitosamente');
                       navigate('/modelos')
                       setVisible2(false)
                       setActualizar(!Actualizar)
@@ -148,7 +148,33 @@
           </div>
           <div style={{height: 20}}></div>
      </div>
-                </>
+
+     <div className="card">
+  <div className="card-header"><h2>Auditoria</h2></div>
+  
+  <table className="table table-striped">
+          <thead>
+          <tr>
+                        <th>Accion</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+                            <td><label>Creacion</label></td>
+                            <td>{modelo.mode_UserCreacion_Nombre}</td>
+                            <td>{modelo.mode_FechaCreacion}</td>
+                        </tr>
+                        <tr>
+                            <td>Modificacion</td>
+                            <td>{modelo.mode_UserModificaciones_Nombre}</td>
+                            <td>{modelo.mode_FechaModificacion}</td>
+                        </tr>
+          </tbody>
+         </table>
+</div>
+                </>           
       ))}
     </div>
                       {/*Modal Edit*/}

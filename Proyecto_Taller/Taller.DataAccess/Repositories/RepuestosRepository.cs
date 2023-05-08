@@ -27,12 +27,12 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-            parametros.Add("@resp_Descripcion", item.resp_Descripcion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_Descripcion", item.resp_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@resp_Precio", item.resp_Precio, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_ID", item.prov_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@resp_Anio", item.resp_Anio, DbType.String, ParameterDirection.Input);
-            parametros.Add("@resp_UserCreacion", item.resp_UserCreacion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@resp_Stock", item.resp_Stock, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Repuestos_Insert, parametros, commandType: CommandType.StoredProcedure);
@@ -53,13 +53,13 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-            parametros.Add("@resp_ID", item.resp_Descripcion, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@resp_Descripcion", item.resp_Descripcion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_ID", item.resp_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_Descripcion", item.resp_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@resp_Precio", item.resp_Precio, DbType.String, ParameterDirection.Input);
             parametros.Add("@prov_ID", item.prov_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@marc_ID", item.marc_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@resp_Anio", item.resp_Anio, DbType.String, ParameterDirection.Input);
-            parametros.Add("@resp_UserModificacion", item.resp_UserModificacion, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_UserModificacion", 1, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Repuestos_Update, parametros, commandType: CommandType.StoredProcedure);
 

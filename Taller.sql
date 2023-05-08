@@ -805,7 +805,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbProveedores
 AS
-SELECT prov_ID, prov_Nombre, 
+SELECT prov_ID,prov_Rut, prov_Nombre, 
 prov_CorreoElectronico, prov_Telefono, 
 prov_Dirrecion, prov_UserCreacion,[user1].user_NombreUsuario AS prov_UserCreacion_Nombre, 
 prov_FechaCreacion, prov_UserModificacion,[user2].user_NombreUsuario AS prov_UserModificacion_Nombre, 
@@ -862,7 +862,7 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbProveedores_Update
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT prov_Nombre FROM tllr.tbProveedores WHERE prov_ID != @prov_ID AND prov_Nombre = @prov_Nombre)
+		IF NOT EXISTS (SELECT prov_Nombre FROM tllr.tbProveedores WHERE prov_ID != @prov_ID AND prov_Rut = @prov_Rut)
 			BEGIN
 			UPDATE tllr.tbProveedores
 			SET prov_Rut = @prov_Rut,
@@ -870,7 +870,8 @@ BEGIN
 				prov_CorreoElectronico = @prov_CorreoElectronico,
 				prov_Telefono = @prov_Telefono,
 				prov_Dirrecion = @prov_Direccion,
-				prov_UserModificacion = @prov_UserModificacion
+				prov_UserModificacion = @prov_UserModificacion,
+				prov_FechaModificacion = GETDATE()
 			WHERE prov_ID  = @prov_ID
 			SELECT	'1'
 			END
@@ -905,7 +906,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbRepuestos
 AS
-SELECT resp_ID, resp_Descripcion, 
+SELECT resp_ID,resp_Stock,resp_Descripcion, 
 resp_Precio, resp.prov_ID,prov_Nombre, 
 resp.marc_ID,marc.marc_Nombre, resp_Anio, 
 resp_FechaCreacion, resp_UserCreacion,[user1].user_NombreUsuario AS resp_UserCreacion_Nombre, 
@@ -939,7 +940,7 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbRepuestos_Insert
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT resp_Descripcion FROM tllr.tbRepuestos WHERE resp_Descripcion = @resp_Descripcion)
+		IF NOT EXISTS (SELECT resp_Descripcion FROM tllr.tbRepuestos WHERE resp_Descripcion = @resp_Descripcion AND resp_Anio = @resp_Anio)
 			BEGIN
 				INSERT INTO tllr.tbRepuestos ([resp_Descripcion], [resp_Precio], [prov_ID], [marc_ID], [resp_Anio], [resp_FechaCreacion], [resp_UserCreacion], [resp_FechaModificacion], [resp_UserModificacion], [resp_Estado],[resp_Stock])
 				VALUES (@resp_Descripcion,@resp_Precio,@prov_ID,@marc_ID,@resp_Anio,GETDATE(),@resp_UserCreacion,NULL,NULL,1,@resp_Stock)
@@ -1023,6 +1024,7 @@ GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_VW
 AS
 SELECT * FROM tllr.VW_tbServicios
+WHERE serv_Estado = 1
 
 /*Servicios Insert*/
 GO
@@ -1063,6 +1065,8 @@ BEGIN
 				serv_FechaModificacion = GETDATE()
 			WHERE 
 				serv_ID = @serv_ID
+
+							SELECT '1'
 			END
 			ELSE
 			SELECT '2'
@@ -1094,14 +1098,15 @@ GO
 CREATE VIEW tllr.VW_tbSucursales
 AS
 SELECT sucu_ID, sucu_Descripcion, 
-sucu.muni_ID,muni.muni_Nombre, sucu_DireccionExacta, 
+muni.depa_ID,depa.depa_Nombre,sucu.muni_ID,muni.muni_Nombre, sucu_DireccionExacta, 
 sucu_FechaCreacion, sucu_UserCreacion,[user1].user_NombreUsuario AS sucu_UserCreacion_Nombre, 
 sucu_FechaModificacion, sucu_UserModificacion,[user2].user_NombreUsuario AS sucu_UserModificacion_Nombre, 
 sucu_Estado 
 FROM [tllr].[tbSucursales] sucu INNER JOIN acce.tbUsuarios [user1]
 ON sucu.sucu_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON sucu.sucu_UserModificacion = user2.user_ID INNER JOIN gral.tbMunicipios muni
-ON sucu.muni_ID = muni.muni_ID 
+ON sucu.muni_ID = muni.muni_ID  INNER JOIN gral.tbDepartamentos depa
+ON muni.depa_ID = depa.depa_ID
 
 /*Sucursales View UDP*/
 GO
@@ -1109,6 +1114,7 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbSucursales_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbSucursales
+WHERE sucu_Estado = 1
 END
 
 /*Sucursales Insert*/

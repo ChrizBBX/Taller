@@ -160,7 +160,7 @@ function Marcas() {
   
   useEffect(() => {
     axios
-      .get('http://proyectotaller.somee.com/api/Marcas')
+      .get('/Marcas')
       .then((response) => {
         console.log('holaaa')
         const insertarid = response.data.map((row) => ({
