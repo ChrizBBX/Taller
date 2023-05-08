@@ -224,11 +224,11 @@ function Servicios() {
       </CModalHeader>
       <CModalBody>
       <CForm
-    className="row g-3 needs-validation"
-    noValidate
-    validated={validated}
-    onSubmit={CreateAction}
-  >
+        className="row g-3 needs-validation"
+        noValidate
+        validated={validated}
+        onSubmit={CreateAction}
+    >
     <CCol>
           <h6>Nombre</h6>
     <CFormInput

@@ -19,11 +19,14 @@ const RepuestosEdit = React.lazy(() => import('./views/custom/repuestos/Repuesto
 const RepuestosDetails = React.lazy(() => import('./views/custom/repuestos/RepuestosDetails'))
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
 const serviciosDetails = React.lazy(() => import('./views/custom/servicios/ServicioDetails'))
+
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
 const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
 const VehiculosDetails = React.lazy(() => import('./views/custom/Vehiculos/VehiculosDetails'))
 const EstadosCiviles = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCiviles'))
+const EstadosDetails = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCivilesDetails'))
+
 const Clientes = React.lazy(() => import('./views/custom/Cliente/Cliente'))
 const Usuarios = React.lazy(() => import('./views/custom/Usuarios/Usuarios'))
 const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagos'))
@@ -87,6 +90,7 @@ const routes = [
   { path: '/modelosDetails', name: 'Modelos', element: ModelosDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
   { path: '/sucursalesDetails', name: 'SucursalesDetails', element: SucursalesDetails },
+  { path: '/EstadosDetails', name: 'EstadosDetails', element: EstadosDetails },
   { path: '/proveedores', name: 'Proveedores', element: Proveedores },
   { path: '/proveedoresDetails', name: 'ProveedoresDetails', element: ProveedoresDetails },
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },

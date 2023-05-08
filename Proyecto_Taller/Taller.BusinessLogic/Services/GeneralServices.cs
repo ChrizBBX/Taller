@@ -28,7 +28,6 @@ namespace Taller.BusinessLogic.Services
         }
 
         #region Estados Civiles
-
         public IEnumerable<VW_tbEstadosCiviles> ListadoEstadosCiviles()
         {
             try
@@ -41,6 +40,78 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbEstadosCiviles>();
             }
         }
+
+        public ServiceResult InsertarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _estadosCivilesRepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _estadosCivilesRepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarEstadosCiviles(tbEstadosCiviles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _estadosCivilesRepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         #endregion
 
         #region Metodos de Pago

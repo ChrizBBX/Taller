@@ -23,6 +23,7 @@ namespace Taller.API.Controllers
             _tallerservices = tallerservices;
             _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult Servicios()
         {
@@ -38,7 +39,6 @@ namespace Taller.API.Controllers
             return Ok(listado);
         }
 
-
         [HttpPost("Update")]
         public IActionResult Update(ServiciosViewModel item)
         {
@@ -46,7 +46,6 @@ namespace Taller.API.Controllers
             var listado = _tallerservices.EditarServicios(listadoMapeado);
             return Ok(listado);
         }
-
 
         [HttpPost("Delete")]
         public IActionResult Delete(ServiciosViewModel item)

@@ -76,6 +76,9 @@ namespace Taller.DataAccess.Repositories
 
         #region Estados Civiles
         public static string UDP_tbEstadosCiviles_VW = "gral.UDP_tbEstadosCiviles_VW";
+        public static string UDP_tbEstadosCiviles_Insert = "gral.UDP_tbEstadosCiviles_Insert";
+        public static string UDP_tbEstadosCiviles_Update = "gral.UDP_tbEstadosCiviles_Update";
+        public static string UDP_tbEstadosCiviles_Delete = "gral.UDP_tbEstadosCiviles_Delete";
         #endregion
 
         #region MetodosPago

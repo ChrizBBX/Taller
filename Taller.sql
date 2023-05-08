@@ -1718,7 +1718,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE gral.UDP_tbClientes_Update
+CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Delete
 @estacivi_ID     INT
 AS
 BEGIN
