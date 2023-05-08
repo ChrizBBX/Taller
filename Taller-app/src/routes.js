@@ -20,6 +20,7 @@ const RepuestosDetails = React.lazy(() => import('./views/custom/repuestos/Repue
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
 const serviciosDetails = React.lazy(() => import('./views/custom/servicios/ServicioDetails'))
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
+const VentasCreate = React.lazy(() => import('./views/custom/ventas/VentasCreate'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
 const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
 const VehiculosDetails = React.lazy(() => import('./views/custom/Vehiculos/VehiculosDetails'))
@@ -92,7 +93,8 @@ const routes = [
   { path: '/repuestosDetails', name: 'RepuestosDetails', element: RepuestosDetails },
   { path: '/servicios', name: 'Servicios', element: Servicios },
   { path: '/serviciosDetails', name: 'ServiciosDetails', element: serviciosDetails },
-  { path: '/ventas', name: 'Ventas', element: Ventas },
+  { path: '/ventas', name: 'Ventas', element: Ventas },    
+  { path: '/ventasCreate', name: 'VentasCreate', element: VentasCreate },    
   { path: '/Empleados', name: 'Empleados', element: Empleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },
   { path: '/VehiculosDetails', name: 'VehiculosDetails', element: VehiculosDetails },
