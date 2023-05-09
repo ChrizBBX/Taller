@@ -23,9 +23,13 @@ namespace Taller.Entities.Entities
         public DateTime? vent_FechaCreacion { get; set; }
         public int? vent_UserModificacion { get; set; }
         public DateTime? vent_FechaModificacion { get; set; }
+        public int? meto_ID { get; set; }
+        public int? vehi_ID { get; set; }
 
         public virtual tbClientes clie { get; set; }
+        public virtual tbMetodosPago meto { get; set; }
         public virtual tbSucursales sucu { get; set; }
+        public virtual tbVehiculos vehi { get; set; }
         public virtual tbUsuarios vent_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios vent_UserModificacionNavigation { get; set; }
         public virtual ICollection<tbDetallesventas> tbDetallesventas { get; set; }

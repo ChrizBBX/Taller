@@ -973,11 +973,21 @@ namespace Taller.DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbVentas_clie_Id_ABRR_tbClientes_clie_Id");
 
+                entity.HasOne(d => d.meto)
+                    .WithMany(p => p.tbVentas)
+                    .HasForeignKey(d => d.meto_ID)
+                    .HasConstraintName("FK_tllr_tbVentas_meto_ID_ABRR_tbMetodosPago_meto_ID");
+
                 entity.HasOne(d => d.sucu)
                     .WithMany(p => p.tbVentas)
                     .HasForeignKey(d => d.sucu_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id");
+
+                entity.HasOne(d => d.vehi)
+                    .WithMany(p => p.tbVentas)
+                    .HasForeignKey(d => d.vehi_ID)
+                    .HasConstraintName("FK_tllr_tbVentas_vehi_ID_ABRR_tbVehiculos_vehi_ID");
 
                 entity.HasOne(d => d.vent_UserCreacionNavigation)
                     .WithMany(p => p.tbVentasvent_UserCreacionNavigation)

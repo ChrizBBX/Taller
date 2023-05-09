@@ -50,9 +50,9 @@ function Ventas() {
 
   const columns = [
     { field: 'vent_Id', headerName: 'ID', width: 100 },
+    { field: 'meto_Nombre', headerName: 'Metodo de Pago', width: 100 },
     { field: 'vent_Fecha', headerName: 'Fecha', width: 200 },
     { field: 'clie_Nombres', headerName: 'Cliente', width: 250 },
-    { field: 'vent_Descuento', headerName: 'Descuento', width: 150 },
     { field: 'vent_MontoFinal', headerName: 'Monto Final', width: 200 },
     { field: 'sucu_Descripcion', headerName: 'Sucursal', width: 250 },
     {

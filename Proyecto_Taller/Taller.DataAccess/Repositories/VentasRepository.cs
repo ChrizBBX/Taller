@@ -28,9 +28,11 @@ namespace Taller.DataAccess.Repositories
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@clie_ID", item.clie_ID, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@vent_Descuento", item.vent_Descuento, DbType.Decimal, ParameterDirection.Input);
-            parametros.Add("@vent_MontoFinal", item.vent_MontoFinal, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@meto_ID", item.meto_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vent_Descuento", 0, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@vent_MontoFinal", 0, DbType.Decimal, ParameterDirection.Input);
             parametros.Add("@sucu_ID", item.sucu_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@vehi_ID", item.vehi_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@vent_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Ventas_Insert, parametros, commandType: CommandType.StoredProcedure);

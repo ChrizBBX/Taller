@@ -17,5 +17,7 @@ namespace Taller.API.Models
         public DateTime? vent_FechaCreacion { get; set; }
         public int? vent_UserModificacion { get; set; }
         public DateTime? vent_FechaModificacion { get; set; }
+        public int? meto_ID { get; set; }
+        public int? vehi_ID { get; set; }
     }
 }

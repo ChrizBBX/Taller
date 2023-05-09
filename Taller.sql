@@ -1209,7 +1209,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbVehiculos
 AS
-SELECT vehi_ID, vehi.mode_ID,mode.mode_Nombre, 
+SELECT vehi_ID, vehi.mode_ID,mode.mode_Nombre,CONCAT(mode.mode_Nombre,'(',vehi_Matricula,')') AS Modelo_Matricula,
 vehi_Matricula, 
 vehi_anio, vehi_FechaCreacion, 
 vehi_UserCreacion,[user1].user_NombreUsuario AS vehi_UserCreacion_Nombre, vehi_FechaModificacion, 
@@ -1312,7 +1312,7 @@ GO
 CREATE VIEW tllr.VW_tbVentas
 AS
 SELECT vent_Id, vent_Fecha, 
-vent.clie_ID,clie.clie_Nombres, vent_Descuento, 
+vent.clie_ID,clie.clie_Nombres,vent.vehi_ID,vehi.vehi_Matricula,vent.meto_ID,meto.meto_Nombre,vent_Descuento, 
 vent_MontoFinal, vent.sucu_ID,sucu.sucu_Descripcion, 
 vent_UserCreacion,[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, vent_FechaCreacion, 
 vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion
@@ -1320,7 +1320,9 @@ FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
 ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
 ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
-ON vent.sucu_ID = sucu.sucu_ID
+ON vent.sucu_ID = sucu.sucu_ID INNER JOIN gral.tbMetodosPago meto
+ON vent.meto_ID = meto.meto_ID INNER JOIN tllr.tbVehiculos vehi
+ON vent.vehi_ID = vehi.vehi_ID
 
 /*Ventas View UDP*/
 GO
@@ -1328,21 +1330,23 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbVentas
-END 
+END		
 
 /*Ventas Insert*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_Insert
 @clie_ID INT,
+@meto_ID INT,
 @vent_Descuento DECIMAL(18,2),
 @vent_MontoFinal DECIMAL(18,2),
 @sucu_ID INT,
-@vent_UserCreacion INT
+@vent_UserCreacion INT,
+@vehi_ID INT 
 AS
 BEGIN
 	BEGIN TRY
-		INSERT INTO tbVentas ([vent_Fecha], [clie_ID], [vent_Descuento], [vent_MontoFinal], [sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion])
-		VALUES (GETDATE(),@clie_ID,@vent_Descuento,NULL,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL)
+		INSERT INTO tbVentas ([vent_Fecha], [clie_ID], [vent_Descuento], [vent_MontoFinal], [sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion], [meto_ID], [vehi_ID])
+		VALUES (GETDATE(),@clie_ID,@vent_Descuento,@vent_MontoFinal,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL,@meto_ID,@vehi_ID)
 		SELECT '1'
 	END TRY
 	BEGIN CATCH

@@ -45,4 +45,3 @@ C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.dll
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\ref\Taller.Entities.dll
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.pdb
-C:\Users\Chris\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.csproj.AssemblyReference.cache

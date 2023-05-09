@@ -11,6 +11,7 @@ namespace Taller.Entities.Entities
         public int vehi_ID { get; set; }
         public int mode_ID { get; set; }
         public string mode_Nombre { get; set; }
+        public string Modelo_Matricula { get; set; }
         public string vehi_Matricula { get; set; }
         public string vehi_anio { get; set; }
         public DateTime? vehi_FechaCreacion { get; set; }
