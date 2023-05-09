@@ -65,7 +65,7 @@ namespace Taller.DataAccess.Repositories
 
             parametros.Add("@estacivi_ID", item.estacivi_ID, DbType.Int32, ParameterDirection.Input);
 
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Servicios_Delete, parametros, commandType: CommandType.StoredProcedure);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbEstadosCiviles_Delete, parametros, commandType: CommandType.StoredProcedure);
 
             result.MessageStatus = answer;
             return result;

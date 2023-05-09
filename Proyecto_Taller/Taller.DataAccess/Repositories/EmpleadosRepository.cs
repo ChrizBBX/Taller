@@ -10,8 +10,17 @@ using Taller.Entities.Entities;
 
 namespace Taller.DataAccess.Repositories
 {
+
     public class EmpleadosRepository : IRepository<tbEmpleados, VW_tbEmpleados>
     {
+        public IEnumerable<tbEmpleados> ListarEmpleados()
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@empe_Id", null, DbType.String, ParameterDirection.Input);
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            return db.Query<tbEmpleados>(ScriptsDataBase.ListaEmpleados, parameters, commandType: CommandType.StoredProcedure);
+
+        }
         public int AgregarEmpleado(tbEmpleados item)
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);

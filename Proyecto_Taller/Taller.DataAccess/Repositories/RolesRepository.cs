@@ -10,15 +10,16 @@ using Taller.Entities.Entities;
 
 namespace Taller.DataAccess.Repositories
 {
-    public class DepartamentosRepositories : IRepository<tbDepartamentos, VW_Modelos>
+    public class RolesRepository : IRepository<tbRoles, VW_Modelos>
     {
-        public IEnumerable<tbDepartamentos> ListarDepartamentos()
+        public IEnumerable<tbRoles> ListarRoles()
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@depa_ID", null, DbType.String, ParameterDirection.Input);
+            parameters.Add("@role_ID", null, DbType.String, ParameterDirection.Input);
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
-            return db.Query<tbDepartamentos>(ScriptsDataBase.LlenarDepartamentos, parameters, commandType: CommandType.StoredProcedure);
+            return db.Query<tbRoles>(ScriptsDataBase.ListarRoles, parameters, commandType: CommandType.StoredProcedure);
         }
+
         public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
@@ -29,7 +30,7 @@ namespace Taller.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public RequestStatus Insert(tbDepartamentos item)
+        public RequestStatus Insert(tbRoles item)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +40,7 @@ namespace Taller.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public RequestStatus Update(tbDepartamentos item)
+        public RequestStatus Update(tbRoles item)
         {
             throw new NotImplementedException();
         }

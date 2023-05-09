@@ -10,7 +10,6 @@ namespace Taller.BusinessLogic.Services
 {
     public class TallerServices
     {
-        private readonly VentasRepository _ventasrepository;
         private readonly VehiculosRepository _vehiculosrepository;
         private readonly SucursalesRepository _sucursalesrepository;
         private readonly ServiciosRepository _serviciosRepository;
@@ -21,9 +20,9 @@ namespace Taller.BusinessLogic.Services
         private readonly MarcasRepository _marcasRepository;
         private readonly EmpleadosRepository _empleadosRepository;
         private readonly ComprasRepository _comprasRepository;
-        private readonly DetallesVentaRepository _detallesventarepository;
 
-        public TallerServices(VentasRepository ventasrepository,
+
+        public TallerServices(
             VehiculosRepository vehiculosrepository,
             SucursalesRepository sucursalesrepository,
             ServiciosRepository serviciosrepository,
@@ -33,10 +32,8 @@ namespace Taller.BusinessLogic.Services
             ClientesRepository clientesRepository, 
             MarcasRepository marcasRepository,
             EmpleadosRepository empleadosRepository,
-            ComprasRepository comprasRepository,
-            DetallesVentaRepository detallesventarepository)
+            ComprasRepository comprasRepository)
         {
-            _ventasrepository = ventasrepository;
             _vehiculosrepository = vehiculosrepository;
             _sucursalesrepository = sucursalesrepository;
             _serviciosRepository = serviciosrepository;
@@ -47,7 +44,7 @@ namespace Taller.BusinessLogic.Services
             _marcasRepository = marcasRepository;
             _empleadosRepository = empleadosRepository;
             _comprasRepository = comprasRepository;
-            _detallesventarepository = detallesventarepository;
+
         }
 
         #region Empleados
@@ -61,6 +58,20 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbEmpleados>();
+            }
+        }
+
+        public IEnumerable<tbEmpleados> ListarEmpleados()
+        {
+            try
+            {
+                var list = _empleadosRepository.ListarEmpleados();
+                return list;
+            }
+            catch (Exception ex)
+            {
+
+                return Enumerable.Empty<tbEmpleados>();
             }
         }
 
@@ -199,53 +210,11 @@ namespace Taller.BusinessLogic.Services
         #endregion
 
         #region DetallesVentas
-        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentas()
-        {
-            try
-            {
-                return _detallesventarepository.List();
-            }
-            catch (Exception e)
-            {
-                return Enumerable.Empty<VW_tbDetallesventas>();
-            }
-        }
+       
         #endregion
 
         #region Ventas
-        public IEnumerable<VW_tbVentas> ListadoVentas()
-        {
-            try
-            {
-                return _ventasrepository.List();
-            }
-            catch (Exception e)
-            {
-
-                return Enumerable.Empty<VW_tbVentas>();
-            }
-        }
-
-        public ServiceResult InsertarVentas(tbVentas item)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var insertar = _ventasrepository.Insert(item);
-                if (insertar.MessageStatus == "1")
-                {
-                    return result.Ok(insertar.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insertar.MessageStatus);
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
+      
         #endregion
 
         #region Vehiculos

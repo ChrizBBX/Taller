@@ -159,21 +159,24 @@ function EstadosCiviles() {
         }
 
         const handleEditClick = (params) => {
-            const estados = estados.find((estados) => estados.estacivi_ID === params.estacivi_ID); // Busca la marca seleccionada
+            const estados = EstadosCiviles.find((estados) => estados.estacivi_ID === params.estacivi_ID); // Busca la marca seleccionada
             setVisible2(true);
             setEstaciviID(estados.estacivi_ID)
             setestaciviNombre(estados.estacivi_Nombre)
           };
         
           const handleDeleteClick = (params) => {
-            const estados = estados.find((estados) => estados.estacivi_ID === params.estacivi_ID); // Busca la marca seleccionada
+            const estados = EstadosCiviles.find((estados) => estados.estacivi_ID === params.estacivi_ID); // Busca la marca seleccionada
             setVisible3(true);
             setEstaciviID(estados.estacivi_ID)
           };
 
+          const handleDetailsClick = (params) => {
+            const estados = EstadosCiviles.find((estados) => estados.estacivi_ID === params.estacivi_ID); // Busca la marca seleccionada
+            localStorage.setItem('EstadoCivilSeleccionado', JSON.stringify(estados));
+            navigate('/EstadosDetails')
+          };
 
-
-       
     const columns = [
         { field: 'estacivi_ID', headerName: 'ID', width: 100 },
         { field: 'estacivi_Nombre', headerName: 'Estado Civil', width: 200 },
@@ -185,6 +188,7 @@ function EstadosCiviles() {
                 <div>
              <CButton color='danger' variant='outline' className='m-3' onClick={() => handleDeleteClick(params.row)}><Delete/></CButton>
               <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
+              <CButton color='info' variant='outline' className='m-3' onClick={() => handleDetailsClick(params.row)}><Book/></CButton>
                 </div>
             ),
         },
@@ -253,7 +257,7 @@ function EstadosCiviles() {
             {/*Modal Edit*/}
     <CModal visible={visible2} onClose={() => setVisible2(false)}>
      <CModalHeader onClose={() => setVisible2(false)}>
-       <CModalTitle>Editar Servicio</CModalTitle>
+       <CModalTitle>Editar Estado Civil</CModalTitle>
      </CModalHeader>
      <CModalBody>
      <CForm
@@ -292,7 +296,7 @@ function EstadosCiviles() {
                    {/*Modal Delete*/}
     <CModal visible={visible3} onClose={() => setVisible3(false)}>
      <CModalHeader onClose={() => setVisible3(false)}>
-       <CModalTitle>Eliminar Servicio</CModalTitle>
+       <CModalTitle>Eliminar Estado Civil</CModalTitle>
      </CModalHeader>
      <CModalBody>
      <CForm

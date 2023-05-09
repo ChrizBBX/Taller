@@ -8,6 +8,11 @@ namespace Taller.Entities.Entities
 {
     public partial class tbMetodosPago
     {
+        public tbMetodosPago()
+        {
+            tbVentas = new HashSet<tbVentas>();
+        }
+
         public int meto_ID { get; set; }
         public string meto_Nombre { get; set; }
         public int meto_UserCreacion { get; set; }
@@ -18,5 +23,6 @@ namespace Taller.Entities.Entities
 
         public virtual tbUsuarios meto_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios meto_UserModificacionNavigation { get; set; }
+        public virtual ICollection<tbVentas> tbVentas { get; set; }
     }
 }

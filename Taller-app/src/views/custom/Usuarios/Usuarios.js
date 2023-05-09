@@ -6,14 +6,52 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Checkbox } from '@material-ui/core';
+import { 
+    CButton, 
+    CModal, 
+    CModalHeader, 
+    CModalTitle,
+     CModalBody, 
+     CModalFooter,
+     CForm,CCol,
+     CFormInput,
+     CFormCheck,
+     CFormFeedback,
+     CFormSelect,
+     CInputGroup,
+     CFormLabel,
+     CInputGroupText,
+     CRow,
+   } from '@coreui/react';
+  import {Button, IconButton} from '@material-ui/core';
+  import {Delete,Edit, Book,} from '@material-ui/icons';
+  import { toast, ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+  
 
 function Usuarios() {
+    const navigate = useNavigate()
     const [Usuarios, setUsuarios] = useState([]);
     const [sortModel, setSortModel] = useState([{ field: 'user_ID', sort: 'asc' }]);
+    const [rolID,setRolID] = useState('')
+    const [nombreUsuario,setnombreUsuario] = useState('')
+    const [EmpID,setEmpeID] = useState('')
+    const [ContraUsuario,setContraUsuario] = useState('')
+    const [rol, setRol] = useState([]);
+    const [selectedRol, setSelectedRol] = useState(null);
+    const [selectedempleado, setselectedEmpleado] = useState(null);
+    const [empleado, setEmpleado] = useState([]);
+    const [validated, setValidated] = useState(false) 
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const [visible2, setVisible2] = useState(false)
+    const [visible3, setVisible3] = useState(false)
+    const [Actualizar, setActualizar] = useState(false)
 
     useEffect(() => {
         axios
-            .get('https://localhost:44387/api/Usuarios')
+            .get('Usuarios')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,
@@ -24,6 +62,24 @@ function Usuarios() {
             .catch((error) => {
                 console.log(error);
             });
+    }, [Actualizar]);
+
+    useEffect(() => {
+        axios.get('/Empleados/ListarEmpleados')
+        .then(response => {
+          setDepartamentos(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data from API:', error);
+        });
+
+        axios.get('/Roles/ListarRoles')
+        .then(response => {
+          setDepartamentos(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data from API:', error);
+        });
     }, []);
 
     const handleSortModelChange = (model) => {

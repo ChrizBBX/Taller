@@ -31,6 +31,7 @@ function Servicios() {
   const [sortModel, setSortModel] = useState([{ field: 'serv_ID', sort: 'asc' }]);
   const [servID,setServID]  = useState('')
   const [servDescripcion,setServDescripcion] = useState('')
+  const [servPrecio, setServPrecio] = useState('');
   const [validated, setValidated] = useState(false) 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -65,9 +66,10 @@ function Servicios() {
     }
     setValidated(true)
     event.preventDefault()
-    if(servDescripcion != ''){
+    if(servDescripcion != '' && servPrecio != ''){
         let payload = {
             serv_Descripcion: servDescripcion,
+            serv_Precio : servPrecio,
           }
           axios
             .post('Servicios/Insert', payload)
@@ -100,10 +102,11 @@ function Servicios() {
     }
     setValidated(true)
     event.preventDefault()
-    if(servDescripcion != ''){
+    if(servDescripcion != ''&& servPrecio != ''){
         let payload = {
             serv_ID: servID,
             serv_Descripcion: servDescripcion,
+            serv_Precio : servPrecio,
           }
           axios
             .post('Servicios/Update', payload)
@@ -165,6 +168,7 @@ function Servicios() {
     setVisible2(true);
     setServID(servicio.serv_ID)
     setServDescripcion(servicio.serv_Descripcion)
+    setServPrecio(servicio.serv_Precio)
   };
 
   const handleDeleteClick = (params) => {
@@ -182,6 +186,7 @@ function Servicios() {
   const columns = [
     { field: 'serv_ID', headerName: 'ID',flex:1 },
     { field: 'serv_Descripcion', headerName: 'Descripción', flex:1 },
+    { field: 'serv_Precio', headerName: 'Precio', flex:1 },
     {
       field: 'acciones',
       headerName: 'Acciones',
@@ -238,6 +243,14 @@ function Servicios() {
         value={servDescripcion}
         onChange={(e) => setServDescripcion(e.target.value)}
       />
+         <h6>Precio</h6>
+      <CFormInput
+        type="text"
+        id="validationCustom01"
+        required
+        value={servPrecio}
+        onChange={(e) => setServPrecio(e.target.value)}
+      />
     </CCol>
     <CRow className='mt-3 offset-7'>
       <CCol className='col-2'>
@@ -276,6 +289,14 @@ function Servicios() {
         required
         value={servDescripcion}
         onChange={(e) => setServDescripcion(e.target.value)}
+      />
+       <h6>Precio</h6>
+       <CFormInput
+        type="text"
+        id="validationCustom01"
+        required
+        value={servPrecio}
+        onChange={(e) => setServPrecio(e.target.value)}
       />
     </CCol>
     <CRow className='mt-3 offset-7'>

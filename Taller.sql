@@ -445,6 +445,8 @@ CREATE TABLE tllr.tbEmpleados(
 	CONSTRAINT FK_maqu_tbEmpleados_maqu_tbSucursales_sucu_Id					FOREIGN KEY(sucu_Id)						REFERENCES tllr.tbSucursales(sucu_Id)		
 );
 
+ALTER TABLE acce.tbUsuarios ADD CONSTRAINT FK_acce_tbUsuarios_empe_ID_tllr_tbEmpleados_empe_Id FOREIGN KEY (empe_ID) REFERENCES tllr.tbEmpleados(empe_Id)
+
 
 /*Insertar Usuarios*/
 GO
@@ -1045,14 +1047,15 @@ WHERE serv_Estado = 1
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Insert
 @serv_Descripcion NVARCHAR(250),
+@serv_Precio DECIMAL(18,2),
 @serv_UserCreacion INT
 AS
 BEGIN
 	BEGIN TRY
 		IF NOT EXISTS (SELECT serv_Descripcion FROM tllr.tbServicios WHERE serv_Descripcion = @serv_Descripcion)
 			BEGIN
-			INSERT INTO tllr.tbServicios ([serv_Descripcion], [serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
-			VALUES (@serv_Descripcion,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
+			INSERT INTO tllr.tbServicios ([serv_Descripcion],[serv_Precio] ,[serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
+			VALUES (@serv_Descripcion,@serv_Precio,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
 			SELECT '1'
 			END
 			ELSE
@@ -1068,6 +1071,7 @@ GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Update
 @serv_ID INT,
 @serv_Descripcion NVARCHAR(250),
+@serv_Precio DECIMAL(18,2),
 @serv_UserModificacion INT
 AS
 BEGIN
@@ -1076,6 +1080,7 @@ BEGIN
 			BEGIN
 			UPDATE tllr.tbServicios
 			SET serv_Descripcion = @serv_Descripcion,
+			    serv_Precio = @serv_Precio,
 				serv_UserModificacion = @serv_UserModificacion,
 				serv_FechaModificacion = GETDATE()
 			WHERE 
@@ -1480,6 +1485,26 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_ListarEmpleados
+	@empe_Id	INT
+AS
+BEGIN
+	SELECT	 [empe_Id],
+			 [empe_Nombres]
+	FROM	[tllr].[tbEmpleados]
+END
+GO
+
+CREATE OR ALTER PROCEDURE tllr.UDP_tbRoles_ListarRoles
+	@role_ID	INT
+AS
+BEGIN
+	SELECT	 [role_ID],
+			 [role_Nombre]
+	FROM	[acce].[tbRoles]
+END
+GO
+
 CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_ActualizarEmpleados
       @empe_ID                 INT, 
       @empe_Nombres            NVARCHAR(150),
@@ -1675,13 +1700,13 @@ END
 --********************************************UDP /tbEstadosCiviles*********************************--
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Insert
-		@estacivi_Nombre NVARCHAR(50)
+   @estacivi_Nombre NVARCHAR(50)
 AS
 BEGIN
     BEGIN TRY
         IF NOT EXISTS (SELECT estacivi_Nombre FROM gral.tbEstadosCiviles WHERE estacivi_Nombre = @estacivi_Nombre)
         BEGIN 
-        INSERT INTO gral.tbEstadosCiviles ([estacivi_Nombre],[estacivi_UserModificacion])
+        INSERT INTO gral.tbEstadosCiviles ([estacivi_Nombre],[estacivi_UserCreacion])
         VALUES (@estacivi_Nombre,1)
         SELECT '1'
         END
@@ -1704,8 +1729,8 @@ BEGIN
             BEGIN
             UPDATE gral.tbEstadosCiviles
             SET estacivi_Nombre = @estacivi_Nombre,
-                [estacivi_UserCreacion] = 1,
-                [estacivi_FechaCreacion] = GETDATE()
+                [estacivi_UserModificacion] = 1,
+                [estacivi_FechaModificacion] = GETDATE()
             WHERE [estacivi_ID]  = @estacivi_ID
             SELECT    '1'
             END
@@ -1736,7 +1761,7 @@ END
 --********************************************UDP /tbEstadosCiviles*********************************--
 --********************************************UDP /tbMetodosPago************************************--
 go
-CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Insert
+CREATE OR ALTER PROCEDURE gral.UDP_tbMetodosdePago_Insert
 		@meto_Nombre NVARCHAR(100)
 AS
 BEGIN
@@ -1756,7 +1781,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
+CREATE OR ALTER PROCEDURE gral.UDP_tbMetodosdePago_Update
    @meto_ID      INT,
    @meto_Nombre  NVARCHAR(150)
 AS

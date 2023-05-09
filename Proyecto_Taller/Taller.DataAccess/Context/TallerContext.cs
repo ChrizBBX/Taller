@@ -276,8 +276,6 @@ namespace Taller.DataAccess.Context
 
                 entity.Property(e => e.deve_FechaModificacion).HasColumnType("datetime");
 
-                entity.Property(e => e.deve_MontoTotal).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.deve_Precioventa).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.deve_UserCreacionNavigation)
@@ -294,14 +292,17 @@ namespace Taller.DataAccess.Context
                 entity.HasOne(d => d.resp)
                     .WithMany(p => p.tbDetallesventas)
                     .HasForeignKey(d => d.resp_ID)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbDetallesventas_resp_ID_tllr_tbVentas_resp_ID");
 
                 entity.HasOne(d => d.serv)
                     .WithMany(p => p.tbDetallesventas)
                     .HasForeignKey(d => d.serv_ID)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbDetallesventas_serv_ID_tllr_tbServicios_serv_ID");
+
+                entity.HasOne(d => d.vehi)
+                    .WithMany(p => p.tbDetallesventas)
+                    .HasForeignKey(d => d.vehi_ID)
+                    .HasConstraintName("FK_tllr_tbDetallesventas_vehi_ID");
 
                 entity.HasOne(d => d.vent)
                     .WithMany(p => p.tbDetallesventas)
@@ -809,6 +810,8 @@ namespace Taller.DataAccess.Context
 
                 entity.Property(e => e.serv_FechaModificacion).HasColumnType("datetime");
 
+                entity.Property(e => e.serv_Precio).HasColumnType("decimal(18, 2)");
+
                 entity.HasOne(d => d.serv_UserCreacionNavigation)
                     .WithMany(p => p.tbServiciosserv_UserCreacionNavigation)
                     .HasForeignKey(d => d.serv_UserCreacion)
@@ -955,23 +958,23 @@ namespace Taller.DataAccess.Context
 
                 entity.ToTable("tbVentas", "tllr");
 
-                entity.Property(e => e.vent_Descuento).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.vent_Fecha).HasColumnType("date");
-
                 entity.Property(e => e.vent_FechaCreacion)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.vent_FechaModificacion).HasColumnType("datetime");
 
-                entity.Property(e => e.vent_MontoFinal).HasColumnType("decimal(18, 2)");
-
                 entity.HasOne(d => d.clie)
                     .WithMany(p => p.tbVentas)
                     .HasForeignKey(d => d.clie_ID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tllr_tbVentas_clie_Id_ABRR_tbClientes_clie_Id");
+
+                entity.HasOne(d => d.meto)
+                    .WithMany(p => p.tbVentas)
+                    .HasForeignKey(d => d.meto_ID)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tllr_tbVentas_meto_ID");
 
                 entity.HasOne(d => d.sucu)
                     .WithMany(p => p.tbVentas)

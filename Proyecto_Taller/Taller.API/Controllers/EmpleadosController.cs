@@ -30,7 +30,14 @@ namespace Taller.API.Controllers
             var item2 = _mapper.Map<tbEmpleados>(item);
             var response = _tallerservices.AgregarEmpleado(item2);
             return Ok(response);
-        }   
+        }
+
+        [HttpGet("ListarEmpleados")]
+        public IActionResult ListarEmpleados()
+        {
+            var list = _tallerservices.ListarEmpleados();
+            return Ok(list);
+        }
 
         [HttpGet]
         public IActionResult Empleados()

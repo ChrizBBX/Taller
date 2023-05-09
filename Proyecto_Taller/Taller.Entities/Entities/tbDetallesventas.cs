@@ -10,11 +10,11 @@ namespace Taller.Entities.Entities
     {
         public int deve_ID { get; set; }
         public int vent_ID { get; set; }
-        public int serv_ID { get; set; }
-        public int resp_ID { get; set; }
+        public int? vehi_ID { get; set; }
+        public int? serv_ID { get; set; }
+        public int? resp_ID { get; set; }
         public int deve_Cantidad { get; set; }
         public decimal deve_Precioventa { get; set; }
-        public decimal? deve_MontoTotal { get; set; }
         public int deve_UserCreacion { get; set; }
         public DateTime? deve_FechaCreacion { get; set; }
         public int? deve_UserModificacion { get; set; }
@@ -24,6 +24,7 @@ namespace Taller.Entities.Entities
         public virtual tbUsuarios deve_UserModificacionNavigation { get; set; }
         public virtual tbRepuestos resp { get; set; }
         public virtual tbServicios serv { get; set; }
+        public virtual tbVehiculos vehi { get; set; }
         public virtual tbVentas vent { get; set; }
     }
 }

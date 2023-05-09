@@ -22,11 +22,6 @@ namespace Taller.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult List()
-        {
-            var listado = _tallerServices.ListadoDetallesVentas();
-            return Ok(listado);
-        }
+       
     }
 }

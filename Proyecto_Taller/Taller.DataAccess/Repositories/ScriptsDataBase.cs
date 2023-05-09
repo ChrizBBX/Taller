@@ -65,6 +65,7 @@ namespace Taller.DataAccess.Repositories
         #region Empleados
         public static string UDP_tbEmpleados_Select = "tllr.UDP_tbEmpleados_VW";
         public static string AgregarEmpleados = "tllr.UDP_tbEmpleado_InsertarEmpleados";
+        public static string ListaEmpleados = "tllr.UDP_tbEmpleado_ListarEmpleados";
         #endregion
 
         #region Modelos
@@ -83,11 +84,14 @@ namespace Taller.DataAccess.Repositories
 
         #region MetodosPago
         public static string UDP_tbMetodosPago_VW = "gral.UDP_tbMetodosPago_VW";
+        public static string UDP_tbMetodosPago_Insert = "gral.UDP_tbMetodosdePago_Insert";
+        public static string UDP_tbMetodosPago_Update = "gral.UDP_tbMetodosdePago_Update";
+        public static string UDP_tbMetodosPago_Delete = "gral.UDP_tbMetodosPago_Delete";
         #endregion
    
         #region  Clientes
-public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
-#endregion
+         public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
+        #endregion
         
         #region  Marcas
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbMarcas_VW";
@@ -102,6 +106,10 @@ public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
 
         #region Departamentos
         public static string LlenarDepartamentos = "GRAL.UDP_tbDepartamentos_LlenarDepartamentos";
+        #endregion
+
+        #region Roles
+        public static string ListarRoles = "tllr.UDP_tbRoles_ListarRoles";
         #endregion
     }
 }

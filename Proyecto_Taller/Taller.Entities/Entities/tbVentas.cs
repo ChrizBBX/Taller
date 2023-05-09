@@ -14,10 +14,8 @@ namespace Taller.Entities.Entities
         }
 
         public int vent_Id { get; set; }
-        public DateTime vent_Fecha { get; set; }
         public int clie_ID { get; set; }
-        public decimal? vent_Descuento { get; set; }
-        public decimal? vent_MontoFinal { get; set; }
+        public int meto_ID { get; set; }
         public int sucu_ID { get; set; }
         public int vent_UserCreacion { get; set; }
         public DateTime? vent_FechaCreacion { get; set; }
@@ -25,6 +23,7 @@ namespace Taller.Entities.Entities
         public DateTime? vent_FechaModificacion { get; set; }
 
         public virtual tbClientes clie { get; set; }
+        public virtual tbMetodosPago meto { get; set; }
         public virtual tbSucursales sucu { get; set; }
         public virtual tbUsuarios vent_UserCreacionNavigation { get; set; }
         public virtual tbUsuarios vent_UserModificacionNavigation { get; set; }
