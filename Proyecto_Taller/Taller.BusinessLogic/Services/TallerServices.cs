@@ -248,6 +248,29 @@ namespace Taller.BusinessLogic.Services
         }
         #endregion
 
+        #region VentasDetalles
+        public ServiceResult InsertarVentasDetalles(tbDetallesventas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _detallesventarepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+        #endregion
+
         #region Vehiculos
         public IEnumerable<VW_tbVehiculos> ListadoVehiculos()
         {

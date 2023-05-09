@@ -9,15 +9,10 @@ namespace Taller.Entities.Entities
     public partial class VW_tbVentas
     {
         public int vent_Id { get; set; }
-        public DateTime vent_Fecha { get; set; }
         public int clie_ID { get; set; }
         public string clie_Nombres { get; set; }
-        public int? vehi_ID { get; set; }
-        public string vehi_Matricula { get; set; }
-        public int? meto_ID { get; set; }
+        public int meto_ID { get; set; }
         public string meto_Nombre { get; set; }
-        public decimal? vent_Descuento { get; set; }
-        public decimal? vent_MontoFinal { get; set; }
         public int sucu_ID { get; set; }
         public string sucu_Descripcion { get; set; }
         public int vent_UserCreacion { get; set; }

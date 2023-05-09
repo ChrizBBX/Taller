@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Controllers
 {
@@ -20,6 +22,14 @@ namespace Taller.API.Controllers
         {
             _tallerServices = tallerServices;
             _mapper = mapper;
+        }
+
+        [HttpPost("Insert")]
+        public IActionResult Insert(VentasDetallesViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbDetallesventas>(item);
+            var listado = _tallerServices.InsertarVentasDetalles(listadoMapeado);
+            return Ok(listado);
         }
 
         [HttpGet]

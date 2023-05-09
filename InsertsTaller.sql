@@ -1235,60 +1235,60 @@ VALUES ('Batería Deka de tornillo 12 voltios 950 CCA 13 X 6.75',4745.90,1,1,'200
 	   ('Cuarto 85W140 MP Gear Lube Phillips 66',199,5,4,'2009',1)
 
 --INSERT TABLA SERVICIOS 
-INSERT INTO tllr.tbServicios(serv_Descripcion,serv_UserCreacion)
-VALUES ('Mecánica',1),
-       ('Electricidad automotriz',1),
-	   ('Escáner',1),
-	   ('Estética automotriz',1),
-	   ('Hojalatería',1),
-	   ('Pintura',1),
-	   ('Cambio de aceite y filtro',1),
-	   ('Venta y montaje de llantas',1),
-	   ('Ajuste del clutch',1),
-	   ('Revisión de las luces y los faros',1)
+INSERT INTO tllr.tbServicios(serv_Descripcion,serv_Precio,serv_UserCreacion)
+VALUES ('Mecánica',800,1),
+       ('Electricidad automotriz',100,1),
+	   ('Escáner',300,1),
+	   ('Estética automotriz',1500,1),
+	   ('Hojalatería',500,1),
+	   ('Pintura',1400,1),
+	   ('Cambio de aceite y filtro',900,1),
+	   ('Venta y montaje de llantas',5000,1),
+	   ('Ajuste del clutch',2500,1),
+	   ('Revisión de las luces y los faros',400,1)
 
---INSERT TABLA VENTAS
-INSERT INTO tllr.tbVentas(vent_Fecha,clie_ID,vent_Descuento,vent_MontoFinal,sucu_ID,vent_UserCreacion)
-VALUES (GETDATE(),1,NULL,0,1,1),
-       (GETDATE(),2,NULL,0,1,1),
-	   (GETDATE(),3,NULL,0,1,1),
-	   (GETDATE(),4,NULL,0,1,1),
-	   (GETDATE(),5,NULL,0,1,1),
-	   (GETDATE(),6,NULL,0,1,1),
-	   (GETDATE(),7,NULL,0,1,1),
-	   (GETDATE(),8,NULL,0,1,1),
-	   (GETDATE(),9,NULL,0,1,1)
+----INSERT TABLA VENTAS
+--INSERT INTO tllr.tbVentas(vent_Fecha,clie_ID,vent_Descuento,vent_MontoFinal,sucu_ID,vent_UserCreacion)
+--VALUES (GETDATE(),1,NULL,0,1,1),
+--       (GETDATE(),2,NULL,0,1,1),
+--	   (GETDATE(),3,NULL,0,1,1),
+--	   (GETDATE(),4,NULL,0,1,1),
+--	   (GETDATE(),5,NULL,0,1,1),
+--	   (GETDATE(),6,NULL,0,1,1),
+--	   (GETDATE(),7,NULL,0,1,1),
+--	   (GETDATE(),8,NULL,0,1,1),
+--	   (GETDATE(),9,NULL,0,1,1)
 
---INSERT TABLA DETALLES VENTAS
-DECLARE @Precioventa AS DECIMAL(18,2);
-SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 1
-INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
-VALUES (1,1,1,8,@Precioventa,NULL,1)
-GO
+----INSERT TABLA DETALLES VENTAS
+--DECLARE @Precioventa AS DECIMAL(18,2);
+--SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 1
+--INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
+--VALUES (1,1,1,8,@Precioventa,NULL,1)
+--GO
 
-DECLARE @Precioventa AS DECIMAL(18,2);
-SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 2
-INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
-VALUES (2,2,2,9,@Precioventa,NULL,1)
-GO
+--DECLARE @Precioventa AS DECIMAL(18,2);
+--SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 2
+--INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
+--VALUES (2,2,2,9,@Precioventa,NULL,1)
+--GO
 
-DECLARE @Precioventa AS DECIMAL(18,2);
-SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 3
-INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
-VALUES (3,3,3,10,@Precioventa,NULL,1)
-GO
+--DECLARE @Precioventa AS DECIMAL(18,2);
+--SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 3
+--INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
+--VALUES (3,3,3,10,@Precioventa,NULL,1)
+--GO
 
-DECLARE @Precioventa AS DECIMAL(18,2);
-SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 4
-INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
-VALUES (4,4,4,7,@Precioventa,NULL,1)
-GO
+--DECLARE @Precioventa AS DECIMAL(18,2);
+--SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 4
+--INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
+--VALUES (4,4,4,7,@Precioventa,NULL,1)
+--GO
 
-DECLARE @Precioventa AS DECIMAL(18,2);
-SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 5
-INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
-VALUES (5,5,5,12,@Precioventa,NULL,1)
-GO
+--DECLARE @Precioventa AS DECIMAL(18,2);
+--SELECT @Precioventa = resp_Precio FROM tllr.tbRepuestos WHERE [resp_ID] = 5
+--INSERT INTO tllr.tbDetallesventas(vent_ID,serv_ID,resp_ID,deve_Cantidad,deve_Precioventa,deve_MontoTotal,deve_UserCreacion)
+--VALUES (5,5,5,12,@Precioventa,NULL,1)
+--GO
 
 --INSERT INTO COMPRAS
 INSERT INTO tllr.tbCompras(prov_ID,comp_Fecha,comp_Descuento,comp_MontoFinal,[comp_UserCreacion])

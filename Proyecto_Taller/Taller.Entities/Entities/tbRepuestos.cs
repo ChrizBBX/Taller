@@ -17,6 +17,7 @@ namespace Taller.Entities.Entities
         public int resp_ID { get; set; }
         public string resp_Descripcion { get; set; }
         public decimal resp_Precio { get; set; }
+        public int resp_Stock { get; set; }
         public int prov_ID { get; set; }
         public int marc_ID { get; set; }
         public string resp_Anio { get; set; }
@@ -25,7 +26,6 @@ namespace Taller.Entities.Entities
         public DateTime? resp_FechaModificacion { get; set; }
         public int? resp_UserModificacion { get; set; }
         public bool? resp_Estado { get; set; }
-        public int resp_Stock { get; set; }
 
         public virtual tbMarcas marc { get; set; }
         public virtual tbProveedores prov { get; set; }

@@ -22,6 +22,7 @@ namespace Taller.API.Extentions
             CreateMap<SucursalesViewModel, tbSucursales>().ReverseMap();
             CreateMap<VehiculosViewModel, tbVehiculos>().ReverseMap();
             CreateMap<VentasViewModel, tbVentas>().ReverseMap();
+            CreateMap<VentasDetallesViewModel,tbDetallesventas>().ReverseMap();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Taller.DataAccess.Repositories
 
         #region DetallesVentas
         public static string UDP_tbDetallesventas_Select = "tllr.UDP_tbDetallesventas_VW";
+        public static string UDP_tbDetallesventas_Insert = "tllr.UDP_tbDetallesventas_Insert";
         #endregion
 
         #region Vehiculos

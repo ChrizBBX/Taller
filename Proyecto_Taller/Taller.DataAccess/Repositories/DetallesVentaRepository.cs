@@ -24,7 +24,19 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Insert(tbDetallesventas item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@vehi_ID", item.vehi_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@serv_ID", item.serv_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@resp_ID", item.resp_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@deve_Cantidad", item.deve_Cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@deve_UserCreacion", item.deve_UserCreacion, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbDetallesventas_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_tbDetallesventas> List()

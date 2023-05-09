@@ -311,6 +311,7 @@ CREATE TABLE tllr.tbRepuestos(
 CREATE TABLE tllr.tbServicios(
      serv_ID                  INT IDENTITY(1,1),
 	 serv_Descripcion         NVARCHAR(250),
+	 serv_Precio		      DECIMAL(18,2) NULL,
 	 serv_FechaCreacion       DATETIME DEFAULT GETDATE(),
 	 serv_UserCreacion        INT,
 	 serv_FechaModificacion   DATETIME,
@@ -323,11 +324,9 @@ CREATE TABLE tllr.tbServicios(
 
 --TABLA VENTAS
 CREATE TABLE tllr.tbVentas(
-    vent_Id		            INT IDENTITY(1,1),
-	vent_Fecha				DATE NOT NULL,
+    vent_Id					INT IDENTITY(1,1),
 	clie_ID	                INT NOT NULL,
-	vent_Descuento			DECIMAL(18,2),
-	vent_MontoFinal			DECIMAL(18,2),
+	meto_ID					INT NOT NULL,
 	sucu_ID					INT NOT NULL,
 	vent_UserCreacion 	    INT NOT NULL,
 	vent_FechaCreacion      DATETIME DEFAULT GETDATE(), 
@@ -337,7 +336,8 @@ CREATE TABLE tllr.tbVentas(
     CONSTRAINT FK_tllr_tbVentas_clie_Id_ABRR_tbClientes_clie_Id FOREIGN KEY (clie_ID) REFERENCES tllr.tbClientes(clie_ID),
 	CONSTRAINT FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id FOREIGN KEY (sucu_ID) REFERENCES tllr.tbSucursales(sucu_ID),
 	CONSTRAINT FK_tllr_acce_tbVentas_vent_UserCreacion FOREIGN KEY (vent_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
-    CONSTRAINT FK_tllr_acce_tbVentas_vent_UserModificacion FOREIGN KEY (vent_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
+    CONSTRAINT FK_tllr_acce_tbVentas_vent_UserModificacion FOREIGN KEY (vent_UserModificacion) REFERENCES acce.tbUsuarios (user_ID),
+	CONSTRAINT FK_tllr_tbVentas_meto_ID FOREIGN KEY (meto_ID) REFERENCES gral.tbMetodosPago(meto_ID)
 );
 GO
 
@@ -345,11 +345,11 @@ GO
 CREATE TABLE tllr.tbDetallesventas(
    deve_ID					INT IDENTITY(1,1),
    vent_ID					INT NOT NULL,
-   serv_ID                  INT NOT NULL,
-   resp_ID                  INT NOT NULL,
+   vehi_ID					INT NULL,
+   serv_ID                  INT NULL,
+   resp_ID                  INT NULL,
    deve_Cantidad            INT NOT NULL,
    deve_Precioventa         DECIMAL(18,2) NOT NULL,
-   deve_MontoTotal			DECIMAL(18,2),
    deve_UserCreacion		INT NOT NULL,
    deve_FechaCreacion       DATETIME DEFAULT GETDATE(), 
    deve_UserModificacion	INT,
@@ -359,7 +359,8 @@ CREATE TABLE tllr.tbDetallesventas(
    CONSTRAINT FK_tllr_tbDetallesventas_vent_ID_tllr_tbVentas_vent_ID FOREIGN KEY (vent_ID) REFERENCES tllr.tbVentas(vent_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_resp_ID_tllr_tbVentas_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserCreacion FOREIGN KEY (deve_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
-   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserModificacion FOREIGN KEY (deve_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserModificacion FOREIGN KEY (deve_UserModificacion) REFERENCES acce.tbUsuarios (user_ID),
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_ID	FOREIGN KEY (vehi_ID) REFERENCES  tllr.tbVehiculos (vehi_ID)
 );
 GO
 
@@ -1026,7 +1027,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbServicios
 AS
-SELECT serv_ID, serv_Descripcion, 
+SELECT serv_ID, serv_Descripcion,serv_Precio,
 serv_FechaCreacion, serv_UserCreacion,[user1].user_NombreUsuario AS serv_UserCreacion_Nombre, 
 serv_FechaModificacion, serv_UserModificacion,[user2].user_NombreUsuario AS serv_UserModificacion_Nombre, 
 serv_Estado 
@@ -1045,14 +1046,15 @@ WHERE serv_Estado = 1
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Insert
 @serv_Descripcion NVARCHAR(250),
+@serv_Precio DECIMAL(18,2),
 @serv_UserCreacion INT
 AS
 BEGIN
 	BEGIN TRY
 		IF NOT EXISTS (SELECT serv_Descripcion FROM tllr.tbServicios WHERE serv_Descripcion = @serv_Descripcion)
 			BEGIN
-			INSERT INTO tllr.tbServicios ([serv_Descripcion], [serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
-			VALUES (@serv_Descripcion,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
+			INSERT INTO tllr.tbServicios ([serv_Descripcion],serv_Precio,[serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
+			VALUES (@serv_Descripcion,@serv_Precio,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
 			SELECT '1'
 			END
 			ELSE
@@ -1068,6 +1070,7 @@ GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbServicios_Update
 @serv_ID INT,
 @serv_Descripcion NVARCHAR(250),
+@serv_Precio DECIMAL(18,2),
 @serv_UserModificacion INT
 AS
 BEGIN
@@ -1076,6 +1079,7 @@ BEGIN
 			BEGIN
 			UPDATE tllr.tbServicios
 			SET serv_Descripcion = @serv_Descripcion,
+				serv_Precio = @serv_ID,
 				serv_UserModificacion = @serv_UserModificacion,
 				serv_FechaModificacion = GETDATE()
 			WHERE 
@@ -1311,9 +1315,8 @@ END
 GO
 CREATE VIEW tllr.VW_tbVentas
 AS
-SELECT vent_Id, vent_Fecha, 
-vent.clie_ID,clie.clie_Nombres,vent.vehi_ID,vehi.vehi_Matricula,vent.meto_ID,meto.meto_Nombre,vent_Descuento, 
-vent_MontoFinal, vent.sucu_ID,sucu.sucu_Descripcion, 
+SELECT vent_Id,
+vent.clie_ID,clie.clie_Nombres,vent.meto_ID,meto.meto_Nombre,vent.sucu_ID,sucu.sucu_Descripcion, 
 vent_UserCreacion,[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, vent_FechaCreacion, 
 vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion
 FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
@@ -1321,8 +1324,7 @@ ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
 ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
 ON vent.sucu_ID = sucu.sucu_ID INNER JOIN gral.tbMetodosPago meto
-ON vent.meto_ID = meto.meto_ID INNER JOIN tllr.tbVehiculos vehi
-ON vent.vehi_ID = vehi.vehi_ID
+ON vent.meto_ID = meto.meto_ID
 
 /*Ventas View UDP*/
 GO
@@ -1337,16 +1339,13 @@ GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_Insert
 @clie_ID INT,
 @meto_ID INT,
-@vent_Descuento DECIMAL(18,2),
-@vent_MontoFinal DECIMAL(18,2),
 @sucu_ID INT,
-@vent_UserCreacion INT,
-@vehi_ID INT 
+@vent_UserCreacion INT
 AS
 BEGIN
 	BEGIN TRY
-		INSERT INTO tbVentas ([vent_Fecha], [clie_ID], [vent_Descuento], [vent_MontoFinal], [sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion], [meto_ID], [vehi_ID])
-		VALUES (GETDATE(),@clie_ID,@vent_Descuento,@vent_MontoFinal,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL,@meto_ID,@vehi_ID)
+		INSERT INTO tbVentas ([clie_ID],[sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion], [meto_ID])
+		VALUES (@clie_ID,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL,@meto_ID)
 		SELECT '1'
 	END TRY
 	BEGIN CATCH
@@ -1358,22 +1357,51 @@ END
 GO
 CREATE VIEW tllr.VW_tbDetallesventas
 AS
-SELECT [deve_ID], [vent_ID], 
+SELECT [deve_ID], [vent_ID],deve.vehi_ID,vehi.mode_ID,vehi.vehi_Matricula,
 deve.[serv_ID],serv.serv_Descripcion, deve.[resp_ID],resp.resp_Descripcion, 
-[deve_Cantidad], [deve_Precioventa], 
-[deve_MontoTotal], [deve_UserCreacion], 
+[deve_Cantidad], [deve_Precioventa],[deve_UserCreacion], 
 [deve_FechaCreacion], [deve_UserModificacion], 
 [deve_FechaModificacion]
 FROM tllr.tbDetallesventas deve LEFT JOIN tllr.tbServicios serv
 ON deve.serv_ID = serv.serv_ID LEFT JOIN tllr.tbRepuestos resp
-ON deve.resp_ID = resp.resp_ID
+ON deve.resp_ID = resp.resp_ID INNER JOIN tllr.tbVehiculos vehi
+ON deve.vehi_ID = vehi.vehi_ID
 
-/*Ventas Detalles View UDP*/
+/*VentasDetalles View UDP*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbDetallesventas
+END
+
+/*VentasDetalles Insert*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Insert
+@vehi_ID INT,
+@serv_ID INT,
+@resp_ID INT,
+@deve_Cantidad INT,
+@deve_UserCreacion INT
+AS 
+BEGIN
+
+DECLARE @deve_PrecioVenta DECIMAL(18,2)
+BEGIN TRY
+IF @serv_ID IS NOT NULL
+BEGIN
+SET @deve_PrecioVenta= (SELECT serv_Precio FROM tllr.tbServicios WHERE serv_ID = @serv_ID) * @deve_Cantidad
+END
+ELSE 
+SET @deve_PrecioVenta = (SELECT resp_Precio FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID) * @deve_Cantidad
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+
+INSERT INTO tllr.tbDetallesventas
+VALUES((SELECT MAX(vent_ID) FROM tbVentas),@vehi_ID,@serv_ID,@resp_ID,@deve_Cantidad,@deve_PrecioVenta,@deve_UserCreacion,GETDATE(),NULL,NULL) 
+SELECT '1'
 END
 
 /*Empleados*/

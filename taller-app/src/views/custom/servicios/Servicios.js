@@ -182,6 +182,7 @@ function Servicios() {
   const columns = [
     { field: 'serv_ID', headerName: 'ID',flex:1 },
     { field: 'serv_Descripcion', headerName: 'Descripción', flex:1 },
+    { field: 'serv_Precio', headerName: 'Precio', flex:1 },
     {
       field: 'acciones',
       headerName: 'Acciones',
