@@ -34,6 +34,7 @@ const [vehiID,setVehiID] = useState('')
 const [respID,setRespID] = useState(null)
 const [servID,setServID] = useState(null)
 const [precioVenta,setprecioVenta] = useState(0)
+const [detalles,setDetalles] = useState([])
 const [cantidad,setCantidad] = useState(1)
 const [clientes,setClientes] = useState([])
 const [metodosPago,setMetodosPago] = useState([]) 
@@ -48,6 +49,22 @@ const [sortModel, setSortModel] = useState([{ field: 'vent_Id', sort: 'asc' }]);
 const [disableFields, setDisableFields] = useState(false); // nuevo estado para deshabilitar los campos de selección
 const [tipo, setTipo] = useState(false)
 
+const columns = [
+  { field: 'serv_Descripcion', headerName: 'Servicio', flex:1 },
+  { field: 'resp_Descripcion', headerName: 'Repuesto', flex:1 },
+  { field: 'deve_Cantidad', headerName: 'Cantidad', flex: 1},
+  { field: 'deve_PrecioVenta', headerName: 'Precio',flex:1 },
+  {
+    field: 'acciones',
+    headerName: 'Acciones',
+    width: 300,
+    renderCell: (params) => (
+      <div>
+            <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
+      </div>
+    ),
+  },
+];
 
 useEffect(() => {
     axios
@@ -58,14 +75,14 @@ useEffect(() => {
           id: row.meto_ID,
         }));
         setMetodosPago(insertarid);
+        console.log(metodosPago)
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [Actualizar]);
 
-  useEffect(() => {
-    axios
+
+      axios
       .get('/Servicios')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
@@ -77,14 +94,8 @@ useEffect(() => {
       .catch((error) => {
         console.log(error);
       });
-  }, [Actualizar]);
 
-  const handleSortModelChange = (model) => {
-    setSortModel(model);
-  };
-
-  useEffect(() => {
-    axios
+      axios
       .get('/Clientes')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
@@ -96,10 +107,8 @@ useEffect(() => {
       .catch((error) => {
         console.log(error);
       });
-  }, [Actualizar]);
 
-  useEffect(() => {
-    axios
+      axios
       .get('/Repuestos')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
@@ -111,11 +120,21 @@ useEffect(() => {
       .catch((error) => {
         console.log(error);
       });
-  }, [Actualizar]);
 
+      axios
+      .get('DetallesVentas/temp')
+      .then((response) => {
+        const insertarid = response.data.map((row) => ({
+          ...row,
+          id: row.deve_ID,
+        }));
+        setDetalles(insertarid);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  useEffect(() => {
-    axios
+      axios
       .get('/Vehiculos')
       .then((response) => {
         const insertarid = response.data.map((row) => ({
@@ -127,25 +146,16 @@ useEffect(() => {
       .catch((error) => {
         console.log(error);
       });
+
   }, [Actualizar]);
 
-  /*useEffect(() => {
-    console.log(tipo)
-if(respID != "" || servID != ""){
-  if(tipo == false){
-    const precio = servicios.find((precio) => servicios.serv_ID === servID.serv_ID);
-    setprecioVenta(precio.serv_Precio * cantidad)
-    console.log(precio.serv_Precio)
-  
-  }
-  if(tipo){
-        console.log(tipo)
-    const precio = servicios.find((precio) => servicios.serv_ID === servID.serv_ID);
-    setprecioVenta(precio.serv_Precio * cantidad)
-    console.log(precioVenta)
-  }
-}
-  }, [respID,servID,cantidad]);*/
+
+ 
+
+
+  const handleSortModelChange = (model) => {
+    setSortModel(model);
+  };
 
   const CreateAction = (event) => {
     const form = event.currentTarget
@@ -203,6 +213,7 @@ if(respID != "" || servID != ""){
             setIsSubmitting(false)
             console.log(response)
             if (response.data.message === '1') {
+              toast.success('Agregado exitosamente')
                 setActualizar(!Actualizar)
             }
           })
@@ -237,6 +248,7 @@ if(respID != "" || servID != ""){
             console.log(response)
             if (response.data.message === '1') {
                 setActualizar(!Actualizar)
+                toast.success('Agregado exitosamente')
             }
           })
           .catch((error) => {
@@ -347,18 +359,26 @@ return(
         }}
         disabled={disableFields ? false : true}
       />
-      <CCol>
-        <CButton color="primary" type="submit" disabled={disableFields ? false : true} >
+        <CButton color="primary" type="submit" disabled={disableFields ? false : true} className='mt-3'>
         Agregar
       </CButton>
       </CCol>
-      </CCol>
+      
       </CForm>   
             </div>
         </div>
    </div>
             </div>
-
+            <DataGrid
+            rows={detalles}
+            columns={columns}
+            sortModel={sortModel}
+            onSortModelChange={handleSortModelChange}
+            components={{
+              Toolbar: GridToolbar,
+            }}
+            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+          />
 
         </div>
     </div>

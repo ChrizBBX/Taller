@@ -38,5 +38,12 @@ namespace Taller.API.Controllers
             var listado = _tallerServices.ListadoDetallesVentas();
             return Ok(listado);
         }
+
+        [HttpGet("Temp")]
+        public IActionResult ListTemp()
+        {
+            var listado = _tallerServices.ListadoDetallesVentasTemporal();
+            return Ok(listado);
+        }
     }
 }

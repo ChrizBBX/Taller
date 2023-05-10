@@ -45,6 +45,12 @@ namespace Taller.DataAccess.Repositories
             var parametros = new DynamicParameters();
             return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesventas_Select, null, commandType: CommandType.StoredProcedure);
         }
+        public IEnumerable<VW_tbDetallesventas> ListTemp()
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesventas_Temp, null, commandType: CommandType.StoredProcedure);
+        }
 
         public RequestStatus Update(tbDetallesventas item)
         {

@@ -1375,6 +1375,13 @@ BEGIN
 SELECT * FROM tllr.VW_tbDetallesventas
 END
 
+/*VentaDetalles TemporalView*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Temp
+AS
+SELECT * FROM tllr.VW_tbDetallesventas WHERE vent_ID = (SELECT MAX(vent_ID) FROM tllr.tbVentas)
+GO
+
 /*VentasDetalles Insert*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Insert

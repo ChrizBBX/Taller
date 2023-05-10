@@ -210,6 +210,18 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbDetallesventas>();
             }
         }
+
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentasTemporal()
+        {
+            try
+            {
+                return _detallesventarepository.ListTemp();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
         #endregion
 
         #region Ventas
