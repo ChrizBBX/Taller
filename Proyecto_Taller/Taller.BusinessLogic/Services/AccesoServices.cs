@@ -30,6 +30,77 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbUsuarios>();
             }
         }
+
+        public ServiceResult InsertarUsuarios(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _usuariosrepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarUsuarios(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _usuariosrepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarUsuarios(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _usuariosrepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Login

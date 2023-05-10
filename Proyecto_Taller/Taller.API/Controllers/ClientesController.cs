@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
+using Taller.Entities.Entities;
 
 namespace Taller.API.Controllers
 {
@@ -26,6 +28,30 @@ namespace Taller.API.Controllers
         public IActionResult Clientes()
         {
             var listado = _tallerServices.ListadoClientes();
+            return Ok(listado);
+        }
+
+        [HttpPost("Insert")]
+        public IActionResult Insert(ClientesViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbClientes>(item);
+            var listado = _tallerservices.InsertarClientes(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(ClientesViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbClientes>(item);
+            var listado = _tallerservices.EditarClientes(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(ClientesViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbClientes>(item);
+            var listado = _tallerservices.EliminarClientes(listadoMapeado);
             return Ok(listado);
         }
     }

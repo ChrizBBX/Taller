@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
 using Taller.Entities.Entities;
 
@@ -34,6 +35,30 @@ namespace Taller.API
         public IActionResult Login(VW_tbUsuarios item)
         {
             var listado = _accesoservice.Login(item);
+            return Ok(listado);
+        }
+
+        [HttpPost("Insert")]
+        public IActionResult Insert(UsuariosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbUsuarios>(item);
+            var listado = _accesoservice.InsertarUsuarios(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(UsuariosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbUsuarios>(item);
+            var listado = _accesoservice.EditarUsuarios(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(UsuariosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbUsuarios>(item);
+            var listado = _accesoservice.EliminarUsuarios(listadoMapeado);
             return Ok(listado);
         }
     }

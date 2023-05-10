@@ -12,6 +12,9 @@ namespace Taller.DataAccess.Repositories
         #region Usuarios
         public static string UDP_Usuarios_Select = "acce.UDP_tbUsuarios_VW";
         public static string UDP_Login = "UDP_Login";
+        public static string UDP_tbUsuarios_Insert = "acce.UDP_tbUsuarios_Insert";
+        public static string UDP_tbUsuarios_Update = "acce.UDP_Usuarios_Update";
+        public static string UDP_tbUsuarios_Delete = "acce.UDP_tbUsuarios_Delete";
         #endregion
 
         #region Ventas
@@ -66,6 +69,8 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbEmpleados_Select = "tllr.UDP_tbEmpleados_VW";
         public static string AgregarEmpleados = "tllr.UDP_tbEmpleado_InsertarEmpleados";
         public static string ListaEmpleados = "tllr.UDP_tbEmpleado_ListarEmpleados";
+        public static string EditarEmpleados = "tllr.UDP_tbEmpleado_ActualizarEmpleados";
+        public static string DeleteEmpleados = "acce.UDP_tbEmpleados_Delete";
         #endregion
 
         #region Modelos
@@ -89,10 +94,13 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbMetodosPago_Delete = "gral.UDP_tbMetodosPago_Delete";
         #endregion
    
-        #region  Clientes
-         public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
+        #region Clientes
+        public static string UDP_UDP_tbClientes_VW = "tllr.UDP_tbClientes_VW";
+        public static string UDP_tbClientes_Insert = "tllr.UDP_tbClientes_Insert";
+        public static string UDP_tbClientes_Update = "tllr.UDP_tbClientes_Update";
+        public static string UDP_tbClientes_Delete = "tllr.UDP_tbClientes_Delete";
         #endregion
-        
+
         #region  Marcas
         public static string UDP_tbMarcas_VW = "tllr.UDP_tbMarcas_VW";
         public static string UDP_tbMarcas_Insert = "tllr.UDP_tbMarcas_Insert";

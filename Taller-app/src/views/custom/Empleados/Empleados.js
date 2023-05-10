@@ -12,7 +12,7 @@ function Empleados() {
 
     useEffect(() => {
         axios
-            .get('https://localhost:44387/api/Empleados')
+            .get('Empleados')
             .then((response) => {
                 const insertarid = response.data.map((row) => ({
                     ...row,

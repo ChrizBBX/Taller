@@ -24,7 +24,18 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Insert(tbUsuarios item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_NombreUsuario", item.user_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_Contraseña", item.user_Contrasena, DbType.String, ParameterDirection.Input);
+            parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_ID", item.empe_ID, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbUsuarios_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_tbUsuarios> List()
@@ -45,7 +56,31 @@ namespace Taller.DataAccess.Repositories
 
         public RequestStatus Update(tbUsuarios item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_NombreUsuario", item.user_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_ID", item.empe_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@user_ID", item.user_ID, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbUsuarios_Update, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
+        }
+
+        public RequestStatus Delete(tbUsuarios item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_ID", item.user_ID, DbType.String, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbUsuarios_Delete, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
         }
     }
 }

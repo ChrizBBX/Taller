@@ -29,6 +29,7 @@ const EstadosDetails = React.lazy(() => import('./views/custom/EstadosCiviles/Es
 
 const Clientes = React.lazy(() => import('./views/custom/Cliente/Cliente'))
 const Usuarios = React.lazy(() => import('./views/custom/Usuarios/Usuarios'))
+const UsuariosDetails = React.lazy(() => import('./views/custom/Usuarios/UsuariosDetails'))
 const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagos'))
 const MetodosPagosDetails = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagosDetails'))
 const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
@@ -107,6 +108,7 @@ const routes = [
   { path: '/EstadosCiviles', name: 'EstadosCiviles', element: EstadosCiviles },
   { path: '/Clientes', name: 'Clientes', element: Clientes },
   { path: '/Usuarios', name: 'Usuarios', element: Usuarios },
+  { path: '/UsuariosDetails', name: 'UsuariosDetails', element: UsuariosDetails },
   { path: '/MetodosPagos', name: 'MetodosPagos', element: MetodosPagos },
   { path: '/MetodosPagosDetails', name: 'MetodosPagosDetails', element: MetodosPagosDetails },
   { path: '/CreateEmpleados', name: 'CreateEmpleados', element: CreateEmpleados },

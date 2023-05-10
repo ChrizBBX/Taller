@@ -75,24 +75,74 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
-        public int AgregarEmpleado(tbEmpleados item)
+        public ServiceResult AgregarEmpleado(tbEmpleados item)
         {
             var result = new ServiceResult();
             try
             {
-                var Resultado = _empleadosRepository.AgregarEmpleado(item);
-                if (Resultado != 0)
+                var insertar = _empleadosRepository.Insert(item);
+                if (insertar.MessageStatus == "1")
                 {
-                    return Resultado;
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
                 }
                 else
                 {
-                    return 0;
+                    return result.BadRequest(insertar.MessageStatus);
                 }
             }
-            catch (Exception x)
+            catch (Exception e)
             {
-                return 0;
+                throw;
+            }
+        }
+
+        public ServiceResult EditarEmpleados(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _empleadosRepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarEmpleados(tbEmpleados item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _empleadosRepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion
@@ -108,6 +158,77 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbClientes>();
+            }
+        }
+
+        public ServiceResult InsertarClientes(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _clientesRepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EditarClientes(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _clientesRepository.Update(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Conflict(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarClientes(tbClientes item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _clientesRepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
             }
         }
         #endregion

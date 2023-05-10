@@ -24,12 +24,28 @@ namespace Taller.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("AgregarEmpleado")]
+        [HttpPost("Insert")]
         public IActionResult AgregarEmpleado(EmpleadosViewModel item)
         {
             var item2 = _mapper.Map<tbEmpleados>(item);
             var response = _tallerservices.AgregarEmpleado(item2);
             return Ok(response);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(EmpleadosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbEmpleados>(item);
+            var listado = _tallerservices.EditarEmpleados(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(EmpleadosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbEmpleados>(item);
+            var listado = _tallerservices.EliminarEmpleados(listadoMapeado);
+            return Ok(listado);
         }
 
         [HttpGet("ListarEmpleados")]
@@ -44,9 +60,6 @@ namespace Taller.API.Controllers
         {
             var listado = _tallerservices.ListadoEmpleados();
             return Ok(listado);
-        }
-
-          
-
+        }         
     }
 }

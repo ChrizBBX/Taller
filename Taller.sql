@@ -516,17 +516,20 @@ GO
 
 /*Usuarios View*/
 GO
-CREATE VIEW acce.VW_tbUsuarios 
+CREATE OR ALTER VIEW acce.VW_tbUsuarios 
 AS
 SELECT [user].user_ID, [user].user_NombreUsuario, 
 [user].user_Contrasena, [user].user_EsAdmin, 
 [user].role_ID, [user].empe_ID, 
+empe.empe_Nombres, rol.role_Nombre,
 [user].user_UserCreacion,[user1].user_NombreUsuario AS user_UserCreacion_Nombre, [user].user_FechaCreacion, 
 [user].user_UserModificacion,[user2].user_NombreUsuario AS user_UserModificacion_Nombre,[user].user_FechaModificacion, 
 [user].user_Estado
-FROM [acce].[tbUsuarios] [user] INNER JOIN acce.tbUsuarios [user1]
+FROM [acce].[tbUsuarios] [user] INNER JOIN acce.tbUsuarios [user1] 
 ON [user].user_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
-ON [user].user_UserModificacion = user2.user_ID
+ON [user].user_UserModificacion = user2.user_ID INNER JOIN tllr.tbEmpleados empe
+ON [user].empe_ID = empe.empe_Id  INNER JOIN acce.tbRoles rol
+on [user].role_ID = rol.role_ID
 WHERE [user].user_Estado = 1
 
 /*Usuarios View UDP*/
@@ -1475,12 +1478,17 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_InsertarEmpleados
 AS
 BEGIN
  BEGIN TRY 
-    INSERT INTO tllr.tbEmpleados([empe_Nombres],[empe_Apellidos],[empe_Identidad],[empe_FechaNacimiento],[empe_Sexo],[estacivi_Id],[muni_Id],[empe_Direccion],[empe_Telefono],[empe_CorreoElectronico],[sucu_Id],[empe_UsuCreacion])
+   IF NOT EXISTS (SELECT empe_Identidad FROM tllr.tbEmpleados WHERE empe_Identidad = @empe_Identidad )
+   BEGIN
+     INSERT INTO tllr.tbEmpleados([empe_Nombres],[empe_Apellidos],[empe_Identidad],[empe_FechaNacimiento],[empe_Sexo],[estacivi_Id],[muni_Id],[empe_Direccion],[empe_Telefono],[empe_CorreoElectronico],[sucu_Id],[empe_UsuCreacion])
 	VALUES (@empe_Nombres,@empe_Apellidos,@empe_Identidad,@empe_FechaNacimiento,@empe_Sexo,@estacivi_Id,@muni_Id,@empe_Direccion,@empe_Telefono,@empe_CorreoElectronico,@sucu_Id,1)
-	SELECT 1
+		SELECT '1'
+   END
+   ELSE
+    SELECT '2'
  END TRY 
  BEGIN CATCH
-    SELECT 0
+    SELECT '0'
  END CATCH
 END
 GO
@@ -1545,22 +1553,38 @@ BEGIN
    END CATCH
 END 
 GO 
+
+CREATE OR ALTER PROCEDURE acce.UDP_tbEmpleados_Delete
+   @empe_Id INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE [tllr].[tbEmpleados]
+        SET [empe_Estado] = 0
+        WHERE empe_Id = @empe_Id
+        SELECT '1'
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+    END CATCH
+END
 --****************************************UDP tbEmpleados*****************************************************--
 --/Usuarios Update/
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
-@user_NombreUsuario NVARCHAR(150),
-@user_Contraseña NVARCHAR(200),
-@user_EsAdmin BIT,
-@role_ID INT,
-@empe_ID INT
+	@user_NombreUsuario NVARCHAR(150),
+	@user_Contraseña NVARCHAR(200),
+	@role_ID INT,
+	@empe_ID INT
 AS
 BEGIN
     BEGIN TRY
         IF NOT EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
         BEGIN 
-        INSERT INTO acce.tbUsuarios ([user_NombreUsuario], [user_Contrasena], [user_EsAdmin], [role_ID], [empe_ID],[user_UserCreacion])
-        VALUES (@user_NombreUsuario,@user_Contraseña,@user_EsAdmin,@role_ID,@empe_ID,1)
+		DECLARE @Pass AS NVARCHAR(MAX);
+		SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @user_Contraseña), 2);
+        INSERT INTO acce.tbUsuarios ([user_NombreUsuario], [user_Contrasena], [role_ID], [empe_ID],[user_UserCreacion])
+        VALUES (@user_NombreUsuario,@Pass,@role_ID,@empe_ID,1)
         SELECT '1'
         END
         ELSE 
@@ -1574,7 +1598,6 @@ END
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_Usuarios_Update
 @user_NombreUsuario NVARCHAR(150),
-@user_EsAdmin BIT,
 @role_ID INT,
 @empe_ID INT,
 @user_ID INT 
@@ -1585,7 +1608,6 @@ BEGIN
             BEGIN
             UPDATE acce.tbUsuarios
             SET [user_NombreUsuario] = @user_NombreUsuario,
-                [user_EsAdmin] = [user_EsAdmin],
                 [role_ID] = @role_ID,
                 [empe_ID] = @empe_ID,
                 [user_UserModificacion] = 1,
@@ -1620,13 +1642,13 @@ END
 --Clientes CREATE 
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Insert
-@clie_Nombres NVARCHAR(150),
-@clie_Apellidos NVARCHAR(200),
-@clie_Sexo  CHAR(1),
-@clie_FechaNacimiento DATETIME,
-@clie_Telefono NVARCHAR(20),
-@clie_CorreoElectronico NVARCHAR(50),
-@muni_ID  INT
+	@clie_Nombres NVARCHAR(150),
+	@clie_Apellidos NVARCHAR(200),
+	@clie_Sexo  CHAR(1),
+	@clie_FechaNacimiento DATETIME,
+	@clie_Telefono NVARCHAR(20),
+	@clie_CorreoElectronico NVARCHAR(50),
+	@muni_ID  INT
 AS
 BEGIN
     BEGIN TRY
@@ -1696,7 +1718,7 @@ BEGIN
         SELECT '0'
     END CATCH
 END
---********************************************UDP /tbClientes**************************************--
+--********************************************UDP /tbClientes***************************************--
 --********************************************UDP /tbEstadosCiviles*********************************--
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Insert
@@ -1821,6 +1843,5 @@ BEGIN
 END
 GO
 --********************************************UDP /tbMetodosPago************************************--
---********************************************UDP /tbCompras****************************************--}
---********************************************UDP /tbCompras****************************************--
+
 

@@ -21,5 +21,9 @@ namespace Taller.Entities.Entities
         public int? vent_UserModificacion { get; set; }
         public string vent_UserModificacion_Nombre { get; set; }
         public DateTime? vent_FechaModificacion { get; set; }
+        public decimal? subtotal { get; set; }
+        public decimal IVA { get; set; }
+        public decimal? impuesto { get; set; }
+        public decimal? total { get; set; }
     }
 }
