@@ -211,11 +211,24 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
-        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentasTemporal()
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentasTemporal(int id)
         {
             try
             {
-                return _detallesventarepository.ListTemp();
+                return _detallesventarepository.ListTemp(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
+
+
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesPorID(int id)
+        {
+            try
+            {
+                return _detallesventarepository.ListById(id);
             }
             catch (Exception e)
             {
@@ -244,13 +257,13 @@ namespace Taller.BusinessLogic.Services
             try
             {
                 var insertar = _ventasrepository.Insert(item);
-                if (insertar.MessageStatus == "1")
+                if (Convert.ToInt32(insertar.CodeStatus) > 0 )
                 {
-                    return result.Ok(insertar.MessageStatus);
+                    return result.Ok(insertar.CodeStatus.ToString());
                 }
                 else
                 {
-                    return result.BadRequest(insertar.MessageStatus);
+                    return result.BadRequest(insertar.CodeStatus.ToString());
                 }
             }
             catch (Exception e)
@@ -268,6 +281,9 @@ namespace Taller.BusinessLogic.Services
             {
                 var insertar = _detallesventarepository.Insert(item);
                 if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }else if(insertar.MessageStatus == "2")
                 {
                     return result.Ok(insertar.MessageStatus);
                 }

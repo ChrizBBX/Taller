@@ -1313,12 +1313,14 @@ END
 
 /*Ventas View*/
 GO
-CREATE VIEW tllr.VW_tbVentas
+CREATE OR ALTER VIEW tllr.VW_tbVentas
 AS
 SELECT vent_Id,
 vent.clie_ID,clie.clie_Nombres,vent.meto_ID,meto.meto_Nombre,vent.sucu_ID,sucu.sucu_Descripcion, 
 vent_UserCreacion,[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, vent_FechaCreacion, 
-vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion
+vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion,(SELECT sum(deve.deve_Precioventa) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS subtotal,0.15 as IVA,
+(SELECT sum(deve.deve_Precioventa) * 0.15 FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS impuesto,
+(SELECT (sum(deve.deve_Precioventa) * 0.15) +  (SELECT sum(deve.deve_Precioventa) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS total
 FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
 ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
@@ -1334,6 +1336,15 @@ BEGIN
 SELECT * FROM tllr.VW_tbVentas
 END		
 
+/*ventas x id*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_By_ID
+@vent_ID INT
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbVentas WHERE vent_ID = @vent_ID
+END
+
 /*Ventas Insert*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_Insert
@@ -1346,26 +1357,31 @@ BEGIN
 	BEGIN TRY
 		INSERT INTO tbVentas ([clie_ID],[sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion], [meto_ID])
 		VALUES (@clie_ID,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL,@meto_ID)
-		SELECT '1'
+		SELECT SCOPE_IDENTITY()
 	END TRY
 	BEGIN CATCH
-		SELECT '0' 
+		SELECT 0
 	END CATCH
 END
 
 /*Ventas Detalles View*/
 GO
-CREATE VIEW tllr.VW_tbDetallesventas
+CREATE OR ALTER VIEW tllr.VW_tbDetallesventas
 AS
-SELECT [deve_ID], [vent_ID],deve.vehi_ID,vehi.mode_ID,vehi.vehi_Matricula,
-deve.[serv_ID],serv.serv_Descripcion, deve.[resp_ID],resp.resp_Descripcion, 
-[deve_Cantidad], [deve_Precioventa],[deve_UserCreacion], 
-[deve_FechaCreacion], [deve_UserModificacion], 
-[deve_FechaModificacion]
-FROM tllr.tbDetallesventas deve LEFT JOIN tllr.tbServicios serv
-ON deve.serv_ID = serv.serv_ID LEFT JOIN tllr.tbRepuestos resp
-ON deve.resp_ID = resp.resp_ID INNER JOIN tllr.tbVehiculos vehi
-ON deve.vehi_ID = vehi.vehi_ID
+SELECT deve.[deve_ID], deve.[vent_ID], deve.vehi_ID, vehi.mode_ID, vehi.vehi_Matricula,
+CASE WHEN deve.[serv_ID] IS NULL THEN COALESCE(resp.resp_Descripcion, '')
+ELSE COALESCE(serv.serv_Descripcion, '') END AS [Descripcion],
+deve.[serv_ID], serv.serv_Descripcion, deve.[resp_ID], resp.resp_Descripcion,
+deve.[deve_Cantidad], deve.[deve_Precioventa], deve.[deve_UserCreacion],
+deve.[deve_FechaCreacion], deve.[deve_UserModificacion], deve.[deve_FechaModificacion],
+-- Calcular el subtotal, impuesto (IVA) y total
+CAST(deve.deve_Cantidad * deve.deve_Precioventa AS DECIMAL(18,2)) AS [Subtotal],
+CAST(deve.deve_Cantidad * deve.deve_Precioventa * 0.15 AS DECIMAL(18,2)) AS [IVA],
+CAST(deve.deve_Cantidad * deve.deve_Precioventa * 1.15 AS DECIMAL(18,2)) AS [Total]
+FROM tllr.tbDetallesventas deve
+LEFT JOIN tllr.tbServicios serv ON deve.serv_ID = serv.serv_ID
+LEFT JOIN tllr.tbRepuestos resp ON deve.resp_ID = resp.resp_ID
+INNER JOIN tllr.tbVehiculos vehi ON deve.vehi_ID = vehi.vehi_ID
 
 /*VentasDetalles View UDP*/
 GO
@@ -1378,38 +1394,76 @@ END
 /*VentaDetalles TemporalView*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Temp
+@vent_ID INT
 AS
-SELECT * FROM tllr.VW_tbDetallesventas WHERE vent_ID = (SELECT MAX(vent_ID) FROM tllr.tbVentas)
+SELECT * FROM tllr.VW_tbDetallesventas WHERE vent_ID = @vent_ID
 GO
 
 /*VentasDetalles Insert*/
 GO
-CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Insert
-@vehi_ID INT,
-@serv_ID INT,
-@resp_ID INT,
-@deve_Cantidad INT,
-@deve_UserCreacion INT
-AS 
+CREATE OR ALTER PROCEDURE [tllr].[UDP_tbDetallesventas_Insert]
+    @vent_ID INT,
+    @vehi_ID INT,
+    @serv_ID INT,
+    @resp_ID INT,
+    @deve_Cantidad INT,
+    @deve_UserCreacion INT
+AS
 BEGIN
+    DECLARE @deve_PrecioVenta DECIMAL(18,2)
 
-DECLARE @deve_PrecioVenta DECIMAL(18,2)
-BEGIN TRY
-IF @serv_ID IS NOT NULL
-BEGIN
-SET @deve_PrecioVenta= (SELECT serv_Precio FROM tllr.tbServicios WHERE serv_ID = @serv_ID) * @deve_Cantidad
-END
-ELSE 
-SET @deve_PrecioVenta = (SELECT resp_Precio FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID) * @deve_Cantidad
-END TRY
-BEGIN CATCH
-SELECT '0'
-END CATCH
+    BEGIN TRY
+        IF @serv_ID IS NOT NULL
+        BEGIN
+            SET @deve_PrecioVenta = (SELECT serv_Precio FROM tllr.tbServicios WHERE serv_ID = @serv_ID) * @deve_Cantidad
+        END
+        ELSE
+        BEGIN
+            -- Verificar si hay suficiente stock del repuesto
+            DECLARE @resp_Stock INT
+            SET @resp_Stock = (SELECT resp_Stock FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID)
+            
+            IF @resp_Stock >= @deve_Cantidad
+            BEGIN
+                SET @deve_PrecioVenta = (SELECT resp_Precio FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID) * @deve_Cantidad
+                
+                -- Actualizar el stock de repuestos
+                UPDATE tllr.tbRepuestos SET resp_Stock = resp_Stock - @deve_Cantidad WHERE resp_ID = @resp_ID
+            END
+            ELSE
+            BEGIN
+                SELECT '2'
+            END
+        END
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+        RETURN
+    END CATCH
 
-INSERT INTO tllr.tbDetallesventas
-VALUES((SELECT MAX(vent_ID) FROM tbVentas),@vehi_ID,@serv_ID,@resp_ID,@deve_Cantidad,@deve_PrecioVenta,@deve_UserCreacion,GETDATE(),NULL,NULL) 
-SELECT '1'
+    -- Verificar si ya existe un registro con los mismos parámetros
+    IF EXISTS (SELECT 1 FROM tllr.tbDetallesventas WHERE vent_ID = @vent_ID AND ((serv_ID IS NOT NULL AND serv_ID = @serv_ID) OR (resp_ID IS NOT NULL AND resp_ID = @resp_ID)))
+    BEGIN
+        -- Actualizar la cantidad del registro existente
+        UPDATE tllr.tbDetallesventas 
+        SET deve_Cantidad = deve_Cantidad + @deve_Cantidad,
+            deve_PrecioVenta = deve_PrecioVenta + @deve_PrecioVenta
+        WHERE vent_ID = @vent_ID AND ((serv_ID IS NOT NULL AND serv_ID = @serv_ID) OR (resp_ID IS NOT NULL AND resp_ID = @resp_ID))
+        SELECT '1'
+    END
+    ELSE
+    BEGIN
+        -- Insertar un nuevo registro
+        INSERT INTO tllr.tbDetallesventas
+        VALUES (@vent_ID,@vehi_ID,@serv_ID,@resp_ID,@deve_Cantidad,@deve_PrecioVenta,@deve_UserCreacion,GETDATE(),NULL,NULL)
+        SELECT '1'
+    END
 END
+
+/*Venta Detalles Delete*/
+GO
+CREATE OR ALTER tllr.UDP_tb
+
 
 /*Empleados*/
 

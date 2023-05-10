@@ -14,6 +14,8 @@ namespace Taller.Entities.Entities
         public bool? user_EsAdmin { get; set; }
         public int? role_ID { get; set; }
         public int? empe_ID { get; set; }
+        public string empe_Nombres { get; set; }
+        public string role_Nombre { get; set; }
         public int? user_UserCreacion { get; set; }
         public string user_UserCreacion_Nombre { get; set; }
         public DateTime user_FechaCreacion { get; set; }

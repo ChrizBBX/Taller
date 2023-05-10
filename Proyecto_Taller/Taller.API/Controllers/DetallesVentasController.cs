@@ -40,9 +40,15 @@ namespace Taller.API.Controllers
         }
 
         [HttpGet("Temp")]
-        public IActionResult ListTemp()
+        public IActionResult ListTemp(int id)
         {
-            var listado = _tallerServices.ListadoDetallesVentasTemporal();
+            var listado = _tallerServices.ListadoDetallesVentasTemporal(id);
+            return Ok(listado);
+        }
+        [HttpGet("ByID")]
+        public IActionResult ListByID(int id)
+        {
+            var listado = _tallerServices.ListadoDetallesPorID(id);
             return Ok(listado);
         }
     }

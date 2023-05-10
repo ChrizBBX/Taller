@@ -32,9 +32,9 @@ namespace Taller.DataAccess.Repositories
             parametros.Add("@sucu_ID", 1, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@vent_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
 
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Ventas_Insert, parametros, commandType: CommandType.StoredProcedure);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_Ventas_Insert, parametros, commandType: CommandType.StoredProcedure);
 
-            result.MessageStatus = answer;
+            result.CodeStatus = answer;
             return result;
         }
 

@@ -19,7 +19,7 @@ import {
    CInputGroupText,
    CRow,
  } from '@coreui/react';
-import {Button, IconButton} from '@material-ui/core';
+import {Button, IconButton, colors} from '@material-ui/core';
 import {Delete,Edit, Book,} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,13 +28,15 @@ import Clientes from '../Cliente/Cliente';
 
 
 function VentasCreate (){
+const navigate = useNavigate()
+const [facturaID, setFacturaID] = useState('0');
 const [clieID,setClieID] = useState('')
 const [metoID,setMetoID] = useState('')
 const [vehiID,setVehiID] = useState('')
 const [respID,setRespID] = useState(null)
 const [servID,setServID] = useState(null)
-const [precioVenta,setprecioVenta] = useState(0)
 const [detalles,setDetalles] = useState([])
+const [detalles2,setDetalles2] = useState([])
 const [cantidad,setCantidad] = useState(1)
 const [clientes,setClientes] = useState([])
 const [metodosPago,setMetodosPago] = useState([]) 
@@ -42,6 +44,7 @@ const [vehiculos,setVehiculos] = useState([])
 const [servicios, setServicios] = useState([])
 const [repuestos, setRepuestos] = useState([])
 const [Actualizar, setActualizar] = useState(false)
+const [paso1,setPaso1] = useState(true)
 const [validated, setValidated] = useState(false) 
 const [validated2, setValidated2] = useState(false) 
 const [isSubmitting, setIsSubmitting] = useState(false)
@@ -50,10 +53,9 @@ const [disableFields, setDisableFields] = useState(false); // nuevo estado para 
 const [tipo, setTipo] = useState(false)
 
 const columns = [
-  { field: 'serv_Descripcion', headerName: 'Servicio', flex:1 },
-  { field: 'resp_Descripcion', headerName: 'Repuesto', flex:1 },
+  { field: 'descripcion', headerName: 'Servicio/Repuesto', flex:1 },
   { field: 'deve_Cantidad', headerName: 'Cantidad', flex: 1},
-  { field: 'deve_PrecioVenta', headerName: 'Precio',flex:1 },
+  { field: 'deve_Precioventa', headerName: 'Precio',flex:1 },
   {
     field: 'acciones',
     headerName: 'Acciones',
@@ -81,6 +83,19 @@ useEffect(() => {
         console.log(error);
       });
 
+      axios
+      .get('/DetallesVentas/ByID?id=' + facturaID)
+      .then((response) => {
+        const insertarid = response.data.map((row) => ({
+          ...row,
+          id: row.meto_ID,
+        }));
+        setDetalles2(insertarid);
+        console.log(metodosPago)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
       axios
       .get('/Servicios')
@@ -122,7 +137,7 @@ useEffect(() => {
       });
 
       axios
-      .get('DetallesVentas/temp')
+      .get(`DetallesVentas/Temp?id=${facturaID}`)
       .then((response) => {
         const insertarid = response.data.map((row) => ({
           ...row,
@@ -157,7 +172,7 @@ useEffect(() => {
     setSortModel(model);
   };
 
-  const CreateAction = (event) => {
+  const CreateAction = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
       event.preventDefault()
@@ -171,12 +186,15 @@ useEffect(() => {
       meto_ID: metoID,
       sucu_ID: 1,
     }
-    axios
+    await axios
       .post('Ventas/Insert', payload)
       .then((response) => {
         setIsSubmitting(false)
-        if (response.data.message === '1') {
+        if (parseInt(response.data.message) > 0 ) {
           setDisableFields(true)
+          setFacturaID(response.data.message)
+          console.log("nyaaaaaaaaaaa",facturaID)
+          setPaso1(false)
             setActualizar(!Actualizar)
         }
       })
@@ -191,8 +209,11 @@ useEffect(() => {
   }
 
   const CreateAction2 = (event) => {
+    setValidated(true)
+    setValidated2(true)
     if(tipo){
-      if(respID != null){
+      if(respID != null ){
+       if(cantidad > 0){
         const form = event.currentTarget
         if (form.checkValidity() === false) {
           event.preventDefault()
@@ -201,12 +222,14 @@ useEffect(() => {
         setValidated2(true)
         event.preventDefault()
         let payload = {
+          vent_ID: facturaID,
           vehi_ID: vehiID,
           serv_ID: servID,
           resp_ID: respID,
           deve_Cantidad: cantidad,
           deve_UserCreacion: 1
         }
+        console.log(payload)
         axios
           .post('DetallesVentas/Insert', payload)
           .then((response) => {
@@ -215,6 +238,8 @@ useEffect(() => {
             if (response.data.message === '1') {
               toast.success('Agregado exitosamente')
                 setActualizar(!Actualizar)
+            }else if(response.data.message === "2"){
+              toast.warning('Stock Insuficiente')
             }
           })
           .catch((error) => {
@@ -222,6 +247,9 @@ useEffect(() => {
             setActualizar(!Actualizar)
               toast.error('ha ocurrido un error');
           })
+       }else{
+        toast.error('Ingrese una cantidad valida')
+       }
       }else{
         toast.error('Ingrese un repuesto')
       }
@@ -232,9 +260,10 @@ useEffect(() => {
           event.preventDefault()
           event.stopPropagation()
         }
-        setValidated2(true)
+        setValidated2(true) 
         event.preventDefault()
         let payload = {
+          vent_ID: facturaID,
           vehi_ID: vehiID,
           serv_ID: servID,
           resp_ID: respID,
@@ -253,6 +282,7 @@ useEffect(() => {
           })
           .catch((error) => {
             console.log(error)
+            console.log(servID)
             setActualizar(!Actualizar)
               toast.error('ha ocurrido un error');
           })
@@ -324,44 +354,52 @@ return(
     <CCol>
 <div className='row'>
 <div className='form-group col-6'>
-<CButton color={tipo ? 'secondary' : 'info'} variant='outline' disabled={disableFields ? false : true} style={{width: '100%'}} onClick={() => {setTipo(false); setRespID(null); setServID(null)}}>Servicio</CButton>  
+<CButton color={tipo ? 'secondary' : 'info'} variant='outline' disabled={disableFields ? false : true} style={{width: '100%'}} onClick={() => {setTipo(false); setRespID(null); setServID(null); setCantidad(1); setValidated(false)}}>Servicio</CButton>  
 </div>
 <div className='form-group col-6'>  
-<CButton color={tipo ? 'info' : 'secondary'} variant='outline' disabled={disableFields ? false : true} style={{width: '100%'}} onClick={() => {setTipo(true); setServID(null); setRespID(null)}}>Repuesto</CButton>
+<CButton color={tipo ? 'info' : 'secondary'} variant='outline' disabled={disableFields ? false : true} style={{width: '100%'}} onClick={() => {setTipo(true); setServID(null); setRespID(null); setCantidad(1); setValidated2(false)}}>Repuesto</CButton>
 </div>
 </div>
                     <h5 hidden={tipo ? true : false}>Servicio</h5>
-             <CFormSelect value={servID} onChange={(event) => setServID(event.target.value)} className='mb-2' required={tipo ? false :  true} id='selectClieID' disabled={disableFields ? false : true} hidden={tipo ? true : false}>
-             <option value="" hidden>--Seleccione un servicio--</option>
+             <CFormSelect value={servID != null ? servID : "" } onChange={(event) => setServID(event.target.value)} className='mb-2' required={tipo ? false :  true} id='selectClieID' disabled={disableFields ? false : true} hidden={tipo ? true : false}>
+             <option value={''} hidden>--Seleccione un servicio--</option>
         {servicios.map((servicio) => (
           <option key={servicio.serv_ID} value={servicio.serv_ID}>{servicio.serv_Descripcion}</option>
         ))}
       </CFormSelect>
 
       <h5 hidden={tipo ? false : true}>Repuesto</h5>
-             <CFormSelect value={respID} onChange={(event) => setRespID(event.target.value)} className='mb-2' required={tipo ? true :  false} id='selectClieID' disabled={disableFields ? false : true} hidden={tipo ? false : true}>
-             <option value="" hidden>--Seleccione un repuesto--</option>
+             <CFormSelect value={respID != null ? respID : ""} onChange={(event) => setRespID(event.target.value)} className='mb-2' required={tipo ? true :  false} id='selectClieID' disabled={disableFields ? false : true} hidden={tipo ? false : true}>
+             <option value={''} hidden>--Seleccione un repuesto--</option>
         {repuestos.map((repuesto) => (
           <option key={repuesto.resp_ID} value={repuesto.resp_ID}>{repuesto.resp_Descripcion}</option>
         ))}
       </CFormSelect>
 
-      <h6>Cantidad</h6>
+      <h6 hidden={tipo ? false: true}>Cantidad</h6>
     <CFormInput
         type="number"
         id="validationCustom01"
         required
-        value={cantidad}
+        value={cantidad >0 ? cantidad : ''}
+        hidden={tipo ? false: true}
         onChange={(e) => {
-          if (e.target.value > 0) { 
+          if (e.target.value > -1) { 
             setCantidad(e.target.value)
           }
         }}
         disabled={disableFields ? false : true}
       />
-        <CButton color="primary" type="submit" disabled={disableFields ? false : true} className='mt-3'>
+ <CRow>
+<div className='form-group col-3'>       
+<CButton color="primary" type="submit" disabled={disableFields ? false : true} className='mt-3'>
         Agregar
       </CButton>
+ </div>
+ <div className='form-group col-6'>
+ <CButton color="danger" style={{color: 'white'}} disabled={disableFields ? false : true} onClick={() => {navigate('/ventas'); toast.success('Venta Finalizada con exito')}} className='mt-3'>Finalizar venta</CButton>
+ </div>
+ </CRow>
       </CCol>
       
       </CForm>   
@@ -373,13 +411,27 @@ return(
             rows={detalles}
             columns={columns}
             sortModel={sortModel}
+            loading={paso1}
             onSortModelChange={handleSortModelChange}
             components={{
               Toolbar: GridToolbar,
             }}
             localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           />
-
+<div className='card-footer'>
+{detalles2.map((detalle) => (
+<>
+<CRow>
+<CCol><h5>Subtotal</h5></CCol>
+<CCol key={detalle.deve_ID}><label >{detalle.subtotal}</label></CCol>
+<CCol><h5>IVA</h5></CCol>
+<CCol key={detalle.deve_ID}><label >{detalle.iva}</label></CCol>
+<CCol><h5>Total</h5></CCol>
+<CCol key={detalle.deve_ID}><label >{detalle.total}</label></CCol>
+</CRow>
+</>
+        ))}
+</div>
         </div>
     </div>
 )

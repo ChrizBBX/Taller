@@ -100,6 +100,66 @@
       {
          "Name": "[tllr].[tbVentas]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[acce].[VW_tbUsuarios]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[gral].[VW_tbEstadosCiviles]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[gral].[VW_tbMetodosPago]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_Modelos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbClientes]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbCompras]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbDetallesventas]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbEmpleados]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbMarcas]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbProveedores]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbRepuestos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbServicios]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbSucursales]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbVehiculos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbVentas]",
+         "ObjectType": 3
       }
    ],
    "UiHint": "VJ7400.ProyectoTaller",

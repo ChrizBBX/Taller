@@ -27,6 +27,8 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
+
+            parametros.Add("@vent_ID", item.vent_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@vehi_ID", item.vehi_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@serv_ID", item.serv_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@resp_ID", item.resp_ID, DbType.Int32, ParameterDirection.Input);
@@ -45,11 +47,22 @@ namespace Taller.DataAccess.Repositories
             var parametros = new DynamicParameters();
             return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesventas_Select, null, commandType: CommandType.StoredProcedure);
         }
-        public IEnumerable<VW_tbDetallesventas> ListTemp()
+        public IEnumerable<VW_tbDetallesventas> ListTemp(int id)
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             var parametros = new DynamicParameters();
-            return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesventas_Temp, null, commandType: CommandType.StoredProcedure);
+            parametros.Add("@vent_ID", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesventas_Temp, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<VW_tbDetallesventas> ListById(int id)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@vent_ID", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.Query<VW_tbDetallesventas>(ScriptsDataBase.UDP_tbDetallesVentas_ByID, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public RequestStatus Update(tbDetallesventas item)

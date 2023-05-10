@@ -13,6 +13,7 @@ namespace Taller.Entities.Entities
         public int? vehi_ID { get; set; }
         public int mode_ID { get; set; }
         public string vehi_Matricula { get; set; }
+        public string Descripcion { get; set; }
         public int? serv_ID { get; set; }
         public string serv_Descripcion { get; set; }
         public int? resp_ID { get; set; }
@@ -23,5 +24,8 @@ namespace Taller.Entities.Entities
         public DateTime? deve_FechaCreacion { get; set; }
         public int? deve_UserModificacion { get; set; }
         public DateTime? deve_FechaModificacion { get; set; }
+        public decimal? Subtotal { get; set; }
+        public decimal? IVA { get; set; }
+        public decimal? Total { get; set; }
     }
 }
