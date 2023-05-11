@@ -35,7 +35,7 @@ namespace Taller.API.Controllers
         public IActionResult Insert(ClientesViewModel item)
         {
             var listadoMapeado = _mapper.Map<tbClientes>(item);
-            var listado = _tallerservices.InsertarClientes(listadoMapeado);
+            var listado = _tallerServices.InsertarClientes(listadoMapeado);
             return Ok(listado);
         }
 
@@ -43,7 +43,7 @@ namespace Taller.API.Controllers
         public IActionResult Update(ClientesViewModel item)
         {
             var listadoMapeado = _mapper.Map<tbClientes>(item);
-            var listado = _tallerservices.EditarClientes(listadoMapeado);
+            var listado = _tallerServices.EditarClientes(listadoMapeado);
             return Ok(listado);
         }
 
@@ -51,7 +51,7 @@ namespace Taller.API.Controllers
         public IActionResult Delete(ClientesViewModel item)
         {
             var listadoMapeado = _mapper.Map<tbClientes>(item);
-            var listado = _tallerservices.EliminarClientes(listadoMapeado);
+            var listado = _tallerServices.EliminarClientes(listadoMapeado);
             return Ok(listado);
         }
     }

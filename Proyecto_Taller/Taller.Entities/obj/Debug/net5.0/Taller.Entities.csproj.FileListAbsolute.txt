@@ -58,3 +58,15 @@ C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.Entities\obj\Debu
 C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.dll
 C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\ref\Taller.Entities.dll
 C:\Users\Ian Hernandez\Documents\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.pdb
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.deps.json
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\ref\Taller.Entities.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\bin\Debug\net5.0\Taller.Entities.pdb
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.csproj.AssemblyReference.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.AssemblyInfoInputs.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.AssemblyInfo.cs
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\ref\Taller.Entities.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.Entities\obj\Debug\net5.0\Taller.Entities.pdb

@@ -73,3 +73,18 @@ C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Deb
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.dll
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\ref\Taller.DataAccess.dll
 C:\Users\achri\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.pdb
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\Taller.DataAccess.deps.json
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\Taller.DataAccess.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\ref\Taller.DataAccess.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\Taller.DataAccess.pdb
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\Taller.Entities.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\bin\Debug\net5.0\Taller.Entities.pdb
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.AssemblyInfo.cs
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.csproj.CopyComplete
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\ref\Taller.DataAccess.dll
+C:\Users\Jose Herrera\Documents\GitHub\Taller\Proyecto_Taller\Taller.DataAccess\obj\Debug\net5.0\Taller.DataAccess.pdb
