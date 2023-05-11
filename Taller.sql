@@ -1509,14 +1509,15 @@ IF NOT EXISTS (SELECT role_Nombre FROM acce.tbRoles WHERE role_Nombre = @role_No
 	BEGIN
 		INSERT INTO acce.tbRoles ([role_Nombre], [role_UserCreacion], [role_FechaCreacion], [role_UserModificacion], [role_FechaModificacion], [role_Estado])
 		VALUES (@role_Nombre,@role_UserCreacion,GETDATE(),NULL,NULL,1)
+		SELECT SCOPE_IDENTITY()
 	END
 	ELSE
 		BEGIN
-		SELECT '2'
+		SELECT 2
 		END
 END TRY
 BEGIN CATCH
-SELECT '0'
+SELECT 0
 END CATCH
 END
 
@@ -1561,6 +1562,38 @@ BEGIN
 	END TRY
 	BEGIN CATCH
 		SELECT '0'
+	END CATCH
+END
+
+/*Pantallas*/
+/*Pantalla Select*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallas_Select
+AS
+BEGIN
+SELECT * FROM acce.tbPantallas
+END
+
+/*RolesXPantalla*/
+
+/*RolesXPantalla Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallasPorRoles_Insert
+@role_ID INT,
+@pant_ID INT,
+@pantrole_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+	INSERT INTO acce.tbPantallasPorRoles([role_ID], 
+	[pant_ID], [pantrole_UserCreacion], 
+	[pantrole_FechaCreacion], [pantrole_UserModificacion], 
+	[pantrole_FechaModificacion], [pantrole_Estado])
+	VALUES(@role_ID,@pant_ID,@pantrole_UserCreacion,GETDATE(),NULL,NULL,1)
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
 	END CATCH
 END
 /*Empleados*/

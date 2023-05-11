@@ -8,13 +8,19 @@ namespace Taller.DataAccess.Repositories
 {
     public class ScriptsDataBase
     {
-
-
         #region Roles
         public static string UDP_tbRoles_Select = "acce.UDP_tbRoles_VW";
         public static string UDP_tbRoles_Insert = "acce.UDP_tbRoles_Insert";
         public static string UDP_tbRoles_Update = "acce.UDP_tbRoles_Update";
         public static string UDP_tbRoles_Delete = "acce.UDP_tbRoles_Delete";
+        #endregion
+
+        #region RolesPorPantalla
+        public static string UDP_tbPantallaPorRoles_Insert = "acce.UDP_tbPantallasPorRoles_Insert";
+        #endregion
+
+        #region Pantallas
+        public static string UDP_tbPantallas_Select = "acce.UDP_tbPantallas_Select";
         #endregion
 
         #region Usuarios

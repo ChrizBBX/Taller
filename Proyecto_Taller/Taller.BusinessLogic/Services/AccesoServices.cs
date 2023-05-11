@@ -12,11 +12,17 @@ namespace Taller.BusinessLogic.Services
     {
         private readonly UsuariosRepository _usuariosrepository;
         private readonly RolesRepository _rolesrepository;
+        private readonly PantallasRepository _pantallasrepository;
+        private readonly RolesPorPantallaRepository _rolesporpantallarepository;
         public AccesoServices(UsuariosRepository usuariosrepository,
-            RolesRepository rolesrepository)
+            RolesRepository rolesrepository,
+            PantallasRepository pantallasrepository,
+            RolesPorPantallaRepository rolesporpantallarepository)
         {
             _usuariosrepository = usuariosrepository;
             _rolesrepository = rolesrepository;
+            _pantallasrepository = pantallasrepository;
+            _rolesporpantallarepository = rolesporpantallarepository;
         }
 
         #region Usuario 
@@ -129,6 +135,45 @@ namespace Taller.BusinessLogic.Services
                 else
                 {
                     return result.BadRequest(insertar.MessageStatus);
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region Pantallas
+        public IEnumerable<tbPantallas> ListadoPantallas()
+        {
+            try
+            {
+                return _pantallasrepository.List();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbPantallas>();
+            }
+        }
+        #endregion
+
+        #region RolesXPantalla
+        public ServiceResult InsertarRolesXPantalla(tbPantallasPorRoles item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _rolesporpantallarepository.Insert(item);
+                if (Convert.ToInt32(insertar.CodeStatus) > 0)
+                {
+                    return result.Ok(insertar.CodeStatus.ToString());
+                }
+                else
+                {
+                    return result.BadRequest(insertar.CodeStatus.ToString());
                 }
 
             }

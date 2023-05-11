@@ -30,7 +30,7 @@ namespace Taller.DataAccess.Repositories
             parametros.Add("@role_Nombre", item.role_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@role_UserCreacion", 1, DbType.Int32, ParameterDirection.Input);
  
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Repuestos_Insert, parametros, commandType: CommandType.StoredProcedure);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Insert, parametros, commandType: CommandType.StoredProcedure);
 
             result.MessageStatus = answer;
             return result;
