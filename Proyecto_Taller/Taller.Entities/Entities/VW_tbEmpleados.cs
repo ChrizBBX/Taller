@@ -18,6 +18,7 @@ namespace Taller.Entities.Entities
         public string estacivi_Nombre { get; set; }
         public string muni_Id { get; set; }
         public string muni_Nombre { get; set; }
+        public string depa_ID { get; set; }
         public string empe_Direccion { get; set; }
         public string empe_Telefono { get; set; }
         public string empe_CorreoElectronico { get; set; }

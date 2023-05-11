@@ -65,10 +65,11 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
+            parametros.Add("@empe_ID", item.empe_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@empe_Nombres", item.empe_Nombres, DbType.String, ParameterDirection.Input);
             parametros.Add("@empe_Apellidos", item.empe_Apellidos, DbType.String, ParameterDirection.Input);
             parametros.Add("@empe_Identidad", item.empe_Identidad, DbType.String, ParameterDirection.Input);
-            parametros.Add("@empe_FechaNacimiento", item.empe_FechaNacimiento, DbType.String, ParameterDirection.Input);
+            parametros.Add("@empe_FechaNacimiento", item.empe_FechaNacimiento, DbType.DateTime, ParameterDirection.Input);
             parametros.Add("@empe_Sexo", item.empe_Sexo, DbType.String, ParameterDirection.Input);
             parametros.Add("@estacivi_Id", item.estacivi_Id, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_Id", item.muni_Id, DbType.String, ParameterDirection.Input);
@@ -88,7 +89,7 @@ namespace Taller.DataAccess.Repositories
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-            parametros.Add("@empe_Id", item.empe_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@empe_ID", item.empe_Id, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<string>(ScriptsDataBase.DeleteEmpleados, parametros, commandType: CommandType.StoredProcedure);
 

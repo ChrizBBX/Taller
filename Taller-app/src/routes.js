@@ -22,6 +22,7 @@ const serviciosDetails = React.lazy(() => import('./views/custom/servicios/Servi
 
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
+const RegistrarEmpleados = React.lazy(() => import('./views/custom/Empleados/RegistrarEmpleados'))
 const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
 const VehiculosDetails = React.lazy(() => import('./views/custom/Vehiculos/VehiculosDetails'))
 const EstadosCiviles = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCiviles'))
@@ -34,8 +35,8 @@ const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/Metodo
 const MetodosPagosDetails = React.lazy(() => import('./views/custom/MetodosPagos/MetodosPagosDetails'))
 const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
 const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/CreateEmpleados'))
-const RegistrarEmpleados = React.lazy(() => import('./views/custom/Empleados/RegistrarEmpleados'))
 const EditEmpleados = React.lazy(() => import('./views/custom/Empleados/EditEmpleados'))
+const DetailsEmpleados = React.lazy(() => import('./views/custom/Empleados/DetailsEmpleados'))
 
 
 // Base
@@ -103,6 +104,7 @@ const routes = [
   { path: '/serviciosDetails', name: 'ServiciosDetails', element: serviciosDetails },
   { path: '/ventas', name: 'Ventas', element: Ventas },
   { path: '/Empleados', name: 'Empleados', element: Empleados },
+  { path: '/DetailsEmpleados', name: 'DetailsEmpleados', element: DetailsEmpleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },
   { path: '/VehiculosDetails', name: 'VehiculosDetails', element: VehiculosDetails },
   { path: '/EstadosCiviles', name: 'EstadosCiviles', element: EstadosCiviles },

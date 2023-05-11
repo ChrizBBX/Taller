@@ -7,6 +7,7 @@ namespace Taller.API.Models
 {
     public class EmpleadosViewModel
     {
+        public int empe_Id { get; set; }
         public string empe_Nombres { get; set; }
         public string empe_Apellidos { get; set; }
         public string empe_Identidad { get; set; }

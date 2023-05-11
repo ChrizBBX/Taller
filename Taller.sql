@@ -1384,12 +1384,12 @@ END
 
 /*Empelados View*/
 GO
-CREATE VIEW tllr.VW_tbEmpleados
+CREATE OR ALTER VIEW tllr.VW_tbEmpleados
 AS
 SELECT empe.[empe_Id], [empe_Nombres], 
 [empe_Apellidos], [empe_Identidad], 
 [empe_FechaNacimiento], [empe_Sexo], 
-empe.[estacivi_ID],estacivi.estacivi_Nombre, empe.[muni_Id],muni.muni_Nombre,
+empe.[estacivi_ID],estacivi.estacivi_Nombre, empe.[muni_Id],muni.muni_Nombre,depto.depa_ID,depto.depa_Nombre
 [empe_Direccion], [empe_Telefono], 
 [empe_CorreoElectronico], empe.[sucu_Id],sucu.sucu_Descripcion, 
 [empe_UsuCreacion],[user1].user_NombreUsuario AS empe_UserCreacion_Nombre, [empe_FechaCreacion], 
@@ -1400,7 +1400,9 @@ ON empe.empe_UsuCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
 ON empe.empe_UsuModificacion = user2.user_ID INNER JOIN [gral].[tbEstadosCiviles] estacivi
 ON empe.[estacivi_ID] = estacivi.estacivi_ID INNER JOIN gral.tbMunicipios muni
 ON empe.muni_Id = muni.muni_ID INNER JOIN tllr.tbSucursales sucu
-ON empe.sucu_ID = sucu.sucu_ID
+ON empe.sucu_ID = sucu.sucu_ID INNER JOIN gral.tbDepartamentos depto
+ON muni.depa_ID = depto.depa_ID
+WHERE [empe_Estado] = 1
 
 /*Empleados View UDP*/
 GO
@@ -1529,7 +1531,7 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbEmpleado_ActualizarEmpleados
 AS
 BEGIN
    BEGIN TRY 
-       IF NOT EXISTS (SELECT empe_Identidad FROM tllr.tbEmpleados WHERE empe_Identidad = @empe_Identidad)
+       IF NOT EXISTS (SELECT empe_Identidad FROM tllr.tbEmpleados WHERE empe_Id != @empe_ID AND empe_Identidad = @empe_Identidad)
 		 BEGIN
 		  UPDATE tllr.tbEmpleados 
 		  SET   empe_Nombres = @empe_Nombres,
@@ -1541,6 +1543,7 @@ BEGIN
 				muni_Id = @muni_Id,
 				empe_Direccion = @empe_Direccion,
 				empe_CorreoElectronico = @empe_CorreoElectronico,
+				empe_Telefono = @empe_Telefono,
 				sucu_Id = @sucu_Id
 		WHERE   empe_Id = @empe_ID
 		SELECT '1'
