@@ -47,9 +47,8 @@ namespace Taller.DataAccess.Repositories
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
 
-            parametros.Add("@vent_ID", item.vent_ID, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@deve_ID", item.deve_ID, DbType.Int32, ParameterDirection.Input);
  
-
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbDetallesVentas_Delete, parametros, commandType: CommandType.StoredProcedure);
 
             result.MessageStatus = answer;

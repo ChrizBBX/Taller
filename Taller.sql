@@ -1462,13 +1462,13 @@ END
 
 /*Venta Detalles Delete*/
 GO
-CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Delete 67
-@vent_ID INT 
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Delete
+@deve_ID INT 
 AS
 BEGIN
 BEGIN TRY
 DELETE tllr.tbDetallesventas
-WHERE vent_ID = @vent_ID
+WHERE deve_ID = @deve_ID 
 SELECT '1'
 END TRY
 BEGIN CATCH
@@ -1476,7 +1476,93 @@ SELECT '0'
 END CATCH
 END
 
+/*Roles View*/
+GO
+CREATE OR ALTER VIEW acce.VW_tbRoles
+AS
+SELECT role.[role_ID], [role_Nombre], 
+[role_UserCreacion],[user1].user_NombreUsuario AS role_UserCreacion_Nombre, [role_FechaCreacion], 
+[role_UserModificacion],[user2].user_NombreUsuario AS role_UserModificacion_Nombre, [role_FechaModificacion], 
+[role_Estado]
+FROM acce.tbRoles role INNER JOIN acce.tbUsuarios [user1]
+ON role.role_UserCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
+ON role.role_UserModificacion = user2.user_ID
+WHERE role_Estado = 1
 
+/*Roles View UDP*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbRoles
+END
+
+/*Roles Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Insert
+@role_Nombre NVARCHAR(100),
+@role_UserCreacion INT
+AS
+BEGIN
+BEGIN TRY
+IF NOT EXISTS (SELECT role_Nombre FROM acce.tbRoles WHERE role_Nombre = @role_Nombre)	
+	BEGIN
+		INSERT INTO acce.tbRoles ([role_Nombre], [role_UserCreacion], [role_FechaCreacion], [role_UserModificacion], [role_FechaModificacion], [role_Estado])
+		VALUES (@role_Nombre,@role_UserCreacion,GETDATE(),NULL,NULL,1)
+	END
+	ELSE
+		BEGIN
+		SELECT '2'
+		END
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+END
+
+/*Roles update*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Update 
+@role_ID INT,
+@role_Nombre NVARCHAR(100),
+@role_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT role_Nombre FROM acce.tbRoles WHERE role_ID != @role_ID AND role_Nombre = @role_Nombre)
+	BEGIN
+		UPDATE acce.tbRoles
+			SET role_Nombre = @role_Nombre,
+			role_UserModificacion = @role_UserModificacion,
+			role_FechaModificacion = GETDATE()
+			WHERE role_ID = @role_ID
+			SELECT '1'
+	END
+	BEGIN
+			SELECT '2'
+	END
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Roles Delete*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Delete
+@role INT 
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE acce.tbRoles
+		SET role_Estado = 0 
+		WHERE role_ID = @role
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
 /*Empleados*/
 
 /*Empelados View*/
