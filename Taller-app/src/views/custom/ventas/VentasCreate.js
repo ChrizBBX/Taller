@@ -20,11 +20,14 @@ import {
    CRow,
  } from '@coreui/react';
 import {Button, IconButton, colors} from '@material-ui/core';
-import {Delete,Edit, Book,} from '@material-ui/icons';
+import {Delete,Edit, Book,MonetizationOn,LocalAtm  } from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import Clientes from '../Cliente/Cliente';
+import { FaMoneyBillAlt } from 'react-icons/fa';
+import { AiOutlinePercentage } from 'react-icons/ai';
+import { BiTotal } from 'react-icons/bi';
 
 
 function VentasCreate (){
@@ -62,11 +65,30 @@ const columns = [
     width: 300,
     renderCell: (params) => (
       <div>
-            <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
+            <CButton color='danger' variant='outline' className='m-3' onClick={() => handleDeleteClick(params.row)}><Delete/></CButton>
       </div>
     ),
   },
 ];
+
+const handleDeleteClick = (params) => {
+  const fila = detalles.find((fila) => fila.vent_ID === params.vent_ID); // Busca la marca seleccionada
+  let payload = {
+    vent_ID: fila.vent_ID,
+  }
+  axios
+    .post('/DetallesVentas/Delete', payload)
+    .then((response) => {
+      console.log(response)
+      if (response.data.message == '1') {
+        setActualizar(!Actualizar)
+        toast.success('Registro Eliminado exitosamente');
+      }
+    })
+    .catch((error) => {
+        toast.error('ha ocurrido un error');
+    })
+};
 
 useEffect(() => {
     axios
@@ -422,12 +444,12 @@ return(
 {detalles2.map((detalle) => (
 <>
 <CRow>
-<CCol><h5>Subtotal</h5></CCol>
-<CCol key={detalle.deve_ID}><label >{detalle.subtotal}</label></CCol>
-<CCol><h5>IVA</h5></CCol>
-<CCol key={detalle.deve_ID}><label >{detalle.iva}</label></CCol>
-<CCol><h5>Total</h5></CCol>
-<CCol key={detalle.deve_ID}><label >{detalle.total}</label></CCol>
+  <CCol><h5>Subtotal</h5></CCol>
+  <CCol key={detalle.deve_ID}><label >{detalle.subtotal}</label></CCol>
+  <CCol><LocalAtm /><h5>IVA</h5></CCol>
+  <CCol key={detalle.deve_ID}><label >{detalle.iva}</label></CCol>
+  <CCol><LocalAtm /><h5>Total</h5></CCol>
+  <CCol key={detalle.deve_ID}><label >{detalle.total}</label></CCol>
 </CRow>
 </>
         ))}

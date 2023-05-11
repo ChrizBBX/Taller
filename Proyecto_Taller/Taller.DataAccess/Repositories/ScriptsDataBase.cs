@@ -24,6 +24,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbDetallesventas_Insert = "tllr.UDP_tbDetallesventas_Insert";
         public static string UDP_tbDetallesventas_Temp = "tllr.UDP_tbDetallesventas_Temp";
         public static string UDP_tbDetallesVentas_ByID = "tllr.UDP_tbVentas_By_ID";
+        public static string UDP_tbDetallesVentas_Delete = "tllr.UDP_tbDetallesventas_Delete";
         #endregion
 
         #region Vehiculos

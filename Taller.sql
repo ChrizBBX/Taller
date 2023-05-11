@@ -1462,7 +1462,19 @@ END
 
 /*Venta Detalles Delete*/
 GO
-CREATE OR ALTER tllr.UDP_tb
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Delete 67
+@vent_ID INT 
+AS
+BEGIN
+BEGIN TRY
+DELETE tllr.tbDetallesventas
+WHERE vent_ID = @vent_ID
+SELECT '1'
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+END
 
 
 /*Empleados*/

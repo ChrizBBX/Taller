@@ -41,6 +41,21 @@ namespace Taller.DataAccess.Repositories
             return result;
         }
 
+        public RequestStatus Delete(VW_tbDetallesventas item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+
+            parametros.Add("@vent_ID", item.vent_ID, DbType.Int32, ParameterDirection.Input);
+ 
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbDetallesVentas_Delete, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
+        }
+
         public IEnumerable<VW_tbDetallesventas> List()
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);

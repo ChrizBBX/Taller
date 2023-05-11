@@ -32,6 +32,14 @@ namespace Taller.API.Controllers
             return Ok(listado);
         }
 
+        [HttpPost("Delete")]
+        public IActionResult Delete(VentasDetallesViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<VW_tbDetallesventas>(item);
+            var listado = _tallerServices.EliminarVentasDetalles(listadoMapeado);
+            return Ok(listado);
+        }
+
         [HttpGet]
         public IActionResult List()
         {

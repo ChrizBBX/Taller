@@ -235,6 +235,56 @@ namespace Taller.BusinessLogic.Services
                 return Enumerable.Empty<VW_tbDetallesventas>();
             }
         }
+
+        public ServiceResult InsertarVentasDetalles(tbDetallesventas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _detallesventarepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarVentasDetalles(VW_tbDetallesventas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _detallesventarepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Ventas
@@ -264,32 +314,6 @@ namespace Taller.BusinessLogic.Services
                 else
                 {
                     return result.BadRequest(insertar.CodeStatus.ToString());
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
-        #endregion
-
-        #region VentasDetalles
-        public ServiceResult InsertarVentasDetalles(tbDetallesventas item)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var insertar = _detallesventarepository.Insert(item);
-                if (insertar.MessageStatus == "1")
-                {
-                    return result.Ok(insertar.MessageStatus);
-                }else if(insertar.MessageStatus == "2")
-                {
-                    return result.Ok(insertar.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insertar.MessageStatus);
                 }
             }
             catch (Exception e)
