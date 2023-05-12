@@ -44,6 +44,12 @@ function Ventas() {
       });
   }, []);
 
+  const handleEditClick = (params) => {
+    const venta = ventas.find((venta) => venta.vent_ID === params.vent_ID); // Busca la marca seleccionada
+    localStorage.setItem('VentaSeleccionada', JSON.stringify(venta));
+    navigate('/ventasEdit')
+  };
+
   const handleSortModelChange = (model) => {
     setSortModel(model);
   };
@@ -62,7 +68,7 @@ function Ventas() {
       renderCell: (params) => (
         <div>
               <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
-              <CButton color='warning' variant='outline' className='m-3'><Edit/></CButton>
+              <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
               <CButton color='info' variant='outline' className='m-3'><Book/></CButton>
         </div>
       ),

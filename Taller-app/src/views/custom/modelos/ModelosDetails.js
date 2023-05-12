@@ -95,7 +95,7 @@
                     
                     if (response.data.message == '1') {
                       toast.success('Registro editado exitosamente');
-                      navigate('/roles')
+                      navigate('/modelos')
                       setVisible2(false)
                       setActualizar(!Actualizar)
                     }else if(response.data.message == '2'){
