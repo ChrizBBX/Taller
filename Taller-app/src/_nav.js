@@ -40,6 +40,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Grafica',
+    to: '/Grafica',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Proveedores',
     to: '/proveedores',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,

@@ -520,6 +520,19 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_ServiciosMasSolicitados> ServiciosMasSolicitados()
+        {
+            try
+            {
+                return _serviciosRepository.ServiciosMasSolicitados();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_ServiciosMasSolicitados>();
+            }
+        }
+
         public ServiceResult InsertarServicios(tbServicios item)
         {
             var result = new ServiceResult();

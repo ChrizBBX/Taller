@@ -1837,6 +1837,27 @@ BEGIN
     END CATCH
 END
 GO
+
 --********************************************UDP /tbMetodosPago************************************--
+--********************************************UDP Grafica*******************************************--
+CREATE OR ALTER VIEW tllr.VW_ServiciosMasSolicitados
+AS
+SELECT TOP 5
+    s.serv_Descripcion,
+    COUNT(*) AS CantidadServicios
+FROM tllr.tbServicios s
+INNER JOIN tllr.tbDetallesventas d ON s.serv_ID = d.serv_ID
+GROUP BY s.serv_ID, s.serv_Descripcion
+ORDER BY CantidadServicios DESC;
+GO
+
+CREATE OR ALTER PROCEDURE tllr.SP_GetServiciosMasSolicitados
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM tllr.VW_ServiciosMasSolicitados;
+END;
+GO
+--********************************************UDP Grafica*******************************************--
 
 

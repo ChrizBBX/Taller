@@ -45,6 +45,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_Servicios_Insert = "tllr.UDP_tbServicios_Insert";
         public static string UDP_Servicios_Update = "tllr.UDP_tbServicios_Update";
         public static string UDP_Servicios_Delete = "tllr.UDP_tbServicios_Delete";
+        public static string UDP_servicios_MasSolicitados = "tllr.SP_GetServiciosMasSolicitados";
         #endregion
 
         #region Repuestos

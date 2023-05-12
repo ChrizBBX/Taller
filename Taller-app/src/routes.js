@@ -27,6 +27,7 @@ const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
 const VehiculosDetails = React.lazy(() => import('./views/custom/Vehiculos/VehiculosDetails'))
 const EstadosCiviles = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCiviles'))
 const EstadosDetails = React.lazy(() => import('./views/custom/EstadosCiviles/EstadosCivilesDetails'))
+const Grafica = React.lazy(() => import('./views/custom/Grafica/Grafica'))
 
 const Clientes = React.lazy(() => import('./views/custom/Cliente/Cliente'))
 const ClienteCreate = React.lazy(() => import('./views/custom/Cliente/ClienteCreate'))
@@ -105,6 +106,7 @@ const routes = [
   { path: '/repuestosDetails', name: 'RepuestosDetails', element: RepuestosDetails },
   { path: '/servicios', name: 'Servicios', element: Servicios },
   { path: '/serviciosDetails', name: 'ServiciosDetails', element: serviciosDetails },
+  { path: '/Grafica', name: 'Grafica', element: Grafica },
   { path: '/ventas', name: 'Ventas', element: Ventas },
   { path: '/Empleados', name: 'Empleados', element: Empleados },
   { path: '/DetailsEmpleados', name: 'DetailsEmpleados', element: DetailsEmpleados },
