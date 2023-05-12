@@ -18,6 +18,7 @@ namespace Taller.DataAccess.Repositories
         #region RolesPorPantalla
         public static string UDP_tbPantallaPorRoles_Insert = "acce.UDP_tbPantallasPorRoles_Insert";
         public static string UDP_tbPantallaPorRoles_SelectByRoleID = "acce.UDP_tbPantallaPorRolesByRoleID";
+        public static string UDP_tbPantallaPorRoles_Delete = "acce.UDP_tbPantallasPorRoles_Delete";
         #endregion
 
         #region Pantallas

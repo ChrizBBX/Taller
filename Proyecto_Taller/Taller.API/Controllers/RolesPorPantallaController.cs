@@ -33,6 +33,15 @@ namespace Taller.API.Controllers
             return Ok(listado);
         }
 
+
+        [HttpPost("Delete")]
+        public IActionResult Delete(RolesPorPantallaViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbPantallasPorRoles>(item);
+            var listado = _accesoservice.EliminarRolesXPantalla(listadoMapeado);
+            return Ok(listado);
+        }
+
         [HttpGet("RolesPorPantallaByRoleID/{id}")]
         public IActionResult ListarMunicipiosPorDepto(int id)
         {

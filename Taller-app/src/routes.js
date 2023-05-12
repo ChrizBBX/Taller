@@ -31,6 +31,7 @@ const MetodosPagos = React.lazy(() => import('./views/custom/MetodosPagos/Metodo
 const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
 const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/CreateEmpleados'))
 const Roles = React.lazy(() => import('./views/custom/roles/Roles'))
+const RolesDetails = React.lazy(() => import('./views/custom/roles/RolesDetails'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -84,6 +85,7 @@ const routes = [
   { path: '/marcasDetails', name: 'MarcasDetails', element: MarcasDetails },
   { path: '/modelos', name: 'Modelos', element: Modelos },
   { path: '/roles', name: 'Roles', element: Roles },
+  { path: '/rolDetails', name: 'RolDetails', element: RolesDetails },
   { path: '/modelosDetails', name: 'Modelos', element: ModelosDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
   { path: '/sucursalesDetails', name: 'SucursalesDetails', element: SucursalesDetails },

@@ -1495,6 +1495,7 @@ CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbRoles
+WHERE role_Estado = 1
 END
 
 /*Roles Insert*/
@@ -1523,7 +1524,7 @@ END
 
 /*Roles update*/
 GO
-CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Update 
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Update
 @role_ID INT,
 @role_Nombre NVARCHAR(100),
 @role_UserModificacion INT
@@ -1539,6 +1540,7 @@ BEGIN
 			WHERE role_ID = @role_ID
 			SELECT '1'
 	END
+	ELSE
 	BEGIN
 			SELECT '2'
 	END
@@ -1551,7 +1553,7 @@ END
 /*Roles Delete*/
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Delete
-@role INT 
+@role_ID INT 
 AS
 BEGIN
 	BEGIN TRY
@@ -1617,6 +1619,22 @@ BEGIN
 	END TRY
 	BEGIN CATCH
 		SELECT 0
+	END CATCH
+END
+
+/*RolesXPantalla Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallasPorRoles_Delete
+@role_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE acce.tbPantallasPorRoles
+		WHERE role_ID = @role_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+	SELECT '2'
 	END CATCH
 END
 /*Empleados*/

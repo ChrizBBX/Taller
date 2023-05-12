@@ -53,7 +53,7 @@ namespace Taller.DataAccess.Repositories
             parametros.Add("@role_Nombre", item.role_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@role_UserModificacion", 1, DbType.Int32, ParameterDirection.Input);
 
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Repuestos_Update, parametros, commandType: CommandType.StoredProcedure);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Update, parametros, commandType: CommandType.StoredProcedure);
 
             result.MessageStatus = answer;
             return result;
@@ -66,7 +66,7 @@ namespace Taller.DataAccess.Repositories
             var parametros = new DynamicParameters();
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
 
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_Repuestos_Delete, parametros, commandType: CommandType.StoredProcedure);
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Delete, parametros, commandType: CommandType.StoredProcedure);
 
             result.MessageStatus = answer;
             return result;

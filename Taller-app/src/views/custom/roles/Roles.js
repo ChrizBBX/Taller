@@ -30,12 +30,14 @@ import DualListBox from "react-dual-listbox";
 import "react-dual-listbox/lib/react-dual-listbox.css";
 
 function Roles (){
+  const navigate = useNavigate()
     const [roles,setRoles] = useState([])
     const [actualizar,setActualizar] = useState(false)
     const [roleNombre,setRoleNombre] = useState('')
     const [pantallas,setPantallas] = useState([])
     const [pantallaSeleccionada,setPantallaSeleccionada] = useState([])
     const [roleID,setRoleID] = useState('')
+    const [rolSeleccionado,setRolSeleccionado] = useState([])
     const [validated, setValidated] = useState(false) 
     const [sortModel, setSortModel] = useState([{ field: 'serv_ID', sort: 'asc' }]);
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -51,9 +53,25 @@ function Roles (){
       const handleEditClick = (params) => {
         const rol = roles.find((rol) => rol.role_ID === params.role_ID); // Busca la marca seleccionada
         setVisible2(true);
+        setRoleNombre(rol.role_Nombre)
         setRoleID(rol.role_ID)
-
+        setValidated(false)
       };
+
+      const handleDeleteClick = (params) => {
+        const rol = roles.find((rol) => rol.role_ID === params.role_ID); // Busca la marca seleccionada
+        setVisible3(true);
+        setRoleID(rol.role_ID)
+        setValidated(false)
+      };
+
+      const handleDetailsClick = (params) => {
+        const rol = roles.find((rol) => rol.role_ID === params.role_ID); // Busca la marca seleccionada
+        setRolSeleccionado(rol); // Establece la marca seleccionada en el estado marcaSeleccionada
+        localStorage.setItem('RolSeleccionado', JSON.stringify(rol));
+        navigate('/rolDetails')
+      };
+
 
       const CreateAction = (event) => {
         const form = event.currentTarget
@@ -113,6 +131,113 @@ function Roles (){
         }else{
             toast.error('Rellene los campos'); 
         }
+      }
+
+      const EditAction = (event) => {
+        const form = event.currentTarget
+        if (form.checkValidity() === false) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        setValidated(true)
+        event.preventDefault()
+        if(roleNombre != ''){
+            let payload = {
+                role_ID: roleID,
+                role_Nombre: roleNombre,
+                role_UserCreacion: 1
+              }
+              axios
+                .post('Roles/Update', payload)
+                .then((response) => {
+                  setIsSubmitting(false)
+                  console.log(response)
+                  if(response.data.message == "1"){
+                    setVisible2(false)
+                    toast.success('Registro Editado Exitosamente')
+                    let payload = {
+                      role_ID: roleID
+                    }
+                    axios
+                    .post('RolesPorPantalla/Delete', payload)
+                    .then((response) => {
+                      setIsSubmitting(false)
+                      if (response.data.message == '1') {
+
+                        pantallaSeleccionada.forEach(element => {
+                          let data = {
+                              role_ID: parseInt(roleID),
+                              pant_ID: element,
+                              pantrole_UserCreacion: 1
+                            }
+                            console.log(data)
+                          axios
+                          .post('RolesPorPantalla/Insert', data)
+                          .then((response) => {
+                            setIsSubmitting(false)
+                            if (response) {
+                              setActualizar(!actualizar)
+                            }
+                          })
+                          .catch((error) => {
+                            console.log(error)
+                            setActualizar(!actualizar)
+                              toast.error('ha ocurrido un error');
+                          })
+                      });
+
+
+                        setActualizar(!actualizar)
+                      }
+                    })
+                    .catch((error) => {
+                      console.log(error)
+                      setActualizar(!actualizar)
+                        toast.error('ha ocurrido un error');
+                    })
+            
+
+
+                  }
+                })
+                .catch((error) => {
+                  setActualizar(!actualizar)
+                    toast.error('ha ocurrido un error');
+                })
+        }else{
+            toast.error('Rellene los campos'); 
+        }
+      }
+
+      const DeleteAction = (event) => {
+        const form = event.currentTarget
+        if (form.checkValidity() === false) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        setValidated(true)
+        event.preventDefault()
+
+        let payload = {
+          role_ID: roleID,
+        }
+        axios
+          .post('Roles/Delete', payload)
+          .then((response) => {
+            setIsSubmitting(false)
+            console.log(response)
+            if (response.data.message == '1') {
+              toast.success('Registro Eliminado exitosamente');
+              setVisible3(false)
+              setActualizar(!actualizar)
+            }else if(response.data.message == "3"){
+              toast.warning('El registro esta siendo utilizado en otra tabla');
+            }
+          })
+          .catch((error) => {
+            setActualizar(!actualizar)
+              toast.error('ha ocurrido un error');
+          })
       }
 
             useEffect(() => {
@@ -184,9 +309,9 @@ function Roles (){
           width: 300,
           renderCell: (params) => (
     <div>
-                  <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
+                  <CButton color='danger' variant='outline' className='m-3' onClick={() => handleDeleteClick(params.row)}><Delete/></CButton>
                   <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
-                  <CButton color='info' variant='outline' className='m-3'><Book/></CButton>
+                  <CButton color='info' variant='outline' className='m-3' onClick={() => handleDetailsClick(params.row)}><Book/></CButton>
     </div>
           ),
         },
@@ -268,7 +393,7 @@ function Roles (){
     className="row g-3 needs-validation"
     noValidate
     validated={validated}
-    onSubmit={CreateAction}
+    onSubmit={EditAction}
   >
   <CCol>
   <h6>Nombre del rol</h6>
@@ -305,6 +430,37 @@ function Roles (){
       </CModalBody>
     </CModal>
         {/*Fin Modal Edit*/}
+                 {/*Modal Delete*/}
+     <CModal visible={visible3} onClose={() => setVisible3(false)}>
+      <CModalHeader onClose={() => setVisible3(false)}>
+        <CModalTitle>Eliminar Rol</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+      <CForm
+    className="row g-3 needs-validation"
+    noValidate
+    validated={validated}
+    onSubmit={DeleteAction}
+  >
+  <CCol>
+  <h5>Seguro que desea eliminar este registro?</h5>
+  </CCol>
+    <CRow className='mt-3 offset-7'>
+      <CCol className='col-2'>
+    <CButton color="secondary" onClick={() => setVisible3(false)}>
+          Cerrar
+        </CButton>
+        </CCol>
+        <CCol>
+        <CButton color="primary" type="submit">
+        Aceptar
+      </CButton>
+      </CCol>
+    </CRow>
+      </CForm>   
+      </CModalBody>
+    </CModal>
+        {/*Fin Modal Delete*/}
         </>
     )
 }

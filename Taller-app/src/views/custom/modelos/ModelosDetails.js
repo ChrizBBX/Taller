@@ -94,8 +94,8 @@
                     console.log(response)
                     
                     if (response.data.message == '1') {
-                      toast.success('Reg1istro editado exitosamente');
-                      navigate('/modelos')
+                      toast.success('Registro editado exitosamente');
+                      navigate('/roles')
                       setVisible2(false)
                       setActualizar(!Actualizar)
                     }else if(response.data.message == '2'){

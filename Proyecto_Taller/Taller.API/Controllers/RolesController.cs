@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Taller.API.Models;
 using Taller.BusinessLogic.Services;
 using Taller.Entities.Entities;
 
@@ -44,9 +45,10 @@ namespace Taller.API.Controllers
         }
 
         [HttpPost("Delete")]
-        public IActionResult Delete(tbRoles item)
+        public IActionResult Delete(RolesViewModel item)
         {
-            var listado = _accesoservices.EliminarRoles(item);
+            var listadoMapeado = _mapper.Map<tbRoles>(item);
+            var listado = _accesoservices.EliminarRoles(listadoMapeado);
             return Ok(listado);
         }
     }
