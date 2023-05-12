@@ -10,7 +10,7 @@ using Taller.Entities.Entities;
 
 namespace Taller.DataAccess.Repositories
 {
-    public class RolesPorPantallaRepository : IRepository<tbPantallasPorRoles, tbPantallasPorRoles>
+    public class RolesPorPantallaRepository : IRepository<tbPantallasPorRoles, VW_tbPantallasPorRoles>
     {
         public RequestStatus Delete(int id)
         {
@@ -38,12 +38,25 @@ namespace Taller.DataAccess.Repositories
         }
 
 
-        public IEnumerable<tbPantallasPorRoles> List()
+        public IEnumerable<VW_tbPantallasPorRoles> List(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@role_ID", id, DbType.Int32, ParameterDirection.Input);
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            return db.Query<VW_tbPantallasPorRoles>(ScriptsDataBase.UDP_tbPantallaPorRoles_SelectByRoleID, parameters, commandType: CommandType.StoredProcedure);
+        }
+
+        public RequestStatus Update(tbPantallasPorRoles item)
         {
             throw new NotImplementedException();
         }
 
-        public RequestStatus Update(tbPantallasPorRoles item)
+        VW_tbPantallasPorRoles IRepository<tbPantallasPorRoles, VW_tbPantallasPorRoles>.Find(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<VW_tbPantallasPorRoles> IRepository<tbPantallasPorRoles, VW_tbPantallasPorRoles>.List()
         {
             throw new NotImplementedException();
         }

@@ -1574,19 +1574,30 @@ BEGIN
 SELECT * FROM acce.tbPantallas
 END
 
-/*Pantalla Por Roles By role Id*/
+
+
+/*RolesXPantalla*/
+
+/*RolesXPantalla View*/
+GO
+CREATE OR ALTER VIEW acce.VW_tbPantallasPorRoles
+AS
+SELECT [pantrole_ID], [role_ID], pantrole.[pant_ID],pant.pant_Nombre, [pantrole_UserCreacion], 
+[pantrole_FechaCreacion], [pantrole_UserModificacion],
+[pantrole_FechaModificacion], [pantrole_Estado]
+FROM [acce].[tbPantallasPorRoles] pantrole INNER JOIN acce.tbPantallas pant
+ON pantrole.pant_ID = pant.pant_ID
+
+/*RolesXPantalla By role Id*/
 	GO
 	CREATE OR ALTER PROCEDURE acce.UDP_tbPantallaPorRolesByRoleID
 	@role_ID INT
 	AS
 	BEGIN
-	SELECT role_ID,pantrole.pant_ID 
-	FROM acce.tbPantallasPorRoles pantrole INNER JOIN acce.tbPantallas pant
-	ON pantrole.pant_ID = pant.pant_ID
+	SELECT pant_ID
+	FROM acce.VW_tbPantallasPorRoles
 	WHERE role_ID = @role_ID
 	END	
-
-/*RolesXPantalla*/
 
 /*RolesXPantalla Insert*/
 GO

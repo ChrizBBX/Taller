@@ -32,5 +32,12 @@ namespace Taller.API.Controllers
             var listado = _accesoservice.InsertarRolesXPantalla(listadoMapeado);
             return Ok(listado);
         }
+
+        [HttpGet("RolesPorPantallaByRoleID/{id}")]
+        public IActionResult ListarMunicipiosPorDepto(int id)
+        {
+            var list = _accesoservice.ListadoRolesPorPantallaByRoleID(id);
+            return Ok(list);
+        }
     }
 }

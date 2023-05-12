@@ -183,6 +183,19 @@ namespace Taller.BusinessLogic.Services
                 throw;
             }
         }
+
+        public IEnumerable<VW_tbPantallasPorRoles> ListadoRolesPorPantallaByRoleID(int id)
+        {
+            try
+            {
+                return _rolesporpantallarepository.List(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbPantallasPorRoles>();
+            }
+        }
+
         #endregion
     }
 }

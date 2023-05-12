@@ -45,7 +45,15 @@ function Roles (){
       const handleSortModelChange = (model) => {
         setSortModel(model);
       };
+      
+   
 
+      const handleEditClick = (params) => {
+        const rol = roles.find((rol) => rol.role_ID === params.role_ID); // Busca la marca seleccionada
+        setVisible2(true);
+        setRoleID(rol.role_ID)
+
+      };
 
       const CreateAction = (event) => {
         const form = event.currentTarget
@@ -107,10 +115,26 @@ function Roles (){
         }
       }
 
+            useEffect(() => {
+        axios
+        .get('/RolesPorPantalla/RolesPorPantallaByRoleID/' + roleID)
+        .then((response) => {
+          const insertarid = response.data.map((row) => ({
+            ...row,
+            id: row.pant_ID,
+          }));
+          const pantallas = insertarid.map(item => item.pant_ID);
+          setPantallaSeleccionada(pantallas);
+          console.log(pantallaSeleccionada)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }, [roleID]);
 
       useEffect(() => {
         console.log(pantallaSeleccionada);
-      }, [pantallas]);
+      }, [pantallas,pantallaSeleccionada]);
 
 
       useEffect(() => {
@@ -126,7 +150,7 @@ function Roles (){
           .catch((error) => {
             console.log(error);
           });
-
+          
           axios
           .get('/Pantallas')
           .then((response) => {
@@ -139,7 +163,7 @@ function Roles (){
           .catch((error) => {
             console.log(error);
           });
-      }, [actualizar]);
+      }, [actualizar,roleID,pantallaSeleccionada]);
 
       const options = pantallas.map((pantalla) => ({
         label: pantalla.pant_Nombre,
@@ -161,7 +185,7 @@ function Roles (){
           renderCell: (params) => (
     <div>
                   <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
-                  <CButton color='warning' variant='outline' className='m-3'><Edit/></CButton>
+                  <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
                   <CButton color='info' variant='outline' className='m-3'><Book/></CButton>
     </div>
           ),
@@ -234,6 +258,53 @@ function Roles (){
       </CModalBody>
     </CModal>
         {/*Fin Modal Create*/}
+         {/*Modal Edit*/}
+     <CModal visible={visible2} onClose={() => setVisible2(false)}>
+      <CModalHeader onClose={() => setVisible2(false)}>
+        <CModalTitle>Editar Rol</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+      <CForm
+    className="row g-3 needs-validation"
+    noValidate
+    validated={validated}
+    onSubmit={CreateAction}
+  >
+  <CCol>
+  <h6>Nombre del rol</h6>
+    <CFormInput
+        type="text"
+        id="validationCustom01"
+        required
+        value={roleNombre}
+        onChange={(e) => setRoleNombre(e.target.value)}
+      />
+      
+<div hidden={false}>
+<h6 className='mt-3'>Editar Pantallas Asignadas</h6>
+<DualListBox
+      options={options}
+      selected={pantallaSeleccionada}
+      onChange={handleChange}
+    />
+</div>
+  </CCol>
+    <CRow className='mt-3 offset-7'>
+      <CCol className='col-2'>
+    <CButton color="secondary" onClick={() => setVisible2(false)}>
+          Cerrar
+        </CButton>
+        </CCol>
+        <CCol>
+        <CButton color="primary" type="submit">
+        Guardar
+      </CButton>
+      </CCol>
+    </CRow>
+      </CForm>   
+      </CModalBody>
+    </CModal>
+        {/*Fin Modal Edit*/}
         </>
     )
 }
