@@ -69,6 +69,7 @@ function Roles (){
                     console.log("El ID del scope es:" + response.data.message)
                     setRoleID(response.data.message)
                     toast.success('Registro agregado exitosamente')
+                    setVisible(!visible)
 
                     pantallaSeleccionada.forEach(element => {
                         let data = {
@@ -82,7 +83,6 @@ function Roles (){
                         .then((response) => {
                           setIsSubmitting(false)
                           if (response.data.message == '1') {
-                            toast.success('Ya esta papa')
                             setActualizar(!actualizar)
                           }
                         })
@@ -173,7 +173,7 @@ function Roles (){
             <div className="card">
             <div className="card-body">
             <h1>Roles</h1>
-            <CButton onClick={() => {setVisible(!visible); setValidated(false);}}>Nuevo</CButton>
+            <CButton onClick={() => {setVisible(!visible); setValidated(false); setRoleNombre(''); setPantallaSeleccionada([])}}>Nuevo</CButton>
             <div className='container' style={{ height: 10 }}></div>
             <DataGrid
             rows={roles}

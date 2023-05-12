@@ -1574,6 +1574,18 @@ BEGIN
 SELECT * FROM acce.tbPantallas
 END
 
+/*Pantalla Por Roles By role Id*/
+	GO
+	CREATE OR ALTER PROCEDURE acce.UDP_tbPantallaPorRolesByRoleID
+	@role_ID INT
+	AS
+	BEGIN
+	SELECT role_ID,pantrole.pant_ID 
+	FROM acce.tbPantallasPorRoles pantrole INNER JOIN acce.tbPantallas pant
+	ON pantrole.pant_ID = pant.pant_ID
+	WHERE role_ID = @role_ID
+	END	
+
 /*RolesXPantalla*/
 
 /*RolesXPantalla Insert*/

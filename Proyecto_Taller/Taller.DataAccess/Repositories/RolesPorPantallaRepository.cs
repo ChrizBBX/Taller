@@ -25,7 +25,7 @@ namespace Taller.DataAccess.Repositories
         public RequestStatus Insert(tbPantallasPorRoles item)
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
-            RequestStatus result = new RequestStatus();
+            RequestStatus result = new RequestStatus(); 
             var parametros = new DynamicParameters();
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@pant_ID", item.pant_ID, DbType.Int32, ParameterDirection.Input);
@@ -36,6 +36,7 @@ namespace Taller.DataAccess.Repositories
             result.CodeStatus = answer;
             return result;
         }
+
 
         public IEnumerable<tbPantallasPorRoles> List()
         {
