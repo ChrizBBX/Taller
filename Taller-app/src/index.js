@@ -14,6 +14,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
      <ToastContainer />
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <App />
   </Provider>,
 )
@@ -22,3 +23,4 @@ createRoot(document.getElementById('root')).render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
+

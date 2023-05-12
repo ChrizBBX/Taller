@@ -8,6 +8,22 @@ namespace Taller.DataAccess.Repositories
 {
     public class ScriptsDataBase
     {
+        #region Roles
+        public static string UDP_tbRoles_Select = "acce.UDP_tbRoles_VW";
+        public static string UDP_tbRoles_Insert = "acce.UDP_tbRoles_Insert";
+        public static string UDP_tbRoles_Update = "acce.UDP_tbRoles_Update";
+        public static string UDP_tbRoles_Delete = "acce.UDP_tbRoles_Delete";
+        #endregion
+
+        #region RolesPorPantalla
+        public static string UDP_tbPantallaPorRoles_Insert = "acce.UDP_tbPantallasPorRoles_Insert";
+        public static string UDP_tbPantallaPorRoles_SelectByRoleID = "acce.UDP_tbPantallaPorRolesByRoleID";
+        public static string UDP_tbPantallaPorRoles_Delete = "acce.UDP_tbPantallasPorRoles_Delete";
+        #endregion
+
+        #region Pantallas
+        public static string UDP_tbPantallas_Select = "acce.UDP_tbPantallas_Select";
+        #endregion
 
         #region Usuarios
         public static string UDP_Usuarios_Select = "acce.UDP_tbUsuarios_VW";
@@ -24,6 +40,10 @@ namespace Taller.DataAccess.Repositories
 
         #region DetallesVentas
         public static string UDP_tbDetallesventas_Select = "tllr.UDP_tbDetallesventas_VW";
+        public static string UDP_tbDetallesventas_Insert = "tllr.UDP_tbDetallesventas_Insert";
+        public static string UDP_tbDetallesventas_Temp = "tllr.UDP_tbDetallesventas_Temp";
+        public static string UDP_tbDetallesVentas_ByID = "tllr.UDP_tbVentas_By_ID";
+        public static string UDP_tbDetallesVentas_Delete = "tllr.UDP_tbDetallesventas_Delete";
         #endregion
 
         #region Vehiculos

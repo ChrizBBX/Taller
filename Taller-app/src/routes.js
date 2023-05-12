@@ -21,6 +21,8 @@ const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
 const serviciosDetails = React.lazy(() => import('./views/custom/servicios/ServicioDetails'))
 
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
+const VentasCreate = React.lazy(() => import('./views/custom/ventas/VentasCreate'))
+const VentasEdit = React.lazy(() => import('./views/custom/ventas/VentasEdit'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
 const RegistrarEmpleados = React.lazy(() => import('./views/custom/Empleados/RegistrarEmpleados'))
 const Vehiculos = React.lazy(() => import('./views/custom/Vehiculos/Vehiculos'))
@@ -41,6 +43,8 @@ const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/
 const EditEmpleados = React.lazy(() => import('./views/custom/Empleados/EditEmpleados'))
 const DetailsEmpleados = React.lazy(() => import('./views/custom/Empleados/DetailsEmpleados'))
 
+const Roles = React.lazy(() => import('./views/custom/roles/Roles'))
+const RolesDetails = React.lazy(() => import('./views/custom/roles/RolesDetails'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -93,6 +97,8 @@ const routes = [
   { path: '/marcas', name: 'Marcas', element: Marcas },
   { path: '/marcasDetails', name: 'MarcasDetails', element: MarcasDetails },
   { path: '/modelos', name: 'Modelos', element: Modelos },
+  { path: '/roles', name: 'Roles', element: Roles },
+  { path: '/rolDetails', name: 'RolDetails', element: RolesDetails },
   { path: '/modelosDetails', name: 'Modelos', element: ModelosDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
   { path: '/sucursalesDetails', name: 'SucursalesDetails', element: SucursalesDetails },
@@ -105,7 +111,9 @@ const routes = [
   { path: '/repuestosDetails', name: 'RepuestosDetails', element: RepuestosDetails },
   { path: '/servicios', name: 'Servicios', element: Servicios },
   { path: '/serviciosDetails', name: 'ServiciosDetails', element: serviciosDetails },
-  { path: '/ventas', name: 'Ventas', element: Ventas },
+  { path: '/ventas', name: 'Ventas', element: Ventas },    
+  { path: '/ventasCreate', name: 'VentasCreate', element: VentasCreate },    
+  { path: '/ventasEdit', name: 'VentasEdit', element: VentasEdit },    
   { path: '/Empleados', name: 'Empleados', element: Empleados },
   { path: '/DetailsEmpleados', name: 'DetailsEmpleados', element: DetailsEmpleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },

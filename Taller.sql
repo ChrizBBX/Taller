@@ -311,6 +311,7 @@ CREATE TABLE tllr.tbRepuestos(
 CREATE TABLE tllr.tbServicios(
      serv_ID                  INT IDENTITY(1,1),
 	 serv_Descripcion         NVARCHAR(250),
+	 serv_Precio		      DECIMAL(18,2) NULL,
 	 serv_FechaCreacion       DATETIME DEFAULT GETDATE(),
 	 serv_UserCreacion        INT,
 	 serv_FechaModificacion   DATETIME,
@@ -323,11 +324,9 @@ CREATE TABLE tllr.tbServicios(
 
 --TABLA VENTAS
 CREATE TABLE tllr.tbVentas(
-    vent_Id		            INT IDENTITY(1,1),
-	vent_Fecha				DATE NOT NULL,
+    vent_Id					INT IDENTITY(1,1),
 	clie_ID	                INT NOT NULL,
-	vent_Descuento			DECIMAL(18,2),
-	vent_MontoFinal			DECIMAL(18,2),
+	meto_ID					INT NOT NULL,
 	sucu_ID					INT NOT NULL,
 	vent_UserCreacion 	    INT NOT NULL,
 	vent_FechaCreacion      DATETIME DEFAULT GETDATE(), 
@@ -337,7 +336,8 @@ CREATE TABLE tllr.tbVentas(
     CONSTRAINT FK_tllr_tbVentas_clie_Id_ABRR_tbClientes_clie_Id FOREIGN KEY (clie_ID) REFERENCES tllr.tbClientes(clie_ID),
 	CONSTRAINT FK_tllr_tbVentas_sucu_Id_ABRR_tbSucursales_sucu_Id FOREIGN KEY (sucu_ID) REFERENCES tllr.tbSucursales(sucu_ID),
 	CONSTRAINT FK_tllr_acce_tbVentas_vent_UserCreacion FOREIGN KEY (vent_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
-    CONSTRAINT FK_tllr_acce_tbVentas_vent_UserModificacion FOREIGN KEY (vent_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
+    CONSTRAINT FK_tllr_acce_tbVentas_vent_UserModificacion FOREIGN KEY (vent_UserModificacion) REFERENCES acce.tbUsuarios (user_ID),
+	CONSTRAINT FK_tllr_tbVentas_meto_ID FOREIGN KEY (meto_ID) REFERENCES gral.tbMetodosPago(meto_ID)
 );
 GO
 
@@ -345,11 +345,11 @@ GO
 CREATE TABLE tllr.tbDetallesventas(
    deve_ID					INT IDENTITY(1,1),
    vent_ID					INT NOT NULL,
-   serv_ID                  INT NOT NULL,
-   resp_ID                  INT NOT NULL,
+   vehi_ID					INT NULL,
+   serv_ID                  INT NULL,
+   resp_ID                  INT NULL,
    deve_Cantidad            INT NOT NULL,
    deve_Precioventa         DECIMAL(18,2) NOT NULL,
-   deve_MontoTotal			DECIMAL(18,2),
    deve_UserCreacion		INT NOT NULL,
    deve_FechaCreacion       DATETIME DEFAULT GETDATE(), 
    deve_UserModificacion	INT,
@@ -359,7 +359,8 @@ CREATE TABLE tllr.tbDetallesventas(
    CONSTRAINT FK_tllr_tbDetallesventas_vent_ID_tllr_tbVentas_vent_ID FOREIGN KEY (vent_ID) REFERENCES tllr.tbVentas(vent_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_resp_ID_tllr_tbVentas_resp_ID FOREIGN KEY (resp_ID) REFERENCES tllr.tbRepuestos(resp_ID),
    CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserCreacion FOREIGN KEY (deve_UserCreacion) REFERENCES acce.tbUsuarios (user_ID),
-   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserModificacion FOREIGN KEY (deve_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_UserModificacion FOREIGN KEY (deve_UserModificacion) REFERENCES acce.tbUsuarios (user_ID),
+   CONSTRAINT FK_tllr_tbDetallesventas_vehi_ID	FOREIGN KEY (vehi_ID) REFERENCES  tllr.tbVehiculos (vehi_ID)
 );
 GO
 
@@ -1033,7 +1034,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbServicios
 AS
-SELECT serv_ID, serv_Descripcion, 
+SELECT serv_ID, serv_Descripcion,serv_Precio,
 serv_FechaCreacion, serv_UserCreacion,[user1].user_NombreUsuario AS serv_UserCreacion_Nombre, 
 serv_FechaModificacion, serv_UserModificacion,[user2].user_NombreUsuario AS serv_UserModificacion_Nombre, 
 serv_Estado 
@@ -1059,7 +1060,7 @@ BEGIN
 	BEGIN TRY
 		IF NOT EXISTS (SELECT serv_Descripcion FROM tllr.tbServicios WHERE serv_Descripcion = @serv_Descripcion)
 			BEGIN
-			INSERT INTO tllr.tbServicios ([serv_Descripcion],[serv_Precio] ,[serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
+			INSERT INTO tllr.tbServicios ([serv_Descripcion],serv_Precio,[serv_FechaCreacion], [serv_UserCreacion], [serv_FechaModificacion], [serv_UserModificacion], [serv_Estado])
 			VALUES (@serv_Descripcion,@serv_Precio,GETDATE(),@serv_UserCreacion,NULL,NULL,1)
 			SELECT '1'
 			END
@@ -1219,7 +1220,7 @@ END
 GO
 CREATE VIEW tllr.VW_tbVehiculos
 AS
-SELECT vehi_ID, vehi.mode_ID,mode.mode_Nombre, 
+SELECT vehi_ID, vehi.mode_ID,mode.mode_Nombre,CONCAT(mode.mode_Nombre,'(',vehi_Matricula,')') AS Modelo_Matricula,
 vehi_Matricula, 
 vehi_anio, vehi_FechaCreacion, 
 vehi_UserCreacion,[user1].user_NombreUsuario AS vehi_UserCreacion_Nombre, vehi_FechaModificacion, 
@@ -1319,18 +1320,20 @@ END
 
 /*Ventas View*/
 GO
-CREATE VIEW tllr.VW_tbVentas
+CREATE OR ALTER VIEW tllr.VW_tbVentas
 AS
-SELECT vent_Id, vent_Fecha, 
-vent.clie_ID,clie.clie_Nombres, vent_Descuento, 
-vent_MontoFinal, vent.sucu_ID,sucu.sucu_Descripcion, 
+SELECT vent_Id,
+vent.clie_ID,clie.clie_Nombres,vent.meto_ID,meto.meto_Nombre,vent.sucu_ID,sucu.sucu_Descripcion, 
 vent_UserCreacion,[user1].user_NombreUsuario AS vent_UserCreacion_Nombre, vent_FechaCreacion, 
-vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion
+vent_UserModificacion,[user2].user_NombreUsuario AS vent_UserModificacion_Nombre, vent_FechaModificacion,(SELECT sum(deve.deve_Precioventa) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS subtotal,0.15 as IVA,
+(SELECT sum(deve.deve_Precioventa) * 0.15 FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS impuesto,
+(SELECT (sum(deve.deve_Precioventa) * 0.15) +  (SELECT sum(deve.deve_Precioventa) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) FROM tllr.tbDetallesventas deve WHERE deve.vent_ID = vent.vent_Id) AS total
 FROM [tllr].[tbVentas] vent INNER JOIN acce.tbUsuarios [user1]
 ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
 ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
-ON vent.sucu_ID = sucu.sucu_ID
+ON vent.sucu_ID = sucu.sucu_ID INNER JOIN gral.tbMetodosPago meto
+ON vent.meto_ID = meto.meto_ID
 
 /*Ventas View UDP*/
 GO
@@ -1338,43 +1341,56 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_VW
 AS
 BEGIN
 SELECT * FROM tllr.VW_tbVentas
-END 
+END		
+
+/*ventas x id*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_By_ID
+@vent_ID INT
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbVentas WHERE vent_ID = @vent_ID
+END
 
 /*Ventas Insert*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbVentas_Insert
 @clie_ID INT,
-@vent_Descuento DECIMAL(18,2),
-@vent_MontoFinal DECIMAL(18,2),
+@meto_ID INT,
 @sucu_ID INT,
 @vent_UserCreacion INT
 AS
 BEGIN
 	BEGIN TRY
-		INSERT INTO tbVentas ([vent_Fecha], [clie_ID], [vent_Descuento], [vent_MontoFinal], [sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion])
-		VALUES (GETDATE(),@clie_ID,@vent_Descuento,NULL,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL)
-		SELECT '1'
+		INSERT INTO tbVentas ([clie_ID],[sucu_ID], [vent_UserCreacion], [vent_FechaCreacion], [vent_UserModificacion], [vent_FechaModificacion], [meto_ID])
+		VALUES (@clie_ID,@sucu_ID,@vent_UserCreacion,GETDATE(),NULL,NULL,@meto_ID)
+		SELECT SCOPE_IDENTITY()
 	END TRY
 	BEGIN CATCH
-		SELECT '0' 
+		SELECT 0
 	END CATCH
 END
 
 /*Ventas Detalles View*/
 GO
-CREATE VIEW tllr.VW_tbDetallesventas
+CREATE OR ALTER VIEW tllr.VW_tbDetallesventas
 AS
-SELECT [deve_ID], [vent_ID], 
-deve.[serv_ID],serv.serv_Descripcion, deve.[resp_ID],resp.resp_Descripcion, 
-[deve_Cantidad], [deve_Precioventa], 
-[deve_MontoTotal], [deve_UserCreacion], 
-[deve_FechaCreacion], [deve_UserModificacion], 
-[deve_FechaModificacion]
-FROM tllr.tbDetallesventas deve LEFT JOIN tllr.tbServicios serv
-ON deve.serv_ID = serv.serv_ID LEFT JOIN tllr.tbRepuestos resp
-ON deve.resp_ID = resp.resp_ID
+SELECT deve.[deve_ID], deve.[vent_ID], deve.vehi_ID, vehi.mode_ID, vehi.vehi_Matricula,
+CASE WHEN deve.[serv_ID] IS NULL THEN COALESCE(resp.resp_Descripcion, '')
+ELSE COALESCE(serv.serv_Descripcion, '') END AS [Descripcion],
+deve.[serv_ID], serv.serv_Descripcion, deve.[resp_ID], resp.resp_Descripcion,
+deve.[deve_Cantidad], deve.[deve_Precioventa], deve.[deve_UserCreacion],
+deve.[deve_FechaCreacion], deve.[deve_UserModificacion], deve.[deve_FechaModificacion],
+-- Calcular el subtotal, impuesto (IVA) y total
+CAST(deve.deve_Cantidad * deve.deve_Precioventa AS DECIMAL(18,2)) AS [Subtotal],
+CAST(deve.deve_Cantidad * deve.deve_Precioventa * 0.15 AS DECIMAL(18,2)) AS [IVA],
+CAST(deve.deve_Cantidad * deve.deve_Precioventa * 1.15 AS DECIMAL(18,2)) AS [Total]
+FROM tllr.tbDetallesventas deve
+LEFT JOIN tllr.tbServicios serv ON deve.serv_ID = serv.serv_ID
+LEFT JOIN tllr.tbRepuestos resp ON deve.resp_ID = resp.resp_ID
+INNER JOIN tllr.tbVehiculos vehi ON deve.vehi_ID = vehi.vehi_ID
 
-/*Ventas Detalles View UDP*/
+/*VentasDetalles View UDP*/
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_VW
 AS
@@ -1382,6 +1398,252 @@ BEGIN
 SELECT * FROM tllr.VW_tbDetallesventas
 END
 
+/*VentaDetalles TemporalView*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Temp
+@vent_ID INT
+AS
+SELECT * FROM tllr.VW_tbDetallesventas WHERE vent_ID = @vent_ID
+GO
+
+/*VentasDetalles Insert*/
+GO
+CREATE OR ALTER PROCEDURE [tllr].[UDP_tbDetallesventas_Insert]
+    @vent_ID INT,
+    @vehi_ID INT,
+    @serv_ID INT,
+    @resp_ID INT,
+    @deve_Cantidad INT,
+    @deve_UserCreacion INT
+AS
+BEGIN
+    DECLARE @deve_PrecioVenta DECIMAL(18,2)
+
+    BEGIN TRY
+        IF @serv_ID IS NOT NULL
+        BEGIN
+            SET @deve_PrecioVenta = (SELECT serv_Precio FROM tllr.tbServicios WHERE serv_ID = @serv_ID) * @deve_Cantidad
+        END
+        ELSE
+        BEGIN
+            -- Verificar si hay suficiente stock del repuesto
+            DECLARE @resp_Stock INT
+            SET @resp_Stock = (SELECT resp_Stock FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID)
+            
+            IF @resp_Stock >= @deve_Cantidad
+            BEGIN
+                SET @deve_PrecioVenta = (SELECT resp_Precio FROM tllr.tbRepuestos WHERE resp_ID = @resp_ID) * @deve_Cantidad
+                
+                -- Actualizar el stock de repuestos
+                UPDATE tllr.tbRepuestos SET resp_Stock = resp_Stock - @deve_Cantidad WHERE resp_ID = @resp_ID
+            END
+            ELSE
+            BEGIN
+                SELECT '2'
+            END
+        END
+    END TRY
+    BEGIN CATCH
+        SELECT '0'
+        RETURN
+    END CATCH
+
+    -- Verificar si ya existe un registro con los mismos parï¿½metros
+    IF EXISTS (SELECT 1 FROM tllr.tbDetallesventas WHERE vent_ID = @vent_ID AND ((serv_ID IS NOT NULL AND serv_ID = @serv_ID) OR (resp_ID IS NOT NULL AND resp_ID = @resp_ID)))
+    BEGIN
+        -- Actualizar la cantidad del registro existente
+        UPDATE tllr.tbDetallesventas 
+        SET deve_Cantidad = deve_Cantidad + @deve_Cantidad,
+            deve_PrecioVenta = deve_PrecioVenta + @deve_PrecioVenta
+        WHERE vent_ID = @vent_ID AND ((serv_ID IS NOT NULL AND serv_ID = @serv_ID) OR (resp_ID IS NOT NULL AND resp_ID = @resp_ID))
+        SELECT '1'
+    END
+    ELSE
+    BEGIN
+        -- Insertar un nuevo registro
+        INSERT INTO tllr.tbDetallesventas
+        VALUES (@vent_ID,@vehi_ID,@serv_ID,@resp_ID,@deve_Cantidad,@deve_PrecioVenta,@deve_UserCreacion,GETDATE(),NULL,NULL)
+        SELECT '1'
+    END
+END
+
+/*Venta Detalles Delete*/
+GO
+CREATE OR ALTER PROCEDURE tllr.UDP_tbDetallesventas_Delete
+@deve_ID INT 
+AS
+BEGIN
+BEGIN TRY
+DELETE tllr.tbDetallesventas
+WHERE deve_ID = @deve_ID 
+SELECT '1'
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+END
+
+/*Roles View*/
+GO
+CREATE OR ALTER VIEW acce.VW_tbRoles
+AS
+SELECT role.[role_ID], [role_Nombre], 
+[role_UserCreacion],[user1].user_NombreUsuario AS role_UserCreacion_Nombre, [role_FechaCreacion], 
+[role_UserModificacion],[user2].user_NombreUsuario AS role_UserModificacion_Nombre, [role_FechaModificacion], 
+[role_Estado]
+FROM acce.tbRoles role INNER JOIN acce.tbUsuarios [user1]
+ON role.role_UserCreacion = user1.user_ID LEFT JOIN acce.tbUsuarios [user2]
+ON role.role_UserModificacion = user2.user_ID
+WHERE role_Estado = 1
+
+/*Roles View UDP*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_VW
+AS
+BEGIN
+SELECT * FROM tllr.VW_tbRoles
+WHERE role_Estado = 1
+END
+
+/*Roles Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Insert
+@role_Nombre NVARCHAR(100),
+@role_UserCreacion INT
+AS
+BEGIN
+BEGIN TRY
+IF NOT EXISTS (SELECT role_Nombre FROM acce.tbRoles WHERE role_Nombre = @role_Nombre)	
+	BEGIN
+		INSERT INTO acce.tbRoles ([role_Nombre], [role_UserCreacion], [role_FechaCreacion], [role_UserModificacion], [role_FechaModificacion], [role_Estado])
+		VALUES (@role_Nombre,@role_UserCreacion,GETDATE(),NULL,NULL,1)
+		SELECT SCOPE_IDENTITY()
+	END
+	ELSE
+		BEGIN
+		SELECT 2
+		END
+END TRY
+BEGIN CATCH
+SELECT 0
+END CATCH
+END
+
+/*Roles update*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Update
+@role_ID INT,
+@role_Nombre NVARCHAR(100),
+@role_UserModificacion INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT role_Nombre FROM acce.tbRoles WHERE role_ID != @role_ID AND role_Nombre = @role_Nombre)
+	BEGIN
+		UPDATE acce.tbRoles
+			SET role_Nombre = @role_Nombre,
+			role_UserModificacion = @role_UserModificacion,
+			role_FechaModificacion = GETDATE()
+			WHERE role_ID = @role_ID
+			SELECT '1'
+	END
+	ELSE
+	BEGIN
+			SELECT '2'
+	END
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Roles Delete*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbRoles_Delete
+@role_ID INT 
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE acce.tbRoles
+		SET role_Estado = 0 
+		WHERE role_ID = @role_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+		SELECT '0'
+	END CATCH
+END
+
+/*Pantallas*/
+/*Pantalla Select*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallas_Select
+AS
+BEGIN
+SELECT * FROM acce.tbPantallas
+END
+
+
+
+/*RolesXPantalla*/
+
+/*RolesXPantalla View*/
+GO
+CREATE OR ALTER VIEW acce.VW_tbPantallasPorRoles
+AS
+SELECT [pantrole_ID], [role_ID], pantrole.[pant_ID],pant.pant_Nombre, [pantrole_UserCreacion], 
+[pantrole_FechaCreacion], [pantrole_UserModificacion],
+[pantrole_FechaModificacion], [pantrole_Estado]
+FROM [acce].[tbPantallasPorRoles] pantrole INNER JOIN acce.tbPantallas pant
+ON pantrole.pant_ID = pant.pant_ID
+
+/*RolesXPantalla By role Id*/
+	GO
+	CREATE OR ALTER PROCEDURE acce.UDP_tbPantallaPorRolesByRoleID
+	@role_ID INT
+	AS
+	BEGIN
+	SELECT pant_ID
+	FROM acce.VW_tbPantallasPorRoles
+	WHERE role_ID = @role_ID
+	END	
+
+/*RolesXPantalla Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallasPorRoles_Insert
+@role_ID INT,
+@pant_ID INT,
+@pantrole_UserCreacion INT
+AS
+BEGIN
+	BEGIN TRY
+	INSERT INTO acce.tbPantallasPorRoles([role_ID], 
+	[pant_ID], [pantrole_UserCreacion], 
+	[pantrole_FechaCreacion], [pantrole_UserModificacion], 
+	[pantrole_FechaModificacion], [pantrole_Estado])
+	VALUES(@role_ID,@pant_ID,@pantrole_UserCreacion,GETDATE(),NULL,NULL,1)
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*RolesXPantalla Insert*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbPantallasPorRoles_Delete
+@role_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE acce.tbPantallasPorRoles
+		WHERE role_ID = @role_ID
+		SELECT '1'
+	END TRY
+	BEGIN CATCH
+	SELECT '2'
+	END CATCH
+END
 /*Empleados*/
 
 /*Empelados View*/
@@ -1578,7 +1840,7 @@ END
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
 	@user_NombreUsuario NVARCHAR(150),
-	@user_Contraseña NVARCHAR(200),
+	@user_Contraseï¿½a NVARCHAR(200),
 	@role_ID INT,
 	@empe_ID INT
 AS
@@ -1587,7 +1849,7 @@ BEGIN
         IF NOT EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
         BEGIN 
 		DECLARE @Pass AS NVARCHAR(MAX);
-		SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @user_Contraseña), 2);
+		SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @user_Contraseï¿½a), 2);
         INSERT INTO acce.tbUsuarios ([user_NombreUsuario], [user_Contrasena], [role_ID], [empe_ID],[user_UserCreacion])
         VALUES (@user_NombreUsuario,@Pass,@role_ID,@empe_ID,1)
         SELECT '1'

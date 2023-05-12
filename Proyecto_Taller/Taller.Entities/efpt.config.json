@@ -102,6 +102,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[acce].[VW_tbPantallasPorRoles]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[acce].[VW_tbRoles]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[acce].[VW_tbUsuarios]",
          "ObjectType": 3
       },
@@ -139,6 +147,10 @@
       },
       {
          "Name": "[tllr].[VW_tbRepuestos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbRoles]",
          "ObjectType": 3
       },
       {

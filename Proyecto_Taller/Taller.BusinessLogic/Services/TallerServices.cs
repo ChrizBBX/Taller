@@ -323,11 +323,128 @@ namespace Taller.BusinessLogic.Services
         #endregion
 
         #region DetallesVentas
-       
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentas()
+        {
+            try
+            {
+                return _detallesventarepository.List();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
+
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesVentasTemporal(int id)
+        {
+            try
+            {
+                return _detallesventarepository.ListTemp(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
+
+
+        public IEnumerable<VW_tbDetallesventas> ListadoDetallesPorID(int id)
+        {
+            try
+            {
+                return _detallesventarepository.ListById(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbDetallesventas>();
+            }
+        }
+
+        public ServiceResult InsertarVentasDetalles(tbDetallesventas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _detallesventarepository.Insert(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public ServiceResult EliminarVentasDetalles(VW_tbDetallesventas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _detallesventarepository.Delete(item);
+                if (insertar.MessageStatus == "1")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else if (insertar.MessageStatus == "2")
+                {
+                    return result.Ok(insertar.MessageStatus);
+                }
+                else
+                {
+                    return result.BadRequest(insertar.MessageStatus);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Ventas
-      
+        public IEnumerable<VW_tbVentas> ListadoVentas()
+        {
+            try
+            {
+                return _ventasrepository.List();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_tbVentas>();
+            }
+        }
+
+        public ServiceResult InsertarVentas(tbVentas item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var insertar = _ventasrepository.Insert(item);
+                if (Convert.ToInt32(insertar.CodeStatus) > 0 )
+                {
+                    return result.Ok(insertar.CodeStatus.ToString());
+                }
+                else
+                {
+                    return result.BadRequest(insertar.CodeStatus.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
         #endregion
 
         #region Vehiculos
