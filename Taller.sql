@@ -1559,7 +1559,7 @@ BEGIN
 	BEGIN TRY
 		UPDATE acce.tbRoles
 		SET role_Estado = 0 
-		WHERE role_ID = @role
+		WHERE role_ID = @role_ID
 		SELECT '1'
 	END TRY
 	BEGIN CATCH
