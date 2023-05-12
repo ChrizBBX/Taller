@@ -24,6 +24,7 @@ import {Delete,Edit, Book,} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+import { async } from 'regenerator-runtime';
 
 function VentasEdit (){
     const navigate = useNavigate()
@@ -31,7 +32,7 @@ function VentasEdit (){
     const [clieID,setClieID] = useState('')
     const [metoID,setMetoID] = useState('')
     const [vehiID,setVehiID] = useState('')
-    const [ventID,setVentID] = useState(null)
+    const [ventID,setVentID] = useState('')
     const [respID,setRespID] = useState(null)
     const [servID,setServID] = useState(null)
     const [detalles,setDetalles] = useState([])
@@ -77,7 +78,6 @@ function VentasEdit (){
         axios
           .post('/DetallesVentas/Delete', payload)
           .then((response) => {
-            console.log(response)
             if (response.data.message == '1') {
               setActualizar(!Actualizar)
               toast.success('Registro Eliminado exitosamente');
@@ -87,18 +87,10 @@ function VentasEdit (){
               toast.error('ha ocurrido un error');
           })
       };
-      
-      useEffect( () => {
+  
         const VentaSeleccionada = JSON.parse(localStorage.getItem('VentaSeleccionada'));
-        if (VentaSeleccionada) {
-            console.log(VentaSeleccionada)
-          setVentID(VentaSeleccionada.vent_Id)
-          setClieID(VentaSeleccionada.clie_ID)
-          setVehiID(VentaSeleccionada.vehi_ID)
-          setMetoID(VentaSeleccionada.meto_ID)
-        }
 
-
+      useEffect( () => {
           axios
             .get('/MetodosPagos')
             .then((response) => {
@@ -109,34 +101,33 @@ function VentasEdit (){
               setMetodosPago(insertarid);
             })
             .catch((error) => {
-              console.log(error);
+
             });
       
             axios
-            .get('/DetallesVentas/ByID?id=' + VentaSeleccionada.vent_Id)
+            .get('/DetallesVentas/ByID?id=' + VentaSeleccionada.id)
             .then((response) => {
               const insertarid = response.data.map((row) => ({
                 ...row,
-                id: row.vent_ID,
+                id: row.vent_Id,
               }));
               setDetalles2(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
 
-            axios
-            .get(`DetallesVentas/Temp?id=${VentaSeleccionada.vent_Id}`)
+             axios
+            .get(`DetallesVentas/Temp?id=${VentaSeleccionada.id}`)
             .then((response) => {
               const insertarid = response.data.map((row) => ({
                 ...row,
-                id: row.deve_ID,
+                id: row.vent_Id,
               }));
 
               setDetalles(insertarid);
             })
             .catch((error) => {
-              console.log(error);
+              setActualizar(!Actualizar)
             });
       
             axios
@@ -149,7 +140,6 @@ function VentasEdit (){
               setServicios(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -162,7 +152,6 @@ function VentasEdit (){
               setClientes(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -175,7 +164,6 @@ function VentasEdit (){
               setRepuestos(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -188,10 +176,9 @@ function VentasEdit (){
               setVehiculos(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
-        }, [Actualizar]);
+        }, [Actualizar,ventID]);
       
         const handleSortModelChange = (model) => {
           setSortModel(model);
@@ -222,7 +209,6 @@ function VentasEdit (){
                 .post('DetallesVentas/Insert', payload)
                 .then((response) => {
                   setIsSubmitting(false)
-                  console.log(response)
                   if (response.data.message === '1') {
                     toast.success('Agregado exitosamente')
                       setActualizar(!Actualizar)
@@ -231,7 +217,6 @@ function VentasEdit (){
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
                   setActualizar(!Actualizar)
                     toast.error('ha ocurrido un error');
                 })
@@ -268,8 +253,6 @@ function VentasEdit (){
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
-                  console.log(servID)
                   setActualizar(!Actualizar)
                     toast.error('ha ocurrido un error');
                 })
