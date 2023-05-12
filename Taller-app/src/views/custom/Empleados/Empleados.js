@@ -76,7 +76,6 @@ function Empleados() {
                 setActualizar(!Actualizar)
                 toast.error('ha ocurrido un error');
             })
-
     }
 
     const handleEditClick = (params) => {

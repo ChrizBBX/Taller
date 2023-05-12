@@ -16,6 +16,7 @@ namespace Taller.Entities.Entities
         public string clie_Telefono { get; set; }
         public string clie_CorreoElectronico { get; set; }
         public string muni_ID { get; set; }
+        public string depa_ID { get; set; }
         public DateTime? clie_FechaCreacion { get; set; }
         public int? clie_UserCreacion { get; set; }
         public string clie_UserCreacion_Nombre { get; set; }

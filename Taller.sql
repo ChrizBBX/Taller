@@ -590,18 +590,20 @@ END
 
 /*Clientes View*/
 GO
-CREATE VIEW tllr.VW_tbClientes
+CREATE OR ALTER VIEW tllr.VW_tbClientes
 AS
 SELECT clie_ID,
 clie_Nombres, clie_Apellidos, 
 clie_Sexo, clie_FechaNacimiento, 
 clie_Telefono, clie_CorreoElectronico, 
-muni_ID, clie_FechaCreacion, 
+clie.muni_ID, muni.muni_Nombre, depa.depa_ID, depa.depa_Nombre, clie_FechaCreacion, 
 clie_UserCreacion,[user1].user_NombreUsuario AS clie_UserCreacion_Nombre, clie_FechaModificacion, 
 clie_UserModificacion,[user2].user_NombreUsuario AS clie_UserModificacion_Nombre, clie_Estado
 FROM [tllr].[tbClientes] clie INNER JOIN acce.tbUsuarios [user1]
 ON clie.clie_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
-ON clie.clie_UserModificacion = user2.user_ID
+ON clie.clie_UserModificacion = user2.user_ID INNER JOIN gral.tbMunicipios muni
+ON clie.muni_ID = muni.muni_ID  INNER JOIN gral.tbDepartamentos depa
+ON muni.depa_ID = depa.depa_ID
 WHERE clie_Estado = 1
 
 /*Clientes View UDP*/
@@ -1655,14 +1657,9 @@ CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Insert
 AS
 BEGIN
     BEGIN TRY
-        IF NOT EXISTS (SELECT clie_Nombres FROM tllr.tbClientes WHERE clie_Nombres = @clie_Nombres)
-        BEGIN 
         INSERT INTO tllr.tbClientes ([clie_Nombres], [clie_Apellidos], [clie_Sexo], [clie_FechaNacimiento], [clie_Telefono],[clie_CorreoElectronico],[muni_ID],[clie_UserCreacion])
         VALUES (@clie_Nombres,@clie_Apellidos,@clie_Sexo,@clie_FechaNacimiento,@clie_Telefono,@clie_CorreoElectronico,@muni_ID,1)
-        SELECT '1'
-        END
-        ELSE 
-        SELECT '2'
+        SELECT '1'     
     END TRY
     BEGIN CATCH
     SELECT '0'
@@ -1672,19 +1669,17 @@ END
 --Clientes UPDATE
 GO
 CREATE OR ALTER PROCEDURE tllr.UDP_tbClientes_Update
-@clie_ID  INT,
-@clie_Nombres NVARCHAR(150),
-@clie_Apellidos NVARCHAR(200),
-@clie_Sexo  CHAR(1),
-@clie_FechaNacimiento DATE,
-@clie_Telefono NVARCHAR(20),
-@clie_CorreoElectronico NVARCHAR(50),
-@muni_ID  INT
+	@clie_ID  INT,
+	@clie_Nombres NVARCHAR(150),
+	@clie_Apellidos NVARCHAR(200),
+	@clie_Sexo  CHAR(1),
+	@clie_FechaNacimiento DATE,
+	@clie_Telefono NVARCHAR(20),
+	@clie_CorreoElectronico NVARCHAR(50),
+	@muni_ID  INT
 AS
 BEGIN
-    BEGIN TRY
-        IF NOT EXISTS (SELECT clie_Nombres FROM tllr.tbClientes WHERE clie_Nombres = @clie_Nombres)
-            BEGIN
+    BEGIN TRY          
             UPDATE tllr.tbClientes
             SET [clie_Nombres] = @clie_Nombres,
                 [clie_Apellidos] = @clie_Apellidos,
@@ -1697,9 +1692,6 @@ BEGIN
                 [clie_FechaModificacion] = GETDATE()
             WHERE  [clie_ID] = @clie_ID
             SELECT    '1'
-            END
-            ELSE
-            SELECT  '2'
     END TRY
     BEGIN CATCH
             SELECT '0'
