@@ -20,6 +20,8 @@ namespace Taller.BusinessLogic.Services
         private readonly MarcasRepository _marcasRepository;
         private readonly EmpleadosRepository _empleadosRepository;
         private readonly ComprasRepository _comprasRepository;
+        private readonly DetallesVentaRepository _detallesventarepository;
+        private readonly VentasRepository _ventasrepository;
 
 
         public TallerServices(
@@ -32,7 +34,9 @@ namespace Taller.BusinessLogic.Services
             ClientesRepository clientesRepository, 
             MarcasRepository marcasRepository,
             EmpleadosRepository empleadosRepository,
-            ComprasRepository comprasRepository)
+            ComprasRepository comprasRepository,
+            DetallesVentaRepository detallesventarepository,
+            VentasRepository ventasrepository)
         {
             _vehiculosrepository = vehiculosrepository;
             _sucursalesrepository = sucursalesrepository;
@@ -44,7 +48,8 @@ namespace Taller.BusinessLogic.Services
             _marcasRepository = marcasRepository;
             _empleadosRepository = empleadosRepository;
             _comprasRepository = comprasRepository;
-
+            _ventasrepository = ventasrepository;
+            _detallesventarepository = detallesventarepository;
         }
 
         #region Empleados

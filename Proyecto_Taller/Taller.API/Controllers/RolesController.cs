@@ -27,7 +27,7 @@ namespace Taller.API.Controllers
         [HttpGet("ListarRoles")]
         public IActionResult ListarRoles()
         {
-            var list = _accesoServices.ListarRoles();
+            var list = _accesoservices.ListarRoles();
             return Ok(list);
         }
 

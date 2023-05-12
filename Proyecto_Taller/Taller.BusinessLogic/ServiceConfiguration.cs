@@ -33,6 +33,7 @@ namespace Taller.BusinessLogic
             services.AddScoped<DetallesVentaRepository>();
             services.AddScoped<RolesRepository>();
             services.AddScoped<PantallasRepository>();
+            services.AddScoped<VentasRepository>();
             services.AddScoped<RolesPorPantallaRepository>();
             TallerMecanicoContext.BuildConnectionString(connection);
         }
