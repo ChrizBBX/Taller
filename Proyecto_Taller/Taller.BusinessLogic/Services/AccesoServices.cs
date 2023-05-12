@@ -13,6 +13,7 @@ namespace Taller.BusinessLogic.Services
         private readonly RolesRepository _rolesrepository;
         private readonly PantallasRepository _pantallasrepository;
         private readonly RolesPorPantallaRepository _rolesporpantallarepository;
+        private readonly UsuariosRepository _usuariosrepository;
         public AccesoServices(UsuariosRepository usuariosrepository,
             RolesRepository rolesrepository,
             PantallasRepository pantallasrepository,
@@ -124,17 +125,17 @@ namespace Taller.BusinessLogic.Services
         #endregion
 
         #region Roles
-        public IEnumerable<tbRoles> ListarRoles()
+        public IEnumerable<VW_tbRoles> ListarRoles()
         {
             try
             {
-                var list = _rolesRepository.ListarRoles();
+                var list = _rolesrepository.List();
                 return list;
             }
             catch (Exception ex)
             {
 
-                return Enumerable.Empty<tbRoles>();
+                return Enumerable.Empty<VW_tbRoles>();
             }
         }
         #endregion
@@ -230,7 +231,6 @@ namespace Taller.BusinessLogic.Services
                 throw;
             }
         }
-        #endregion
 
         #region Pantallas
         public IEnumerable<tbPantallas> ListadoPantallas()

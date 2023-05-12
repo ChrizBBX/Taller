@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj": {}
+    "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj": {
+    "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
+        "projectUniqueName": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
         "projectName": "Taller.API",
-        "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
-        "packagesPath": "C:\\Users\\Jose Herrera\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\obj\\",
+        "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\Taller.API.csproj",
+        "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jose Herrera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj": {
-                "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj"
+              "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj"
               }
             }
           }
@@ -93,24 +93,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj": {
+    "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
         "projectName": "Taller.BusinessLogic",
-        "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
-        "packagesPath": "C:\\Users\\Jose Herrera\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\obj\\",
+        "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\Taller.BusinessLogic.csproj",
+        "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jose Herrera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -125,8 +125,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj"
+              "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj"
               }
             }
           }
@@ -155,24 +155,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj": {
+    "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
         "projectName": "Taller.DataAccess",
-        "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Jose Herrera\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\obj\\",
+        "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\Taller.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jose Herrera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -187,8 +187,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
-                "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj"
+              "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
+                "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj"
               }
             }
           }
@@ -231,24 +231,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
+    "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj",
+        "projectUniqueName": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj",
         "projectName": "Taller.Entities",
-        "projectPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj",
-        "packagesPath": "C:\\Users\\Jose Herrera\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jose Herrera\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\obj\\",
+        "projectPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\Taller.Entities.csproj",
+        "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB02\\Documents\\GitHub\\Taller\\Proyecto_Taller\\Taller.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jose Herrera\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -289,7 +289,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     }
