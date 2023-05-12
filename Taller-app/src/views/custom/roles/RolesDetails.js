@@ -177,7 +177,7 @@ function RolesDetails (){
 
           </div>
           <div className="col-3">
-          <CButton color="info" onClick={() => {  navigate('/modelos')}}>Regresar</CButton>
+          <CButton color="info" onClick={() => {  navigate('/roles')}}>Regresar</CButton>
           </div>
           <div style={{height: 20}}></div>
      </div>

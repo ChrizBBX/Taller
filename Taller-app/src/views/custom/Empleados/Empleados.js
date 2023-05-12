@@ -64,7 +64,7 @@ function Empleados() {
                 console.log(response)
                 if (response.data.message == '1') {
                     toast.success('Registro Eliminado exitosamente');
-                    setVisible(false)
+                    setVisible3(false)
                     setActualizar(!Actualizar)
                     navigate('/Empleados')
                 } else if (response.data.message == '2') {

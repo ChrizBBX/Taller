@@ -145,7 +145,7 @@ function MetodosPagos() {
                 meto_ID: metodoID,
               }
               axios
-                .post('Modelos/Delete', payload)
+                .post('MetodosPagos/Delete', payload)
                 .then((response) => {
                   setIsSubmitting(false)
                   console.log(response)
