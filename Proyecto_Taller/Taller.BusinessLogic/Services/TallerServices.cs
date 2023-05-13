@@ -352,7 +352,6 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
-
         public IEnumerable<VW_tbDetallesventas> ListadoDetallesPorID(int id)
         {
             try
@@ -463,6 +462,19 @@ namespace Taller.BusinessLogic.Services
             {
 
                 return Enumerable.Empty<VW_tbVehiculos>();
+            }
+        }
+
+        public IEnumerable<vwClientesConMasVehiculos> ClientesConMasVehiculos()
+        {
+            try
+            {
+                return _vehiculosrepository.ClientesConMasVehiculos();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<vwClientesConMasVehiculos>();
             }
         }
 
@@ -642,6 +654,18 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
+        public IEnumerable<VW_ServiciosMasSolicitados> ServiciosMasSolicitados()
+        {
+            try
+            {
+                return _serviciosRepository.ServiciosMasSolicitados();
+            }
+            catch (Exception e)
+            {
+
+                return Enumerable.Empty<VW_ServiciosMasSolicitados>();
+            }
+        }
         public ServiceResult InsertarServicios(tbServicios item)
         {
             var result = new ServiceResult();

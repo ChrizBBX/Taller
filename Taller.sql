@@ -418,6 +418,7 @@ CREATE TABLE tllr.tbClientePorVehiculo(
     CONSTRAINT FK_tllr_acce_tbClientePorVehiculo_clvh_UserModificacion FOREIGN KEY (clvh_UserModificacion) REFERENCES acce.tbUsuarios (user_ID)
 );
 
+
 CREATE TABLE tllr.tbEmpleados(
 	empe_Id						INT IDENTITY(1,1),
 	empe_Nombres				NVARCHAR(100)	NOT NULL,
@@ -2037,6 +2038,7 @@ BEGIN
     END CATCH
 END
 
+
 --********************************************UDP /tbEstadosCiviles*********************************--
 --********************************************UDP /tbMetodosPago************************************--
 go
@@ -2100,5 +2102,73 @@ BEGIN
 END
 GO
 --********************************************UDP /tbMetodosPago************************************--
+--********************************************UDP Grafica*******************************************--
+CREATE OR ALTER VIEW tllr.VW_ServiciosMasSolicitados
+AS
+SELECT TOP 5
+    s.serv_Descripcion,
+    COUNT(*) AS CantidadServicios
+FROM tllr.tbServicios s
+INNER JOIN tllr.tbDetallesventas d ON s.serv_ID = d.serv_ID
+GROUP BY s.serv_ID, s.serv_Descripcion
+ORDER BY CantidadServicios DESC;
+GO
+
+CREATE OR ALTER PROCEDURE tllr.SP_GetServiciosMasSolicitados
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM tllr.VW_ServiciosMasSolicitados;
+END;
+GO
+
+CREATE OR ALTER VIEW tllr.vwClientesConMasVehiculos 
+AS
+SELECT TOP 5
+    c.clie_ID,
+    c.clie_Nombres,
+    COUNT(cv.vehi_ID) AS total_vehiculos
+FROM 
+    tllr.tbClienteS c
+    JOIN tllr.tbClientePorVehiculo cv ON c.clie_ID = cv.clie_ID
+GROUP BY 
+    c.clie_ID,
+    c.clie_Nombres
+ORDER BY 
+    total_vehiculos DESC;
+GO
+	
+CREATE OR ALTER PROCEDURE tllr.SP_GetClientesConMasVehiculos 
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM tllr.vwClientesConMasVehiculos;
+END;
+GO
+
+CREATE VIEW tllr.vwTopProveedores 
+AS
+SELECT 
+    p.prov_Nombre, 
+    COUNT(r.resp_ID) AS TotalRepuestos 
+FROM 
+    tllr.tbProveedores p 
+    INNER JOIN tllr.tbRepuestos r ON p.prov_ID = r.prov_ID 
+WHERE 
+    p.prov_Estado = 1 
+    AND r.resp_Estado = 1 
+GROUP BY 
+    p.prov_Nombre 
+HAVING 
+    COUNT(r.resp_ID) > 10;
+GO
+
+CREATE PROCEDURE tllr.uspGetTopProveedores
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM tllr.vwTopProveedores;
+END;
+--********************************************UDP Grafica*******************************************--
 
 

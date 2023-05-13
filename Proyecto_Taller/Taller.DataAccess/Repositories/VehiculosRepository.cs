@@ -38,6 +38,13 @@ namespace Taller.DataAccess.Repositories
             return result;
         }
 
+        public IEnumerable<vwClientesConMasVehiculos> ClientesConMasVehiculos()
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            return db.Query<vwClientesConMasVehiculos>(ScriptsDataBase.UDP_vehiculos_Grafica, null, commandType: CommandType.StoredProcedure);
+        }
+
         public IEnumerable<VW_tbVehiculos> List()
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);

@@ -51,6 +51,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_Vehiculos_Insert = "tllr.UDP_tbVehiculos_Insert";
         public static string UDP_Vehiculos_Update = "tllr.UDP_tbVehiculos_Update";
         public static string UDP_Vehiculos_Delete = "tllr.UDP_tbVehiculos_Delete";
+        public static string UDP_vehiculos_Grafica = "tllr.SP_GetClientesConMasVehiculos ";
         #endregion
 
         #region Sucursales
@@ -65,6 +66,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_Servicios_Insert = "tllr.UDP_tbServicios_Insert";
         public static string UDP_Servicios_Update = "tllr.UDP_tbServicios_Update";
         public static string UDP_Servicios_Delete = "tllr.UDP_tbServicios_Delete";
+        public static string UDP_servicios_MasSolicitados = "tllr.SP_GetServiciosMasSolicitados";
         #endregion
 
         #region Repuestos

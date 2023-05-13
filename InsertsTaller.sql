@@ -1385,7 +1385,6 @@ INSERT INTO ACCE.tbUsuarios([user_NombreUsuario],[user_Contrasena],[user_EsAdmin
 VALUES('elysH', @Pass, 0,4,5,1 );
 GO
 
-
 DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
 SET @Clave = 'axel'
 SET @Pass = CONVERT (NVARCHAR(MAX), HASHBYTES('sha2_512',@Clave),2)
@@ -1393,3 +1392,20 @@ SET @Pass = CONVERT (NVARCHAR(MAX), HASHBYTES('sha2_512',@Clave),2)
 INSERT INTO ACCE.tbUsuarios([user_NombreUsuario],[user_Contrasena],[user_EsAdmin],[role_ID],[empe_ID],[user_UserCreacion])
 VALUES('axel', @Pass, 0,5,2,1 );
 GO
+
+INSERT INTO [tllr].[tbClientePorVehiculo]([clie_ID],[vehi_ID],[clvh_UserCreacion])
+VALUES  (1,1,1),
+        (1,2,1),
+		(1,3,1),
+		(1,4,1),
+		(1,5,1),
+		(2,1,1),
+		(2,4,1),
+		(2,5,1),
+		(2,6,1),
+		(3,5,1),
+		(3,11,1),
+		(3,6,1),
+		(4,8,1),
+		(4,2,1),
+		(5,9,1)

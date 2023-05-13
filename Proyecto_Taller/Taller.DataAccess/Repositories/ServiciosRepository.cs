@@ -22,6 +22,13 @@ namespace Taller.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<VW_ServiciosMasSolicitados> ServiciosMasSolicitados()
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            return db.Query<VW_ServiciosMasSolicitados>(ScriptsDataBase.UDP_servicios_MasSolicitados, null, commandType: CommandType.StoredProcedure);
+        }
+
         public RequestStatus Insert(tbServicios item)
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);

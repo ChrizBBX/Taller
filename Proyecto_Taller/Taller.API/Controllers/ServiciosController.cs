@@ -31,6 +31,13 @@ namespace Taller.API.Controllers
             return Ok(listado);
         }
 
+        [HttpGet("ServiciosMasSolicitados")]
+        public IActionResult ServiciosMasSolicitados()
+        {
+            var listado = _tallerservices.ServiciosMasSolicitados();
+            return Ok(listado);
+        }
+
         [HttpPost("Insert")]
         public IActionResult Insert(ServiciosViewModel item)
         {

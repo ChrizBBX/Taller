@@ -126,11 +126,19 @@
          "ObjectType": 3
       },
       {
+         "Name": "[tllr].[VW_ServiciosMasSolicitados]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[tllr].[VW_tbClientes]",
          "ObjectType": 3
       },
       {
          "Name": "[tllr].[VW_tbCompras]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_tbDetallesventas]",
          "ObjectType": 3
       },
       {
@@ -167,6 +175,10 @@
       },
       {
          "Name": "[tllr].[VW_tbVentas]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[vwClientesConMasVehiculos]",
          "ObjectType": 3
       }
    ],
