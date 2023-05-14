@@ -23,15 +23,18 @@ import {Button, IconButton} from '@material-ui/core';
 import {Delete,Edit, Book,} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation  } from 'react-router-dom'
+import { set } from 'core-js/core/dict';
 
 function VentasEdit (){
     const navigate = useNavigate()
+    const location = useLocation();
+    const arregloRecibido = location.state?.ventas ?? "";
     const [facturaID, setFacturaID] = useState('0');
-    const [clieID,setClieID] = useState('')
-    const [metoID,setMetoID] = useState('')
-    const [vehiID,setVehiID] = useState('')
-    const [ventID,setVentID] = useState(null)
+    const [ventID,setVentID] = useState(arregloRecibido.vent_Id)
+    const [clieID,setClieID] = useState(arregloRecibido.clie_ID)
+    const [metoID,setMetoID] = useState(arregloRecibido.meto_ID)
+    const [vehiID,setVehiID] = useState(arregloRecibido.vehi_ID)
     const [respID,setRespID] = useState(null)
     const [servID,setServID] = useState(null)
     const [detalles,setDetalles] = useState([])
@@ -50,8 +53,9 @@ function VentasEdit (){
     const [sortModel, setSortModel] = useState([{ field: 'vent_Id', sort: 'asc' }]);
     const [disableFields, setDisableFields] = useState(false); // nuevo estado para deshabilitar los campos de selección
     const [tipo, setTipo] = useState(false)
-
     
+
+  
 
     const columns = [
         { field: 'descripcion', headerName: 'Servicio/Repuesto', flex:1 },
@@ -77,7 +81,6 @@ function VentasEdit (){
         axios
           .post('/DetallesVentas/Delete', payload)
           .then((response) => {
-            console.log(response)
             if (response.data.message == '1') {
               setActualizar(!Actualizar)
               toast.success('Registro Eliminado exitosamente');
@@ -89,15 +92,6 @@ function VentasEdit (){
       };
       
       useEffect( () => {
-        const VentaSeleccionada = JSON.parse(localStorage.getItem('VentaSeleccionada'));
-        if (VentaSeleccionada) {
-            console.log(VentaSeleccionada)
-          setVentID(VentaSeleccionada.vent_Id)
-          setClieID(VentaSeleccionada.clie_ID)
-          setVehiID(VentaSeleccionada.vehi_ID)
-          setMetoID(VentaSeleccionada.meto_ID)
-        }
-
 
           axios
             .get('/MetodosPagos')
@@ -109,36 +103,36 @@ function VentasEdit (){
               setMetodosPago(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
-            .get('/DetallesVentas/ByID?id=' + VentaSeleccionada.vent_Id)
-            .then((response) => {
-              const insertarid = response.data.map((row) => ({
-                ...row,
-                id: row.vent_ID,
-              }));
-              setDetalles2(insertarid);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
-            axios
-            .get(`DetallesVentas/Temp?id=${VentaSeleccionada.vent_Id}`)
+            .get('/DetallesVentas/ByID?id=' + ventID)
             .then((response) => {
               const insertarid = response.data.map((row) => ({
                 ...row,
                 id: row.deve_ID,
               }));
+              
+              setDetalles2(insertarid);
+            })
+            .catch((error) => {
+            });
 
+            axios
+            .get(`DetallesVentas/Temp?id=${ventID}`)
+            .then((response) => {
+              const insertarid = response.data.map((row) => ({
+                ...row,
+                id: row.deve_ID,
+              }));
+              console.log(response)
+              setVehiID(insertarid.vehi_ID)
               setDetalles(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
-      
+            
+
             axios
             .get('/Servicios')
             .then((response) => {
@@ -149,7 +143,6 @@ function VentasEdit (){
               setServicios(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -162,7 +155,6 @@ function VentasEdit (){
               setClientes(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -175,7 +167,6 @@ function VentasEdit (){
               setRepuestos(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
             axios
@@ -188,16 +179,20 @@ function VentasEdit (){
               setVehiculos(insertarid);
             })
             .catch((error) => {
-              console.log(error);
             });
       
-        }, [Actualizar]);
+        },[Actualizar]);
       
         const handleSortModelChange = (model) => {
           setSortModel(model);
         };
     
         const CreateAction2 = (event) => {
+          console.log("ID de venta enviado: " + ventID)
+          console.log("Vehiculo enviado : " + vehiID)
+          console.log("Servicio ID : " + servID)
+          console.log("Repuesto ID : " + respID)
+          console.log("Cantidad Enviada : " + cantidad)
           setValidated(true)
           setValidated2(true)
           if(tipo){
@@ -222,7 +217,6 @@ function VentasEdit (){
                 .post('DetallesVentas/Insert', payload)
                 .then((response) => {
                   setIsSubmitting(false)
-                  console.log(response)
                   if (response.data.message === '1') {
                     toast.success('Agregado exitosamente')
                       setActualizar(!Actualizar)
@@ -231,7 +225,6 @@ function VentasEdit (){
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
                   setActualizar(!Actualizar)
                     toast.error('ha ocurrido un error');
                 })
@@ -251,7 +244,7 @@ function VentasEdit (){
               setValidated2(true) 
               event.preventDefault()
               let payload = {
-                vent_ID: facturaID,
+                vent_ID: ventID,
                 vehi_ID: vehiID,
                 serv_ID: servID,
                 resp_ID: respID,
@@ -268,8 +261,6 @@ function VentasEdit (){
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
-                  console.log(servID)
                   setActualizar(!Actualizar)
                     toast.error('ha ocurrido un error');
                 })
@@ -296,21 +287,21 @@ function VentasEdit (){
   >
     <CCol>
                     <h5>Cliente</h5>
-             <CFormSelect value={clieID} onChange={(event) => setClieID(event.target.value)} className='mb-2' required id='selectClieID' disabled >
+             <CFormSelect value={clieID} onChange={(event) => setClieID(event.target.value)} className='mb-2' required disabled >
              <option value="" hidden>--Seleccione un cliente--</option>
         {clientes.map((cliente) => (
           <option key={cliente.clie_ID} value={cliente.clie_ID}>{cliente.clie_Nombres}</option>
         ))}
       </CFormSelect>
       <h5>Metodo de Pago</h5>
-             <CFormSelect value={metoID} onChange={(event) => setMetoID(event.target.value)} className='mb-2' required id='selectMetoID' disabled >
+             <CFormSelect value={metoID} onChange={(event) => setMetoID(event.target.value)} className='mb-2' required disabled >
              <option value="" hidden>--Seleccione un metodo de pago--</option>
         {metodosPago.map((metodosPagos) => (
           <option key={metodosPagos.meto_ID} value={metodosPagos.meto_ID}>{metodosPagos.meto_Nombre}</option>
         ))}
       </CFormSelect>
       <h5>Vehiculo</h5>
-             <CFormSelect value={vehiID} onChange={(event) => setVehiID(event.target.value)} className='mb-2' required id='selectVehiID' disabled >
+             <CFormSelect value={vehiID} onChange={(event) => setVehiID(event.target.value)} className='mb-2' required disabled >
              <option value="" hidden>--Seleccione el vehiculo--</option>
         {vehiculos.map((vehiculo) => (
           <option key={vehiculo.vehi_ID} value={vehiculo.vehi_ID}>{vehiculo.modelo_Matricula}</option>
@@ -347,7 +338,7 @@ function VentasEdit (){
 </div>
 </div>
                     <h5 hidden={tipo ? true : false}>Servicio</h5>
-             <CFormSelect value={servID != null ? servID : "" } onChange={(event) => setServID(event.target.value)} className='mb-2' required={tipo ? false :  true} id='selectClieID' hidden={tipo ? true : false}>
+             <CFormSelect value={servID != null ? servID : "" } onChange={(event) => setServID(event.target.value)} className='mb-2' required={tipo ? false :  true} hidden={tipo ? true : false}>
              <option value={''} hidden>--Seleccione un servicio--</option>
         {servicios.map((servicio) => (
           <option key={servicio.serv_ID} value={servicio.serv_ID}>{servicio.serv_Descripcion}</option>
@@ -355,7 +346,7 @@ function VentasEdit (){
       </CFormSelect>
 
       <h5 hidden={tipo ? false : true}>Repuesto</h5>
-             <CFormSelect value={respID != null ? respID : ""} onChange={(event) => setRespID(event.target.value)} className='mb-2' required={tipo ? true :  false} id='selectClieID' hidden={tipo ? false : true}>
+             <CFormSelect value={respID != null ? respID : ""} onChange={(event) => setRespID(event.target.value)} className='mb-2' required={tipo ? true :  false} hidden={tipo ? false : true}>
              <option value={''} hidden>--Seleccione un repuesto--</option>
         {repuestos.map((repuesto) => (
           <option key={repuesto.resp_ID} value={repuesto.resp_ID}>{repuesto.resp_Descripcion}</option>

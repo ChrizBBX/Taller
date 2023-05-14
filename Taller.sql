@@ -1333,7 +1333,8 @@ ON vent.vent_UserCreacion = user1.user_ID  LEFT JOIN acce.tbUsuarios [user2]
 ON vent.vent_UserModificacion = user2.user_ID INNER JOIN tllr.tbClientes clie
 ON vent.clie_ID = clie.clie_ID INNER JOIN tllr.tbSucursales sucu
 ON vent.sucu_ID = sucu.sucu_ID INNER JOIN gral.tbMetodosPago meto
-ON vent.meto_ID = meto.meto_ID
+ON vent.meto_ID = meto.meto_ID INNER JOIN tllr.tbVehiculos vehi
+ON vehi.vehi_ID = 
 
 /*Ventas View UDP*/
 GO
