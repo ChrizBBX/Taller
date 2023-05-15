@@ -1,63 +1,99 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
   cilSpeedometer,
-  cilStar,
+  cilLockLocked,
+  cilSettings,
+  cilCarAlt
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle,CNav } from '@coreui/react'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
-const token = JSON.parse(localStorage.getItem('token'));
-const pantallas = JSON.parse(localStorage.getItem('pantallas'));
+const token = JSON.parse(localStorage.getItem('token'))
+const pantallas = JSON.parse(localStorage.getItem('pantallas'))
 
-const menu = [];
+const menu = []
 
 if (pantallas) {
+  console.log(pantallas)
 
-  const categorias = {};
+  const tllr = []
+  const acce = []
+  const gral = []
 
-  pantallas.forEach((element) => {
-    const { pant_Menu: menu, pant_Nombre: name, pant_Url: to } = element;
-
-    if (!categorias[menu]) {
-      categorias[menu] = {
-        title: menu,
-        items: [],
-      };
+  pantallas.forEach(element => {
+    if (element.pant_Menu === 'Taller') {
+      tllr.push({
+        component: CNavItem,
+        name: element.pant_Nombre,
+        to: element.pant_Url,
+      })
+    } else if (element.pant_Menu === 'Acceso') {
+      acce.push({
+        component: CNavItem,
+        name: element.pant_Nombre,
+        to: element.pant_Url,
+      })
+    } else if (element.pant_Menu === 'General') {
+      gral.push({
+        component: CNavItem,
+        name: element.pant_Nombre,
+        to: element.pant_Url,
+      })
     }
+  })
 
-    categorias[menu].items.push({
-      component: CNavItem,
-      name,
-      to,
-    });
-  });
-
-  Object.values(categorias).forEach(({ title, items }) => {
-    if (items.length > 0) {
-      menu.push({
+  /* Taller */
+  if (tllr.length !== 0) {
+    menu.push(
+      {
         component: CNavTitle,
-        name: title,
-      });
-
-      menu.push({
+        name: 'Taller',
+      },
+      {
         component: CNavGroup,
-        name: title,
-        to: `/${title}`,
+        name: 'Taller',
+        to: '/Taller',
+        icon: <CIcon icon={cilCarAlt} customClassName="nav-icon" />,
+        items: tllr
+      }
+    )
+  }
+
+  /* Acceso */
+  if (acce.length !== 0) {
+    menu.push(
+      {
+        component: CNavTitle,
+        name: 'Acceso',
+      },
+      {
+        component: CNavGroup,
+        name: 'Acceso',
+        to: '/Acceso',
+        icon: <CIcon icon={cilLockLocked} customClassName="nav-icon" />,
+        items: acce
+      }
+    )
+  }
+
+  /* General */
+  if (gral.length !== 0) {
+    menu.push(
+      {
+        component: CNavTitle,
+        name: 'General',
+      },
+      {
+        component: CNavGroup,
+        name: 'General',
+        to: '/General',
         icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-        items,
-      });
-    }
-  });
+        items: gral
+      }
+    )
+  }
+} else {
+  console.log(pantallas)
 }
 
-export default menu;
+export default menu

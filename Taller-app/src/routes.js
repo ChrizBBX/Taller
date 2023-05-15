@@ -19,6 +19,7 @@ const RepuestosEdit = React.lazy(() => import('./views/custom/repuestos/Repuesto
 const RepuestosDetails = React.lazy(() => import('./views/custom/repuestos/RepuestosDetails'))
 const Servicios = React.lazy(() => import('./views/custom/servicios/Servicios'))
 const serviciosDetails = React.lazy(() => import('./views/custom/servicios/ServicioDetails'))
+const Recover = React.lazy(() => import('./views/pages/login/recover'))
 
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 const VentasCreate = React.lazy(() => import('./views/custom/ventas/VentasCreate'))
@@ -97,6 +98,7 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/Recover', name: 'Recover', element: Recover },
   { path: '/marcas', name: 'Marcas', element: Marcas },
   { path: '/marcasDetails', name: 'MarcasDetails', element: MarcasDetails },
   { path: '/modelos', name: 'Modelos', element: Modelos },

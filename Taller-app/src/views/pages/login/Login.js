@@ -122,8 +122,8 @@ const Login = () => {
                       </CButton>
                     </CCol>
                     <CCol xs={6} className="text-right">
-                      <CButton color="link" className="px-0" type="submit">
-                        Olvidaste tu contraseña?
+                      <CButton color="link" className="px-0" onClick={() => {navigate('/Register'); localStorage.setItem("token", "24")}}>
+                        Olvidaste tu contraseña?  
                       </CButton>
                     </CCol>
                   </CRow>

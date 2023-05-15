@@ -32,6 +32,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbUsuarios_Insert = "acce.UDP_tbUsuarios_Insert";
         public static string UDP_tbUsuarios_Update = "acce.UDP_Usuarios_Update";
         public static string UDP_tbUsuarios_Delete = "acce.UDP_tbUsuarios_Delete";
+        public static string UDP_tbUsuarios_Recover = "acce.UDP_tbUsuarios_Recover";
         #endregion
 
         #region Ventas

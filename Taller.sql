@@ -2120,3 +2120,27 @@ BEGIN
 END
 
 
+/*User Recover*/
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Recover
+@user_NombreUsuario NVARCHAR(100),
+@user_Contrasena NVARCHAR(MAX)
+AS
+BEGIN
+BEGIN TRY
+DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena);
+IF EXISTS(SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
+	BEGIN
+	UPDATE acce.tbUsuarios
+SET user_Contrasena = @contraEncriptada
+SELECT '1'
+	END
+	ELSE
+	SELECT '2'
+END TRY
+BEGIN CATCH
+SELECT '0'
+END CATCH
+END
+
+

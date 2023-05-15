@@ -10,8 +10,9 @@ const DefaultLayout = () => {
   useEffect(() => {
     try{
       const token = JSON.parse(localStorage.getItem('token'));  
-      navigate('/home')
-      if(token != null){
+    
+      if(token != null && token != "24"){
+        navigate('/home')
       }else{
         navigate('/')
       }
