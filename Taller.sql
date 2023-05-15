@@ -504,7 +504,7 @@ BEGIN
 
 	DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @user_Contrasena);
 
-	SELECT [user_Id], [user_NombreUsuario], [role_Id],empe.sucu_Id
+	SELECT [user_Id], [user_NombreUsuario], [role_Id],empe.sucu_Id,user_EsAdmin
 	FROM [acce].[tbUsuarios] [user] INNER JOIN tllr.tbEmpleados empe
 	ON [user].empe_ID = empe.empe_Id
 	WHERE [user_Contrasena] = @contraEncriptada
@@ -1592,7 +1592,7 @@ END
 GO
 CREATE OR ALTER VIEW acce.VW_tbPantallasPorRoles
 AS
-SELECT [pantrole_ID], [role_ID], pantrole.[pant_ID],pant.pant_Nombre, [pantrole_UserCreacion], 
+SELECT [pantrole_ID], [role_ID], pantrole.[pant_ID],pant.pant_Nombre,pant_Url,[pant_Menu],[pant_HtmlID] ,[pantrole_UserCreacion], 
 [pantrole_FechaCreacion], [pantrole_UserModificacion],
 [pantrole_FechaModificacion], [pantrole_Estado]
 FROM [acce].[tbPantallasPorRoles] pantrole INNER JOIN acce.tbPantallas pant
@@ -2101,5 +2101,22 @@ BEGIN
 END
 GO
 --********************************************UDP /tbMetodosPago************************************--
+GO 
+CREATE OR ALTER PROCEDURE acce.tbRolesPorPantallaMenu
+	@role_ID	INT,
+	@esAdmin	BIT
+AS
+BEGIN
+	IF @esAdmin = 1
+		BEGIN
+			SELECT DISTINCT pant_Id, pant_Nombre, pant_Url, pant_Menu, pant_HtmlId, @role_Id AS role_Id, @esAdmin AS esAdmin
+			FROM [acce].[tbPantallas] 
+		END
+	ELSE
+		SELECT DISTINCT T1.pant_Id, pant_Nombre, pant_Url, pant_Menu, pant_HtmlId, @role_Id AS role_Id, @esAdmin AS esAdmin
+		FROM [acce].[tbPantallas] T1 INNER JOIN [acce].[tbPantallasPorRoles] T2
+		ON T1.pant_Id = T2.pant_Id
+		WHERE role_Id = @role_Id
+END
 
 

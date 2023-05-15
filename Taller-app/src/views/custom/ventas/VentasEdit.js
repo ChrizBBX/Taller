@@ -24,7 +24,6 @@ import {Delete,Edit, Book,} from '@material-ui/icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate, useLocation  } from 'react-router-dom'
-import { set } from 'core-js/core/dict';
 
 function VentasEdit (){
     const navigate = useNavigate()
@@ -35,8 +34,8 @@ function VentasEdit (){
     const [clieID,setClieID] = useState(arregloRecibido.clie_ID)
     const [metoID,setMetoID] = useState(arregloRecibido.meto_ID)
     const [vehiID,setVehiID] = useState(arregloRecibido.vehi_ID)
-    const [respID,setRespID] = useState(null)
-    const [servID,setServID] = useState(null)
+    const [respID,setRespID] = useState('')
+    const [servID,setServID] = useState('')
     const [detalles,setDetalles] = useState([])
     const [detalles2,setDetalles2] = useState([])
     const [cantidad,setCantidad] = useState(1)
@@ -53,10 +52,7 @@ function VentasEdit (){
     const [sortModel, setSortModel] = useState([{ field: 'vent_Id', sort: 'asc' }]);
     const [disableFields, setDisableFields] = useState(false); // nuevo estado para deshabilitar los campos de selección
     const [tipo, setTipo] = useState(false)
-    
-
   
-
     const columns = [
         { field: 'descripcion', headerName: 'Servicio/Repuesto', flex:1 },
         { field: 'deve_Cantidad', headerName: 'Cantidad', flex: 1},
@@ -125,8 +121,8 @@ function VentasEdit (){
                 ...row,
                 id: row.deve_ID,
               }));
-              console.log(response)
-              setVehiID(insertarid.vehi_ID)
+              console.log(response.data[0].vehi_ID)
+              setVehiID(response.data[0].vehi_ID)
               setDetalles(insertarid);
             })
             .catch((error) => {
@@ -196,7 +192,7 @@ function VentasEdit (){
           setValidated(true)
           setValidated2(true)
           if(tipo){
-            if(respID != null ){
+            if(respID != ""){
              if(cantidad > 0){
               const form = event.currentTarget
               if (form.checkValidity() === false) {
@@ -235,7 +231,7 @@ function VentasEdit (){
               toast.error('Ingrese un repuesto')
             }
           }else{
-            if(servID != null){
+            if(servID != ""){
               const form = event.currentTarget
               if (form.checkValidity() === false) {
                 event.preventDefault()
@@ -269,7 +265,6 @@ function VentasEdit (){
             }
           }
         }
-      
 
     return(
          <div className='card'>
@@ -331,10 +326,10 @@ function VentasEdit (){
     <CCol>
 <div className='row'>
 <div className='form-group col-6'>
-<CButton color={tipo ? 'secondary' : 'info'} variant='outline' style={{width: '100%'}} onClick={() => {setTipo(false); setRespID(null); setServID(null); setCantidad(1); setValidated(false)}}>Servicio</CButton>  
+<CButton color={tipo ? 'secondary' : 'info'} variant='outline' style={{width: '100%'}} onClick={() => {setTipo(false); setRespID(null); setServID(null); setCantidad(1); setValidated(false);}}>Servicio</CButton>  
 </div>
 <div className='form-group col-6'>  
-<CButton color={tipo ? 'info' : 'secondary'} variant='outline' style={{width: '100%'}} onClick={() => {setTipo(true); setServID(null); setRespID(null); setCantidad(1); setValidated2(false)}}>Repuesto</CButton>
+<CButton color={tipo ? 'info' : 'secondary'} variant='outline' style={{width: '100%'}} onClick={() => {setTipo(true); setServID(null); setRespID(null); setCantidad(1); setValidated2(false);}}>Repuesto</CButton>
 </div>
 </div>
                     <h5 hidden={tipo ? true : false}>Servicio</h5>

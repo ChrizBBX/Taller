@@ -12,6 +12,9 @@ namespace Taller.Entities.Entities
         public int role_ID { get; set; }
         public int pant_ID { get; set; }
         public string pant_Nombre { get; set; }
+        public string pant_Url { get; set; }
+        public string pant_Menu { get; set; }
+        public string pant_HtmlID { get; set; }
         public int pantrole_UserCreacion { get; set; }
         public DateTime pantrole_FechaCreacion { get; set; }
         public int? pantrole_UserModificacion { get; set; }

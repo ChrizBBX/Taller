@@ -22,6 +22,7 @@ const serviciosDetails = React.lazy(() => import('./views/custom/servicios/Servi
 
 const Ventas = React.lazy(() => import('./views/custom/ventas/Ventas'))
 const VentasCreate = React.lazy(() => import('./views/custom/ventas/VentasCreate'))
+const VentasDetails = React.lazy(() => import('./views/custom/ventas/VentasDetails'))
 const VentasEdit = React.lazy(() => import('./views/custom/ventas/VentasEdit'))
 const Empleados = React.lazy(() => import('./views/custom/Empleados/Empleados'))
 const RegistrarEmpleados = React.lazy(() => import('./views/custom/Empleados/RegistrarEmpleados'))
@@ -44,6 +45,8 @@ const EditEmpleados = React.lazy(() => import('./views/custom/Empleados/EditEmpl
 const DetailsEmpleados = React.lazy(() => import('./views/custom/Empleados/DetailsEmpleados'))
 
 const Roles = React.lazy(() => import('./views/custom/roles/Roles'))
+const RolesCreate = React.lazy(() => import('./views/custom/roles/RolesCreate'))
+const RolesEdit = React.lazy(() => import('./views/custom/roles/RolesEdit'))
 const RolesDetails = React.lazy(() => import('./views/custom/roles/RolesDetails'))
 
 // Base
@@ -98,6 +101,8 @@ const routes = [
   { path: '/marcasDetails', name: 'MarcasDetails', element: MarcasDetails },
   { path: '/modelos', name: 'Modelos', element: Modelos },
   { path: '/roles', name: 'Roles', element: Roles },
+  { path: '/rolesCreate', name: 'RolesCreate', element: RolesCreate },
+  { path: '/rolesEdit', name: 'RolesEdit', element: RolesEdit },
   { path: '/rolDetails', name: 'RolDetails', element: RolesDetails },
   { path: '/modelosDetails', name: 'Modelos', element: ModelosDetails },
   { path: '/sucursales', name: 'Sucursales', element: Sucursales },
@@ -114,6 +119,7 @@ const routes = [
   { path: '/ventas', name: 'Ventas', element: Ventas },    
   { path: '/ventasCreate', name: 'VentasCreate', element: VentasCreate },    
   { path: '/ventasEdit', name: 'VentasEdit', element: VentasEdit },    
+  { path: '/ventasDetails', name: 'VentasDetails', element: VentasDetails },    
   { path: '/Empleados', name: 'Empleados', element: Empleados },
   { path: '/DetailsEmpleados', name: 'DetailsEmpleados', element: DetailsEmpleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },

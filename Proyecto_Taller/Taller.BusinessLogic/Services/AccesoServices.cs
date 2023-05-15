@@ -282,6 +282,19 @@ namespace Taller.BusinessLogic.Services
             }
         }
 
+
+        public IEnumerable<VW_tbPantallasPorRoles> menu(int id, bool esadmin)
+        {
+            try
+            {
+                return _rolesporpantallarepository.Menu(id, esadmin);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<VW_tbPantallasPorRoles>();
+            }
+        }
+
         public ServiceResult EliminarRolesXPantalla(tbPantallasPorRoles item)
         {
             var result = new ServiceResult();

@@ -49,21 +49,31 @@ function Ventas() {
     navigate('/ventasEdit',{ state: { ventas: venta } })
   };
 
+  const handleDetailsClick = (params) => {
+    const venta = ventas.find((venta) => venta.vent_ID === params.vent_ID); // Busca la marca seleccionada
+    navigate('/ventasDetails',{ state: { ventas: venta } })
+  };
+
+
   const handleSortModelChange = (model) => {
     setSortModel(model);
   };
 
   const columns = [
-    { field: 'vent_Id', headerName: 'ID', width: 100 },
+    { field: 'vent_Id', headerName: 'ID', flex: 1 },
+    { field: 'clie_Nombres', headerName: 'Cliente', flex: 1 },
+    { field: 'meto_Nombre', headerName: 'Metodo de pago', flex: 1 },
+    { field: 'sucu_Descripcion', headerName: 'Sucursal',flex: 1 },
+    { field: 'vent_FechaCreacion', headerName: 'Fecha',flex: 1 },
     {
       field: 'acciones',
       headerName: 'Acciones',
       width: 300,
       renderCell: (params) => (
         <div>
-              <CButton color='danger' variant='outline' className='m-3'><Delete/></CButton>
+              <CButton color='danger' variant='outline' className='m-3' onClick={() => toast.warning('No se puede eliminar una venta')}><Delete/></CButton>
               <CButton color='warning' variant='outline' className='m-3' onClick={() => handleEditClick(params.row)}><Edit/></CButton>
-              <CButton color='info' variant='outline' className='m-3'><Book/></CButton>
+              <CButton color='info' variant='outline' className='m-3' onClick={() => handleDetailsClick(params.row)}><Book/></CButton>
         </div>
       ),
     },

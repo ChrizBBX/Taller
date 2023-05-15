@@ -47,15 +47,10 @@ function Roles (){
       const handleSortModelChange = (model) => {
         setSortModel(model);
       };
-      
-   
 
       const handleEditClick = (params) => {
         const rol = roles.find((rol) => rol.role_ID === params.role_ID); // Busca la marca seleccionada
-        setVisible2(true);
-        setRoleNombre(rol.role_Nombre)
-        setRoleID(rol.role_ID)
-        setValidated(false)
+        navigate('/rolesEdit',{ state: { roles: rol } })
       };
 
       const handleDeleteClick = (params) => {
@@ -322,7 +317,7 @@ function Roles (){
             <div className="card">
             <div className="card-body">
             <h1>Roles</h1>
-            <CButton onClick={() => {setVisible(!visible); setValidated(false); setRoleNombre(''); setPantallaSeleccionada([])}}>Nuevo</CButton>
+            <CButton onClick={() => {navigate('/RolesCreate')}}>Nuevo</CButton>
             <div className='container' style={{ height: 10 }}></div>
             <DataGrid
             rows={roles}
