@@ -22,6 +22,7 @@ const pantallas = JSON.parse(localStorage.getItem('pantallas'));
 const menu = [];
 
 if (pantallas) {
+
   const categorias = {};
 
   pantallas.forEach((element) => {

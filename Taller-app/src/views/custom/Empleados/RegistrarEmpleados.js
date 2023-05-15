@@ -143,15 +143,8 @@ const CreateEmpleado = () => {
           validated={validated}
           onSubmit={CreateAction}
         >
-          <CCol>
-            <h6>Identidad</h6>
-            <CFormInput
-              type="text"
-              id="validationCustom01"
-              required
-              value={dni}
-              onChange={(e) => { setDni(e.target.value) }}
-            />
+          <CRow>
+            <div className='form-group col-6 mt-3'></div>
             <h6>Nombre Empleado</h6>
             <CFormInput
               type="text"
@@ -160,43 +153,44 @@ const CreateEmpleado = () => {
               value={nombre}
               onChange={(e) => { setNombre(e.target.value) }}
             />
-            <h6>Apellido Empleado</h6>
-            <CFormInput
-              type="text"
-              id="validationCustom01"
-              required
-              value={apellido}
-              onChange={(e) => { setApellido(e.target.value) }}
-            />
-            <h6>Estados Civil</h6>
+     <div className='form-group col-6  mt-3'>
+     <h6>Estados Civil</h6>
             <CFormSelect value={estadoCivil} onChange={(event) => setEstadoCivil(event.target.value)} className='mb-2' required>
               <option value="" hidden>--Seleccione una opcion--</option>
               {estadosCiviles.map((estadocivil) => (
                 <option key={estadocivil.estacivi_ID} value={estadocivil.estacivi_ID}>{estadocivil.estacivi_Nombre}</option>
               ))}
             </CFormSelect>
-            <h6>Departamento</h6>
+     </div>
+      <div className='form-group col-6 mt-3'>
+      <h6>Departamento</h6>
             <CFormSelect value={selectedDepartamento} onChange={(event) => setSelectedDepartamento(event.target.value)} className='mb-2' required>
               <option value="" hidden>--Seleccione una opcion--</option>
               {departamentos.map((departamento) => (
                 <option key={departamento.depa_ID} value={departamento.depa_ID}>{departamento.depa_Nombre}</option>
               ))}
             </CFormSelect>
-            <h6>Municipio</h6>
+      </div>
+    <div className='form-group col-6 mt-3'>
+    <h6>Municipio</h6>
             <CFormSelect value={municipio} onChange={(event) => setMunicipio(event.target.value)} required>
               <option value="" hidden>{selectedDepartamento != '' ? '--Seleccione un municipio--' : 'Seleccione un departamento'}</option>
               {municipios.map(municipio => (
                 <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
               ))}
             </CFormSelect>
-            <h6>Sucursal</h6>
+    </div>
+ <div className='form-group col-6 mt-3'>
+ <h6>Sucursal</h6>
             <CFormSelect value={sucursal} onChange={(event) => setSucursal(event.target.value)} className='mb-2' required>
               <option value="" hidden>--Seleccione una opcion--</option>
               {sucursales.map((sucursal) => (
                 <option key={sucursal.sucu_ID} value={sucursal.sucu_ID}>{sucursal.sucu_Descripcion}</option>
               ))}
             </CFormSelect>
-            <label htmlFor="Sexo">Sexo</label>
+ </div>
+      <div className='form-group col-6 mt-3'>
+      <label htmlFor="Sexo">Sexo</label>
             <div className="grid">
               <div className="col-12 md:col-4">
                 <div className="field-radiobutton">
@@ -227,7 +221,9 @@ const CreateEmpleado = () => {
                 </div>
               </div>
             </div>
-            <CFormInput
+      </div>
+         <div className='form-group col-6 mt-3'>
+         <CFormInput
               type="date"
               value={FechaNac}
               onChange={(e) => setFechaNac(e.target.value)}
@@ -235,7 +231,10 @@ const CreateEmpleado = () => {
               label="Fecha de Nacimiento"
               required
             />
-            <h6>Direccion Exacta</h6>
+         </div>
+
+         <div className='form-group col-6 mt-3'>
+         <h6>Direccion Exacta</h6>
             <CFormInput
               type="text"
               id="validationCustom01"
@@ -243,6 +242,8 @@ const CreateEmpleado = () => {
               value={direccion}
               onChange={(e) => { setDirreccion(e.target.value) }}
             />
+         </div>
+            <div className='form-group col-6 mt-3'>
             <h6>Correo</h6>
             <CFormInput
               type="email"
@@ -251,7 +252,10 @@ const CreateEmpleado = () => {
               value={correoElectronico}
               onChange={(e) => { setCorreoElectronico(e.target.value) }}
             />
-            <h6>Telefono</h6>
+            </div>
+            
+       <div className='form-group col-6 mt-3'>
+       <h6>Telefono</h6>
             <CFormInput
               type="number"
               id="validationCustom01"
@@ -259,7 +263,9 @@ const CreateEmpleado = () => {
               value={telefono}
               onChange={(e) => { setTelefono(e.target.value) }}
             />
-          </CCol>
+       </div>
+      
+          </CRow>
           <CRow className='mt-3 mb-3'>
             <CCol className='col-2'>
               <CButton color="secondary" onClick={() => navigate('/Empleados')}>

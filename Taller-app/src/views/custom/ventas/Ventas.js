@@ -28,7 +28,6 @@ function Ventas() {
   const navigate = useNavigate()
   const [ventas, setVentas] = useState([]);
   const [sortModel, setSortModel] = useState([{ field: 'vent_Id', sort: 'asc' }]);
-
   useEffect(() => {
     axios
       .get('/Ventas')

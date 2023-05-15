@@ -65,7 +65,7 @@ const Login = () => {
           .catch(error => {
             console.error('Error fetching data from API:', error);
           });
-           navigate('/home')
+    navigate('/ventas')
         }else{
           console.log("Login faliido")
           if(password == '' || UserName == ''){
