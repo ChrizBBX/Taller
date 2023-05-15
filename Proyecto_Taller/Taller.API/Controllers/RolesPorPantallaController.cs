@@ -43,9 +43,16 @@ namespace Taller.API.Controllers
         }
 
         [HttpGet("RolesPorPantallaByRoleID/{id}")]
-        public IActionResult ListarMunicipiosPorDepto(int id)
+        public IActionResult ListadoRolesPorPantallaByRoleID(int id)
         {
             var list = _accesoservice.ListadoRolesPorPantallaByRoleID(id);
+            return Ok(list);
+        }
+
+        [HttpGet("Menu/{id}/{esadmin}")]
+        public IActionResult Menu(int id, bool esadmin)
+        {
+            var list = _accesoservice.menu(id, esadmin);
             return Ok(list);
         }
     }

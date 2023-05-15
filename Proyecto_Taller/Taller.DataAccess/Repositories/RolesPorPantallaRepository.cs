@@ -58,6 +58,15 @@ namespace Taller.DataAccess.Repositories
             return db.Query<VW_tbPantallasPorRoles>(ScriptsDataBase.UDP_tbPantallaPorRoles_SelectByRoleID, parameters, commandType: CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbPantallasPorRoles> Menu(int id,bool esadmin)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@role_ID", id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("@esAdmin", esadmin, DbType.Int32, ParameterDirection.Input);
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            return db.Query<VW_tbPantallasPorRoles>(ScriptsDataBase.UDP_tbPantallaPorRoles_Menu, parameters, commandType: CommandType.StoredProcedure);
+        }
+
         public RequestStatus Update(tbPantallasPorRoles item)
         {
             throw new NotImplementedException();

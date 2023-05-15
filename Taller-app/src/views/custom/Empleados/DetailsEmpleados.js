@@ -33,7 +33,8 @@ function EmpleadosDetails() {
     const [EmpleadoSeleccionado, setEmpleado] = useState([]);
  
     useEffect(() => {
-        setEmpleado(JSON.parse(localStorage.getItem('EmpleadoSeleccionado')));   
+        const token = (JSON.parse(localStorage.getItem('token')));   
+        console.log(token)
     }, []);
 
     const handleSortModelChange = (model) => {

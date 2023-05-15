@@ -111,8 +111,9 @@ import {
             validated={validated}
             onSubmit={CreateAction}
           >
-            <CCol>             
-              <h6>Nombre Cliente</h6>
+            <CRow>             
+            <div className='col-6 mt-3'>
+            <h6>Nombre Cliente</h6>
               <CFormInput
                 type="text"
                 id="validationCustom01"
@@ -120,7 +121,9 @@ import {
                 value={nombre}
                 onChange={(e) => { setNombre(e.target.value) }}
               />
-              <h6>Apellido Cliente</h6>
+            </div>
+        <div className='col-6 mt-3'>
+        <h6>Apellido Cliente</h6>
               <CFormInput
                 type="text"
                 id="validationCustom01"
@@ -128,13 +131,17 @@ import {
                 value={apellido}
                 onChange={(e) => { setApellido(e.target.value) }}
               />
-              <h6>Departamento</h6>
+        </div>
+        <div className='col-6 mt-3'>
+        <h6>Departamento</h6>
               <CFormSelect value={selectedDepartamento} onChange={(event) => setSelectedDepartamento(event.target.value)} className='mb-2' required>
                 <option value="" hidden>--Seleccione una opcion--</option>
                 {departamentos.map((departamento) => (
                   <option key={departamento.depa_ID} value={departamento.depa_ID}>{departamento.depa_Nombre}</option>
                 ))}
               </CFormSelect>
+        </div>
+              <div className='col-6 mt-3'>
               <h6>Municipio</h6>
               <CFormSelect value={municipio} onChange={(event) => setMunicipio(event.target.value)} required>
                 <option value="" hidden>{selectedDepartamento != '' ? '--Seleccione un municipio--' : 'Seleccione un departamento'}</option>
@@ -142,6 +149,9 @@ import {
                   <option key={municipio.muni_ID} value={municipio.muni_ID}>{municipio.muni_Nombre}</option>
                 ))}
               </CFormSelect>
+              </div>
+              
+              <div className='col-6 mt-3'>
               <label htmlFor="Sexo">Sexo</label>
               <div className="grid">
                 <div className="col-12 md:col-4">
@@ -173,6 +183,9 @@ import {
                   </div>
                 </div>
               </div>
+              </div>
+
+              <div className='col-6 mt-3'>
               <CFormInput
                 type="date"
                 value={FechaNac}
@@ -180,8 +193,10 @@ import {
                 id="validationCustom01"
                 label="Fecha de Nacimiento"
                 required
-              />           
-              <h6>Correo</h6>
+              />       </div>    
+              
+         <div className='col-6 mt-3'>
+         <h6>Correo</h6>
               <CFormInput
                 type="email"
                 id="validationCustom01"
@@ -189,7 +204,9 @@ import {
                 value={correoElectronico}
                 onChange={(e) => { setCorreoElectronico(e.target.value) }}
               />
-              <h6>Telefono</h6>
+         </div>
+             <div className='col-6 mt-3'>
+             <h6>Telefono</h6>
               <CFormInput
                 type="number"
                 id="validationCustom01"
@@ -197,18 +214,18 @@ import {
                 value={telefono}
                 onChange={(e) => { setTelefono(e.target.value) }}
               />
-            </CCol>
-            <CRow className='mt-3 mb-3'>
-              <CCol className='col-2'>
+             </div>
+            </CRow>
+            <CRow className='mt-3'>
+                  <div style={{display: 'inline-block'}}>
+                  <CButton color="primary" type="submit" style={{marginRight: 20}}>
+                  Guardar
+                </CButton>
                 <CButton color="secondary" onClick={() => navigate('/Clientes')}>
                   Regresar
                 </CButton>
-              </CCol>
-              <CCol className='col-1'>
-                <CButton color="primary" type="submit">
-                  Guardar
-                </CButton>
-              </CCol>
+                  </div>
+            
             </CRow>
           </CForm>
         </div>

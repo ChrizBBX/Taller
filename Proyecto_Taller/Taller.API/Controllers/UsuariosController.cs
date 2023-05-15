@@ -46,6 +46,13 @@ namespace Taller.API
             return Ok(listado);
         }
 
+        [HttpPost("Recover")]
+        public IActionResult Recover(UsuariosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbUsuarios>(item);
+            var listado = _accesoservice.RecoverUsuario(listadoMapeado);
+            return Ok(listado);
+        }
         [HttpPost("Update")]
         public IActionResult Update(UsuariosViewModel item)
         {

@@ -38,6 +38,20 @@ namespace Taller.DataAccess.Repositories
             return result;
         }
 
+        public RequestStatus Recover(tbUsuarios item)
+        {
+            using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@user_NombreUsuario", item.user_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@user_Contrasena", item.user_Contrasena, DbType.String, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbUsuarios_Recover, parametros, commandType: CommandType.StoredProcedure);
+
+            result.MessageStatus = answer;
+            return result;
+        }
+
         public IEnumerable<VW_tbUsuarios> List()
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);

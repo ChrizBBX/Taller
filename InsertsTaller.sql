@@ -12,24 +12,23 @@ VALUES
 --INSERT TABLA PANTALLAS
 
 INSERT INTO acce.tbPantallas(pant_Nombre,pant_Url,pant_Menu,pant_HtmlID,pant_UserCreacion)
-VALUES ('Estados Civiles','/EstadoCivil/Listado','General','estadoscivilesItem',1),
-       ('Clientes', '/Clientes/Listado', 'Taller', 'clientesItem', 1),
-	   ('Empleados', '/Empleados/Listado','Taller', 'empleadosItem', 1),
-	   ('Métodos de Pago', '/MetodosPago/Listado', 'General', 'metodosItem', 1),
-	   ('Proveedores', '/Proveedor/Listado', 'Taller', 'proveedoresItem', 1),
-	   ('Usuarios', '/Usuario/Listado', 'Acceso', 'usuariosItem', 1),
-	   ('Sucursales', '/Sucursal/Listado', 'Taller', 'sucursalesItem', 1),
-	   ('Vehiculos', '/Vehiculos/Listado', 'Taller', 'vehiculosItem', 1),
-	   ('Ventas', '/Ventas/Listado', 'Taller', 'ventasItem', 1),
-	   ('Detalles Ventas', '/DetalleVentas/Listado', 'Taller', 'detallesventasItem', 1),
-	   ('Compras', '/Compras/Listado', 'Taller', 'comprasItem', 1),
-	   ('Detalles Compras', '/DetallesCompras/Listado', 'Taller', 'detallescomprasItem', 1),
-	   ('Cliente Por Vehiculo', '/ClientePorVehiculo/Listado', 'Taller', 'clienteporvehiculoItem', 1),
-	   ('Marcas', '/Marcas/Listado', 'Taller', 'marcasItem', 1),
-	   ('Modelos', '/Modelos/Listado', 'Taller', 'modelosItem', 1),
-	   ('Repuestos', '/Repuestos/Listado', 'Taller', 'repuestosItem', 1),
-	   ('Servicios', '/Servicios/Listado', 'Taller', 'serviciosItem', 1)
-
+VALUES ('Estados Civiles','/EstadosCiviles','General','estadoscivilesItem',1),
+       ('Clientes', '/Clientes', 'Taller', 'clientesItem', 1),
+	   ('Empleados', '/Empleados','Taller', 'empleadosItem', 1),
+	   ('Metodos de Pago', '/MetodosPagos', 'General', 'metodosItem', 1),
+	   ('Proveedores', '/proveedores', 'Taller', 'proveedoresItem', 1),
+	   ('Usuarios', '/Usuarios', 'Acceso', 'usuariosItem', 1),
+	   ('Sucursales', '/sucursales', 'Taller', 'sucursalesItem', 1),
+	   ('Vehiculos', '/Vehiculos', 'Taller', 'vehiculosItem', 1),
+	   ('Ventas', '/ventas', 'Taller', 'ventasItem', 1),
+	   ('Marcas', '/marcas', 'Taller', 'marcasItem', 1),
+	   ('Modelos', '/modeloso', 'Taller', 'modelosItem', 1),
+	   ('Repuestos', '/modelos', 'Taller', 'repuestosItem', 1),
+	   ('Servicios', '/servicios', 'Taller', 'serviciosItem', 1),
+	   ('Roles', '/roles', 'Acceso', 'serviciosItem', 1),
+	   ('Usuarios', '/Usuarios', 'Acceso', 'serviciosItem', 1),
+	   ('Reportes', '/Reportes', 'Taller', 'serviciosItem', 1),
+	   ('Graficas', '/Graficas', 'Taller', 'serviciosItem', 1)
 --INSERT TABLA PATALLAS POR ROLES
 
 INSERT INTO acce.tbPantallasPorRoles(role_ID,pant_ID,pantrole_UserCreacion)

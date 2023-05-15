@@ -30,8 +30,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        <img src='https://i.ibb.co/3dXP0t5/JDM-MECHANICS-138-40-px.png'></img>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

@@ -19,6 +19,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbPantallaPorRoles_Insert = "acce.UDP_tbPantallasPorRoles_Insert";
         public static string UDP_tbPantallaPorRoles_SelectByRoleID = "acce.UDP_tbPantallaPorRolesByRoleID";
         public static string UDP_tbPantallaPorRoles_Delete = "acce.UDP_tbPantallasPorRoles_Delete";
+        public static string UDP_tbPantallaPorRoles_Menu = "acce.tbRolesPorPantallaMenu";
         #endregion
 
         #region Pantallas
@@ -31,6 +32,7 @@ namespace Taller.DataAccess.Repositories
         public static string UDP_tbUsuarios_Insert = "acce.UDP_tbUsuarios_Insert";
         public static string UDP_tbUsuarios_Update = "acce.UDP_Usuarios_Update";
         public static string UDP_tbUsuarios_Delete = "acce.UDP_tbUsuarios_Delete";
+        public static string UDP_tbUsuarios_Recover = "acce.UDP_tbUsuarios_Recover";
         #endregion
 
         #region Ventas

@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify';
+import { Windows } from 'react-bootstrap-icons';
 
 const DefaultLayout = () => {
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    try{
+      const token = JSON.parse(localStorage.getItem('token'));  
+    
+      if(token != null && token != "24"){
+        navigate('/home')
+      }else{
+        navigate('/')
+      }
+    } catch {
+      navigate('/')
+    }
+  }, []);
+
   return (
     <div>
       <AppSidebar />

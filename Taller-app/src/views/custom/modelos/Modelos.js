@@ -273,7 +273,7 @@ function Modelos (){
     <CCol>
     <h6>Marca</h6>
     <CFormSelect value={MarcID} onChange={(event) => SetMarcID(event.target.value)} className='mb-2'>
-    <option value=''>--Seleccione una opcion--</option>
+    <option value="" hidden>--Seleccione una opcion--</option>
         {marcas.map((marca) => (
           <option key={marca.marc_ID} value={marca.marc_ID}>{marca.marc_Nombre}</option>
         ))}

@@ -248,19 +248,20 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
 </div>
 </div>
      {/*Modal Create*/}
-     <CModal visible={visible} onClose={() => setVisible(false)}>
+     <CModal visible={visible} onClose={() => setVisible(false)} size="lg">
       <CModalHeader onClose={() => setVisible(false)}>
         <CModalTitle>Nuevo Proveedor</CModalTitle>
       </CModalHeader>
-      <CModalBody>
+    <CModalBody>
       <CForm
     className="row g-3 needs-validation"
     noValidate
     validated={validated}
     onSubmit={CreateAction}
   >
-    <CCol>
-    <h6>Rut</h6>
+    <CRow>
+ <div className='form-group col-6 mt-3'>
+ <h6>Rut</h6>
     <CFormInput
         type="number"
         id="validationCustom01"
@@ -273,7 +274,10 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           }
         }}
       />
-    <h6>Nombre</h6>
+ </div>
+
+   <div className='form-group col-6 mt-3'>
+   <h6>Nombre</h6>
     <CFormInput
         type="text"
         id="validationCustom01"
@@ -281,7 +285,10 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         value={ProveedoresNombre}
         onChange={(e) => setProveedoresNombre(e.target.value)}
       />
-        <h6>Correo Electrónico</h6>
+   </div>
+
+       <div className='form-group col-6 mt-3'>
+       <h6>Correo Electrónico</h6>
     <CFormInput
         type="email"
         id="validationCustom01"
@@ -289,6 +296,8 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         value={ProveedoresCorreoElectronico}
         onChange={(e) => setProveedoresCorreoElectronico(e.target.value)}
       />
+       </div>
+       <div className='form-group col-6 mt-3'>
        <h6>Telefono</h6>
     <CFormInput
         type="number"
@@ -301,7 +310,9 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           }
         }}
       />
-          <h6>Dirección</h6>
+       </div>
+        <div className='form-group col-6 mt-3'>
+        <h6>Dirección</h6>
     <CFormInput
         type="text"
         id="validationCustom01"
@@ -309,7 +320,8 @@ localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         value={ProveedoresDireccion}
         onChange={(e) => setProveedoresDireccion(e.target.value)}
       />
-    </CCol>
+        </div>
+    </CRow>
     <CRow className='mt-3 offset-7'>
       <CCol className='col-2'>
     <CButton color="secondary" onClick={() => setVisible(false)}>

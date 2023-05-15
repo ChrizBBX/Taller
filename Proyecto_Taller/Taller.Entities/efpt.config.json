@@ -126,6 +126,14 @@
          "ObjectType": 3
       },
       {
+         "Name": "[tllr].[VW_RepuestosMasVendidos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[VW_RepuestosMasVendidos2]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[tllr].[VW_ServiciosMasSolicitados]",
          "ObjectType": 3
       },
@@ -179,6 +187,10 @@
       },
       {
          "Name": "[tllr].[vwClientesConMasVehiculos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[tllr].[vwTopProveedores]",
          "ObjectType": 3
       }
    ],

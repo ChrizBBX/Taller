@@ -22,6 +22,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { red } from '@material-ui/core/colors';
 
 
 const Login = () => {
@@ -33,9 +34,7 @@ const Login = () => {
   localStorage.setItem('token', '')
 
   useEffect(() => {
-    if (localStorage.getItem('token') !== '' && localStorage.getItem('token') !== null) {
-      navigate('/home')
-    }
+    localStorage.clear()
   }, [])
 
   const LoginAction = (event) => {
@@ -55,11 +54,18 @@ const Login = () => {
       .post('Usuarios/Login', payload)
       .then((response) => {
         setIsSubmitting(false)
-        console.log(response)
         if (response.data[0] != null) {
-          localStorage.setItem('token', response.data[0]);
-          navigate('/home')
-          console.log('Entro')
+          localStorage.setItem('token', JSON.stringify(response.data[0]));
+          axios.get(`/RolesPorPantalla/Menu/${response.data[0].role_ID}/${response.data[0].user_EsAdmin}`)
+          .then(response => {
+            const pantallas = response.data;
+            localStorage.setItem('pantallas', JSON.stringify(pantallas));
+            console.log(pantallas)
+          })
+          .catch(error => {
+            console.error('Error fetching data from API:', error);
+          });
+    navigate('/ventas')
         }else{
           console.log("Login faliido")
           if(password == '' || UserName == ''){
@@ -73,80 +79,66 @@ const Login = () => {
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm onSubmit={LoginAction} validated={validated} className="row g-3 needs-validation" noValidate>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput
-                        placeholder="Username"
-                        autoComplete="username"
-                        id="validationCustom01"
-                        required
-                        value={UserName}
-                        onChange={(e) => setUserName(e.target.value)}
-                      />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                        id="validationCustom01"
-                        value={password}
-                        required
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4" type="submit">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0" type="submit">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+    <div className="min-vh-100 d-flex flex-row align-items-center" style={{ backgroundColor: "#303C54" }}>
+    <CContainer style={{height: "120%"}}> 
+      <CRow className="justify-content-center">
+        <CCol>
+          <CCardGroup>
+            <CCard className="p-5">
+              <CCardBody>
+                <CForm onSubmit={LoginAction} validated={validated} className="row g-3 needs-validation" noValidate>
+                  <h1>Iniciar Sesion</h1>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilUser} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="Username"
+                      autoComplete="username"
+                      id="validationCustom01"
+                      required
+                      value={UserName}
+                      onChange={(e) => setUserName(e.target.value)}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-4">
+                    <CInputGroupText>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="password"
+                      placeholder="Password"
+                      autoComplete="current-password"
+                      id="validationCustom01"
+                      value={password}
+                      required
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </CInputGroup>
+                  <CRow>
+                    <CCol xs={6}>
+                      <CButton color="primary" className="px-4" type="submit">
+                        Login
                       </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
+                    </CCol>
+                    <CCol xs={6} className="text-right">
+                      <CButton color="link" className="px-0" onClick={() => {navigate('/Register'); localStorage.setItem("token", "24")}}>
+                        Olvidaste tu contraseña?  
+                      </CButton>
+                    </CCol>
+                  </CRow>
+                </CForm>
+
+              </CCardBody>
+            </CCard>
+            <CCard style={{ width: '44%' }}>
+  <img src="https://i.ibb.co/QvV6chB/bannerlogin.jpg" alt="background" style={{ width: '100%', height: '100%' }} />
+</CCard>
+          </CCardGroup>
+        </CCol>
+      </CRow>
+    </CContainer>
+  </div>
   )
 }
 

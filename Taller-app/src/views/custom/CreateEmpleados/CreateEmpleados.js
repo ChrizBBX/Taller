@@ -110,23 +110,23 @@ const CreateEmpleado = () => {
     <div className="card">
       <h5>Nuevo Empleado</h5>
       <CForm className="mid-form grid-cols-2" onSubmit={handleFormSubmit}>
-        <div className="grid p-fluid grid-cols-2">
-          <div className="field mt-3">
+        <div className="row">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="DNI">Identidad</label>
             <CFormInput id="inputnumber" className="p-valid" value={dni} onChange={(event) => setDni(event.target.value)} />
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="Nombre">Nombre</label>
             <CFormInput type="text" id="Nombre" className="p-valid" value={nombre} onChange={(event) => setNombre(event.target.value)} />
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="Apellido">Apellido</label>
             <CFormInput type="text" id="Apellido" className="p-valid" value={apellido} onChange={(event) => setApellido(event.target.value)} />
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="estadocivil">Estados Civiles</label>
             <CFormSelect id="estadocivil" value={estadoCivil} onChange={(event) => setEstadoCivil(event.target.value)}>
               <option value="">Seleccione un Estado Civil</option>
@@ -136,7 +136,7 @@ const CreateEmpleado = () => {
             </CFormSelect>
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="departamento">Departamentos</label>
             <CFormSelect id="departamento" value={selectedDepartamento} onChange={handleDepartamentoChange}>
               <option value="">Selecciona un departamento</option>
@@ -146,7 +146,7 @@ const CreateEmpleado = () => {
             </CFormSelect>
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="municipio">Municipios</label>
             <CFormSelect id="municipio" value={municipio} onChange={(event) => setMunicipio(event.target.value)}>
               {municipios.map(municipio => (
@@ -155,7 +155,7 @@ const CreateEmpleado = () => {
             </CFormSelect>
           </div>
 
-          <div className="field mt-3">
+          <div className="form-group col-6 mt-3">
             <label htmlFor="sucursal">Sucursales</label>
             <CFormSelect id="sucursal" value={sucursal} onChange={(event) => setSucursal(event.target.value)}>
               <option value="">Seleccione una Sucursal</option>
@@ -165,7 +165,7 @@ const CreateEmpleado = () => {
             </CFormSelect>
           </div>
 
-          <div className="col-12 md:col-6">
+          <div className="form-group col-6 mt-3">
             <div className="field mt-3">
               <label htmlFor="Sexo">Sexo</label>
               <div className="grid">
@@ -196,7 +196,7 @@ const CreateEmpleado = () => {
                   </div>
                 </div>
               </div>
-              <div  className="field mt-3">
+              <div  className="form-group col-6 mt-3">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   disableToolbar
@@ -214,18 +214,18 @@ const CreateEmpleado = () => {
               </MuiPickersUtilsProvider>
               </div > 
              
-              <div className="field mt-3">
+              <div className="form-group col-6 mt-3">
                 <label htmlFor="Dirrecion">Dirrecion</label>
                 <CFormInput type="text" id="Dirrecion" className="p-valid" value={direccion} onChange={(event) => setDirreccion(event.target.value)} />
               </div>
 
 
-              <div className="field mt-3">
+              <div className="form-group col-6 mt-3">
                 <label htmlFor="CorreoElectronico">Correo Electrónico</label>
                 <CFormInput type="email" id="CorreoElectronico" className="p-valid" value={correoElectronico} onChange={(event) => setCorreoElectronico(event.target.value)} />
               </div>
 
-              <div className="field mt-3">
+              <div className="form-group col-6 mt-3">
                 <label htmlFor="Telefono">Teléfono</label>
                 <CFormInput type="text" id="Telefono" className="p-valid" keyfilter="num" value={telefono} onChange={(event) => setTelefono(event.target.value)} />
               </div>
