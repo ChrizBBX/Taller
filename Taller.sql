@@ -1841,7 +1841,7 @@ END
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
 	@user_NombreUsuario NVARCHAR(150),
-	@user_Contrase�a NVARCHAR(200),
+	@user_Contraseña NVARCHAR(200),
 	@role_ID INT,
 	@empe_ID INT
 AS
@@ -1850,7 +1850,7 @@ BEGIN
         IF NOT EXISTS (SELECT user_NombreUsuario FROM acce.tbUsuarios WHERE user_NombreUsuario = @user_NombreUsuario)
         BEGIN 
 		DECLARE @Pass AS NVARCHAR(MAX);
-		SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @user_Contrase�a), 2);
+		SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @user_Contraseña), 2);
         INSERT INTO acce.tbUsuarios ([user_NombreUsuario], [user_Contrasena], [role_ID], [empe_ID],[user_UserCreacion])
         VALUES (@user_NombreUsuario,@Pass,@role_ID,@empe_ID,1)
         SELECT '1'

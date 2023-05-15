@@ -21,7 +21,7 @@ namespace Taller.DataAccess.Repositories
         {
             throw new NotImplementedException();
         }
-
+        
         public RequestStatus Insert(tbVentas item)
         {
             using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
@@ -43,12 +43,7 @@ namespace Taller.DataAccess.Repositories
         {
             return con.VW_tbVentas.AsList();
         }
-        //public IEnumerable<VW_tbVentas> List()
-        //{
-        //    using var db = new SqlConnection(TallerMecanicoContext.ConnectionString);
-        //    var parametros = new DynamicParameters();
-        //    return db.Query<VW_tbVentas>(ScriptsDataBase.UDP_Ventas_Select, null, commandType: CommandType.StoredProcedure);
-        //}
+      
 
         public RequestStatus Update(tbVentas item)
         {
