@@ -8,7 +8,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAFmjIXMLhqkWjw4qZ8+QkaQAAAAACAAAAAAAQZgAAAAEAACAAAAD5JYuGLtaBz3SP1UhiXxOPk7pV3goBlTcaMpsQP4jvzAAAAAAOgAAAAAIAACAAAAC3aG7QUigAniEIh4wHTiXp29bV9Eaj6MzA3WwMs+eiPiAAAABH1tHFuUe27dO1VSci7/5L1eXfpeLMf/6usBE2qObbfEAAAAB5u3nW8oAlWDldj0G2TYOb+5TgeGz3cIsbWmjWaTDGVXEJlfERKCQwXGV57VaVXf2ynDkVgRy/3zupTV1CiQ2O</EncryptedPassword>
     <_PublishTargetUrl>ftp://155.254.244.38/www.ProyectoTaller.somee.com</_PublishTargetUrl>
-    <History>True|2023-05-15T15:09:14.4284781Z;False|2023-05-15T09:03:49.8896855-06:00;True|2023-05-15T08:13:07.7803825-06:00;False|2023-05-04T14:33:01.1210717-06:00;False|2023-05-04T14:30:19.1356685-06:00;False|2023-05-04T14:30:15.3705714-06:00;True|2023-05-04T09:51:16.1392007-06:00;False|2023-05-04T09:48:25.4880890-06:00;True|2023-05-04T09:34:35.7763729-06:00;False|2023-05-04T09:31:36.0479906-06:00;True|2023-05-03T22:23:49.2681234-06:00;True|2023-05-01T19:05:04.0974994-06:00;False|2023-05-01T18:59:51.5995056-06:00;False|2023-05-01T18:58:54.9606562-06:00;False|2023-05-01T18:57:30.8810949-06:00;False|2023-05-01T18:56:55.2581596-06:00;False|2023-05-01T18:55:53.7122397-06:00;</History>
+    <History>True|2023-05-15T17:19:20.6880081Z;False|2023-05-15T11:15:41.0983522-06:00;False|2023-05-15T11:12:32.6604759-06:00;False|2023-05-15T11:12:28.9172024-06:00;True|2023-05-15T09:09:14.4284781-06:00;False|2023-05-15T09:03:49.8896855-06:00;True|2023-05-15T08:13:07.7803825-06:00;False|2023-05-04T14:33:01.1210717-06:00;False|2023-05-04T14:30:19.1356685-06:00;False|2023-05-04T14:30:15.3705714-06:00;True|2023-05-04T09:51:16.1392007-06:00;False|2023-05-04T09:48:25.4880890-06:00;True|2023-05-04T09:34:35.7763729-06:00;False|2023-05-04T09:31:36.0479906-06:00;True|2023-05-03T22:23:49.2681234-06:00;True|2023-05-01T19:05:04.0974994-06:00;False|2023-05-01T18:59:51.5995056-06:00;False|2023-05-01T18:58:54.9606562-06:00;False|2023-05-01T18:57:30.8810949-06:00;False|2023-05-01T18:56:55.2581596-06:00;False|2023-05-01T18:55:53.7122397-06:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="appsettings.Development.json">
@@ -324,37 +324,37 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>11/15/2019 02:37:42</publishTime>
     </File>
     <File Include="Taller.API.deps.json">
-      <publishTime>05/15/2023 09:06:45</publishTime>
+      <publishTime>05/15/2023 11:15:47</publishTime>
     </File>
     <File Include="Taller.API.dll">
-      <publishTime>05/15/2023 09:06:45</publishTime>
+      <publishTime>05/15/2023 11:15:47</publishTime>
     </File>
     <File Include="Taller.API.exe">
-      <publishTime>05/15/2023 09:06:45</publishTime>
+      <publishTime>05/15/2023 11:15:47</publishTime>
     </File>
     <File Include="Taller.API.pdb">
-      <publishTime>05/15/2023 09:06:45</publishTime>
+      <publishTime>05/15/2023 11:15:47</publishTime>
     </File>
     <File Include="Taller.API.runtimeconfig.json">
-      <publishTime>05/15/2023 08:08:32</publishTime>
+      <publishTime>05/15/2023 11:13:08</publishTime>
     </File>
     <File Include="Taller.BusinessLogic.dll">
-      <publishTime>05/15/2023 09:00:59</publishTime>
+      <publishTime>05/15/2023 11:12:27</publishTime>
     </File>
     <File Include="Taller.BusinessLogic.pdb">
-      <publishTime>05/15/2023 09:00:59</publishTime>
+      <publishTime>05/15/2023 11:12:27</publishTime>
     </File>
     <File Include="Taller.DataAccess.dll">
-      <publishTime>05/15/2023 09:00:59</publishTime>
+      <publishTime>05/15/2023 11:12:27</publishTime>
     </File>
     <File Include="Taller.DataAccess.pdb">
-      <publishTime>05/15/2023 09:00:59</publishTime>
+      <publishTime>05/15/2023 11:12:27</publishTime>
     </File>
     <File Include="Taller.Entities.dll">
-      <publishTime>05/15/2023 08:08:29</publishTime>
+      <publishTime>05/15/2023 11:12:25</publishTime>
     </File>
     <File Include="Taller.Entities.pdb">
-      <publishTime>05/15/2023 08:08:29</publishTime>
+      <publishTime>05/15/2023 11:12:25</publishTime>
     </File>
     <File Include="tr/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -369,7 +369,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>07/24/2020 22:17:20</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>05/15/2023 09:06:45</publishTime>
+      <publishTime>05/15/2023 11:15:47</publishTime>
     </File>
     <File Include="zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>

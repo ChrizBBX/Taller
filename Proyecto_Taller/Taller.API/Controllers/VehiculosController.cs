@@ -24,17 +24,18 @@ namespace Taller.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult Vehiculos()
-        {
-            var listado = _tallerservices.ListadoVehiculos();
-            return Ok(listado);
-        }
-
         [HttpGet("ClientesConMasVehiculos")]
         public IActionResult ClientesConMasVehiculos()
         {
             var listado = _tallerservices.ClientesConMasVehiculos();
+            return Ok(listado);
+        }
+
+
+        [HttpGet]
+        public IActionResult Vehiculos()
+        {
+            var listado = _tallerservices.ListadoVehiculos();
             return Ok(listado);
         }
 

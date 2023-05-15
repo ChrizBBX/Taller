@@ -44,12 +44,12 @@ const Compras = React.lazy(() => import('./views/custom/Compras/Compras'))
 const CreateEmpleados = React.lazy(() => import('./views/custom/CreateEmpleados/CreateEmpleados'))
 const EditEmpleados = React.lazy(() => import('./views/custom/Empleados/EditEmpleados'))
 const DetailsEmpleados = React.lazy(() => import('./views/custom/Empleados/DetailsEmpleados'))
-const Grafica = React.lazy(() => import('./views/custom/Grafica/Grafica'))
+const Graficas = React.lazy(() => import('./views/custom/Grafica/Graficas'))
 const Roles = React.lazy(() => import('./views/custom/roles/Roles'))
 const RolesCreate = React.lazy(() => import('./views/custom/roles/RolesCreate'))
 const RolesEdit = React.lazy(() => import('./views/custom/roles/RolesEdit'))
 const RolesDetails = React.lazy(() => import('./views/custom/roles/RolesDetails'))
-const Reporte = React.lazy(() => import('./views/custom/Reporte/Reporte'))
+const Reportes = React.lazy(() => import('./views/custom/Reporte/Reportes'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -114,7 +114,7 @@ const routes = [
   { path: '/proveedores', name: 'Proveedores', element: Proveedores },
   { path: '/proveedoresDetails', name: 'ProveedoresDetails', element: ProveedoresDetails },
   { path: '/repuestos', name: 'Repuestos', element: Repuestos },
-  { path: '/Grafica', name: 'Grafica', element: Grafica },
+  { path: '/Graficas', name: 'Graficas', element: Graficas },
   { path: '/repuestosCreate', name: 'RepuestosCreate', element: RepuestosCreate },
   { path: '/repuestosEdit', name: 'RepuestosEdit', element: RepuestosEdit },
   { path: '/repuestosDetails', name: 'RepuestosDetails', element: RepuestosDetails },
@@ -125,7 +125,7 @@ const routes = [
   { path: '/ventasEdit', name: 'VentasEdit', element: VentasEdit },    
   { path: '/ventasDetails', name: 'VentasDetails', element: VentasDetails },    
   { path: '/Empleados', name: 'Empleados', element: Empleados },
-  { path: '/Reporte', name: 'Reporte', element: Reporte },
+  { path: '/Reportes', name: 'Reportes', element: Reportes },
   { path: '/DetailsEmpleados', name: 'DetailsEmpleados', element: DetailsEmpleados },
   { path: '/Vehiculos', name: 'Vehiculos', element: Vehiculos },
   { path: '/VehiculosDetails', name: 'VehiculosDetails', element: VehiculosDetails },

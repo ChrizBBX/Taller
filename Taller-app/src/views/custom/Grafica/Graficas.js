@@ -6,7 +6,7 @@ import { CChartPie,
     } 
 from '@coreui/react-chartjs';
 
-const Example = () => {
+const Graficas = () => {
   const [servicios, setServicios] = useState([]);
   const [data, setData] = useState(null);
 
@@ -15,6 +15,7 @@ const Example = () => {
       try {
         const response = await axios.get('Servicios/ServiciosMasSolicitados');
         setServicios(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error(error);
       }
@@ -110,4 +111,4 @@ const Example = () => {
   );
 };
 
-export default Example;
+export default Graficas;
